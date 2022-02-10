@@ -1,0 +1,47 @@
+{
+  "name": "fasc-openapi-node-sdk",
+  "version": "1.0.0",
+  "description": "法大大 FASC-OPENAPI NODEJS SDK",
+  "main": "fascapi/index.js",
+  "scripts": {
+    "build": "tsc",
+    "prettier": "prettier --config prettier.config.js --write 'src/**/*.{tsx,ts,jsx,js,css,json,vue}'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "type": "commonjs",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.fabigbig.com/open-platform/sdks/fasc-openapi-node-sdk"
+  },
+  "keywords": [
+    "fasc-openapi",
+    "api",
+    "nodejs",
+    "sdk",
+    "js"
+  ],
+  "author": "fasc-openapi",
+  "license": "ISC",
+  "dependencies": {
+    "form-data": "^4.0.0",
+    "https-proxy-agent": "^5.0.0",
+    "is-stream": "^2.0.1",
+    "node-fetch": "^2.6.7",
+    "ts-node": "^10.4.0",
+    "tslib": "^2.3.1"
+  },
+  "devDependencies": {
+    "@types/form-data": "^2.5.0",
+    "@types/node": "^17.0.5",
+    "@types/node-fetch": "^2.5.12",
+    "@typescript-eslint/eslint-plugin": "^5.8.1",
+    "@typescript-eslint/parser": "^5.8.1",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^8.5.0",
+    "prettier": "^2.5.1",
+    "typescript": "^4.5.4"
+  }
+}
