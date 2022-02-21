@@ -1,15 +1,3 @@
-/** 参与方类型 */
-export enum ActorTypeEnum {
-  /** 发起方 */
-  INITIATOR = "initiator",
-  /** 填写方 */
-  FILLER = "filler",
-  /** 签署方 */
-  SIGNER = "signer",
-  /** 抄送方 */
-  CC = "cc",
-}
-
 export enum FileTypeEnum {
   DOC = "doc",
 

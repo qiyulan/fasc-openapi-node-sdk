@@ -1,3 +1,5 @@
+import { UserIdentInfo } from "../common/models"
+
 /** 用户实名认证时所选择的认证方案 */
 export enum IdentMethodEnum {
   /** 实名手机号认证 (该方案校验的是用户在电信运营商绑定的真实姓名、身份证号码、手机号及对应的短信验证码) */
@@ -34,18 +36,6 @@ export enum IdentStatusEnum {
   IDENT_INVALID = "ident_invalid",
 }
 
-/** 证件类型 */
-export enum IdentTypeEnum {
-  /** 身份证 */
-  ID_CARD = "id_card",
-  /** 护照 */
-  PASSPORT = "passport",
-  /** 港澳居民来往内地通行证 */
-  HK_MACAO = "hk_macao",
-  /** 台湾居民来往大陆通行证 */
-  TAIWAN = "taiwan",
-}
-
 /** addUser 新增个人用户请求参数结构体 */
 export interface AddUserRequest {
   clientUserId: string
@@ -58,8 +48,41 @@ export interface AddUserResponse {
 }
 
 /** updateUser 更新个人用户请求参数结构体 */
-export interface AddUserRequest {
+export interface UpdateUserRequest {
   openUserId: string
   clientUserId: string
   clientUserName: string
+}
+
+/** deleteUser 删除个人用户 */
+export interface DeleteUserRequest {
+  openUserId: string
+}
+
+/** disableUser 禁用个人用户 */
+export interface DisableUserRequest {
+  openUserId: string
+}
+
+/** enableUser 恢复个人用户 */
+export interface EnableUserRequest {
+  openUserId: string
+}
+
+export interface GetAuthUrlRequest {
+  openUserId: string
+  userInfo: UserIdentInfo
+}
+
+/** 查询个人用户基本信息请求参数结构体 */
+export interface GetUserInfoRequest {
+  openUserId: string
+}
+
+/** 查询个人用户基本信息返回参数结构体 */
+export interface GetUserInfoRequest {
+  clientUserId: string
+  clientUserName?: string
+  bindingStatus: "unauthorized" | "authorized"
+  authScope?: "ident_info" | "signtask_init" | "resource_for_sign"
 }

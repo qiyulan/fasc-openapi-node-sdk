@@ -9,7 +9,7 @@ import FascOpenApiSDKHttpException from "./fasc_openapi_sdk_exception"
 
 export type ReqMethod = "POST" | "GET"
 
-type ResponseCallback = (error: unknown | string, req: any) => void
+type ResponseCallback = (error: string, req: any) => void
 interface RequestOptions {
   multipart: boolean
 }

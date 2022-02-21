@@ -1,6 +1,6 @@
 import { ClientConfig, Credential, ClientProfile } from "./interface";
 export declare type ReqMethod = "POST" | "GET";
-declare type ResponseCallback = (error: unknown | string, req: any) => void;
+declare type ResponseCallback = (error: string, req: any) => void;
 interface RequestOptions {
     multipart: boolean;
 }
@@ -31,6 +31,5 @@ export declare class AbstractClient {
     private doRequest;
     private doRequestWithSign;
     private parseResponse;
-    private formatRequestData;
 }
 export {};

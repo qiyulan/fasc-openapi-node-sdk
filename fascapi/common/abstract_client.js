@@ -108,7 +108,6 @@ class AbstractClient {
         catch (e) {
             throw new fasc_openapi_sdk_exception_1.default(e.message);
         }
-        // console.log("res: ", res)
         return this.parseResponse(res);
     }
     async parseResponse(res) {
@@ -124,23 +123,5 @@ class AbstractClient {
             throw new fasc_openapi_sdk_exception_1.default(`响应为空(${res})`);
         }
     }
-    formatRequestData(params) {
-        return params;
-    }
 }
 exports.AbstractClient = AbstractClient;
-function mergeData(data, prefix = "") {
-    const ret = {};
-    for (const k in data) {
-        if (data[k] === null) {
-            continue;
-        }
-        if (data[k] instanceof Array || data[k] instanceof Object) {
-            Object.assign(ret, mergeData(data[k], prefix + k + "."));
-        }
-        else {
-            ret[prefix + k] = data[k];
-        }
-    }
-    return ret;
-}

@@ -1,18 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VerifyMethodEnum = exports.SignTaskStatusEnum = exports.SignerSignMethodEnum = exports.SignActorStatusEnum = exports.FillActorStatusEnum = exports.FileTypeEnum = exports.ActorTypeEnum = void 0;
-/** 参与方类型 */
-var ActorTypeEnum;
-(function (ActorTypeEnum) {
-    /** 发起方 */
-    ActorTypeEnum["INITIATOR"] = "initiator";
-    /** 填写方 */
-    ActorTypeEnum["FILLER"] = "filler";
-    /** 签署方 */
-    ActorTypeEnum["SIGNER"] = "signer";
-    /** 抄送方 */
-    ActorTypeEnum["CC"] = "cc";
-})(ActorTypeEnum = exports.ActorTypeEnum || (exports.ActorTypeEnum = {}));
+exports.VerifyMethodEnum = exports.SignTaskStatusEnum = exports.SignerSignMethodEnum = exports.SignActorStatusEnum = exports.FillActorStatusEnum = exports.FileTypeEnum = void 0;
 var FileTypeEnum;
 (function (FileTypeEnum) {
     FileTypeEnum["DOC"] = "doc";

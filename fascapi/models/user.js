@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.IdentTypeEnum = exports.IdentStatusEnum = exports.IdentProcessStatusEnum = exports.IdentMethodEnum = void 0;
+exports.IdentStatusEnum = exports.IdentProcessStatusEnum = exports.IdentMethodEnum = void 0;
 /** 用户实名认证时所选择的认证方案 */
 var IdentMethodEnum;
 (function (IdentMethodEnum) {
@@ -37,15 +37,3 @@ var IdentStatusEnum;
     /** 认证失效 */
     IdentStatusEnum["IDENT_INVALID"] = "ident_invalid";
 })(IdentStatusEnum = exports.IdentStatusEnum || (exports.IdentStatusEnum = {}));
-/** 证件类型 */
-var IdentTypeEnum;
-(function (IdentTypeEnum) {
-    /** 身份证 */
-    IdentTypeEnum["ID_CARD"] = "id_card";
-    /** 护照 */
-    IdentTypeEnum["PASSPORT"] = "passport";
-    /** 港澳居民来往内地通行证 */
-    IdentTypeEnum["HK_MACAO"] = "hk_macao";
-    /** 台湾居民来往大陆通行证 */
-    IdentTypeEnum["TAIWAN"] = "taiwan";
-})(IdentTypeEnum = exports.IdentTypeEnum || (exports.IdentTypeEnum = {}));
