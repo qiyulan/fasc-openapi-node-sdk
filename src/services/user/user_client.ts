@@ -85,7 +85,7 @@ export class Client extends AbstractClient {
     req: GetAuthUrlRequest,
     cb?: (error: string, res: GetAuthUrlResponse) => void
   ): Promise<GetAuthUrlResponse> {
-    return this.request({ url: "/user/enable", req, reqMethod: "POST", cb })
+    return this.request({ url: "/user/get-auth-url", req, reqMethod: "POST", cb })
   }
 
   /**

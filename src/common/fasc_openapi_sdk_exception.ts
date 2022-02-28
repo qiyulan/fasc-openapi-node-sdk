@@ -14,6 +14,7 @@ export default class FascOpenApiSDKHttpException extends Error {
 
   constructor(error: string, requestId = "") {
     super(error)
+    this.message = error
     this.requestId = requestId || ""
   }
 

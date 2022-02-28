@@ -1,6 +1,9 @@
 import { Field, OpenId } from "../../common/models";
 /** getDocTemplateList 查询文档模板列表-请求参数结构体 */
 export interface GetDocTemplateListRequest {
+    /**
+     * @type {OpenId}
+     */
     ownerId?: OpenId;
     /** 查询条件 */
     listFilter?: {
@@ -26,7 +29,7 @@ export interface DocTemplate {
 }
 /** getDocTemplateList 查询文档模板列表-响应参数结构体 */
 export interface GetDocTemplateListResponse {
-    docTemplates: DocTemplate[];
+    docTemplates: Array<DocTemplate>;
     /** 列表当前分页 */
     listPageNo: number;
     /** 当前返回页中的文档模板数量，即数组大小 */
@@ -49,5 +52,8 @@ export interface GetDocTemplateDetailResponse {
     docTemplateId: string;
     docTemplateName: string;
     docTemplateStatus: string;
-    docFields: Field[];
+    /**
+     * @type {Array<Field>}
+     */
+    docFields: Array<Field>;
 }

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class FascOpenApiSDKHttpException extends Error {
     constructor(error, requestId = "") {
         super(error);
+        this.message = error;
         this.requestId = requestId || "";
     }
     getMessage() {

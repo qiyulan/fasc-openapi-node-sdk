@@ -42,9 +42,9 @@ export interface ProxyProfile {
    */
   proxyHost?: string
   /**
-   * @type {string} - 代理端口
+   * @type {number} - 代理端口
    */
-  proxyPort?: string
+  proxyPort?: number
 }
 
 /** 可选配置项 */

@@ -28,7 +28,7 @@ export interface SignTemplate {
 }
 /** getSignTemplateList 查询签署模板列表-响应参数结构体*/
 export interface GetSignTemplateListResponse {
-    signTemplates: SignTemplate[];
+    signTemplates: Array<SignTemplate>;
     /** 列表当前分页 */
     listPageNo: number;
     /** 当前返回页中的文档模板数量，即数组大小 */
@@ -52,7 +52,7 @@ export interface Doc {
     /** 文档名称 */
     docName: string;
     /** 文档中的控件 */
-    docFields?: Field[];
+    docFields?: Array<Field>;
 }
 /** 填写参与方详情 */
 export interface FillActor {
@@ -99,17 +99,17 @@ export interface GetSignTemplateDetailResponse {
     /** 签署模板状态：invalid、valid */
     signTemplateStatus: string;
     /** 文档列表 */
-    doc?: Doc[];
+    doc?: Array<Doc>;
     /** 填写是否有序，默认为false */
     fillInOrder?: boolean;
     /** 签署是否有序，默认为false */
     signInOrder?: boolean;
     /** 填写参与方列表 */
-    fillActors: FillActor[];
+    fillActors: Array<FillActor>;
     /** 填写参与方和控件的关系 */
-    fillActorFields?: FillActorFiled[];
+    fillActorFields?: Array<FillActorFiled>;
     /** 签署参与方列表 */
-    signActors: SignActor[];
+    signActors: Array<SignActor>;
     /** 签署参与方和控件的关系 */
-    signActorFields?: SignActorField[];
+    signActorFields?: Array<SignActorField>;
 }

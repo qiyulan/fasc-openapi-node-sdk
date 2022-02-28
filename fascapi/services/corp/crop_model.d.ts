@@ -47,20 +47,29 @@ export declare type EnableCorpResponse = null;
 export interface GetAuthUrlRequest {
     /** 法大大平台为该企业在该应用appId范围内分配的唯一标识 */
     openCorpId: string;
-    /** 企业身份信息 */
+    /**
+     * 企业身份信息
+     * @type {CorpIdentInfo}
+     */
     corpIdentInfo?: CorpIdentInfo;
     /** 是否需要匹配企业身份信息一致 */
     corpIdentInfoMatch?: boolean;
     /** 企业经办人的openUserId */
     operatorId: string;
-    /** 企业经办人身份信息 */
+    /**
+     * 企业经办人身份信息
+     * @type {UserIdentInfo}
+     */
     operatorIdentInfo?: UserIdentInfo;
-    /** 企业经办人补充信息 */
+    /**
+     * 企业经办人补充信息
+     * @type {UserInfoExtend}
+     */
     operatorInfoExtend?: UserInfoExtend;
     /** 是否需要匹配企业经办人身份信息一致 */
     operatorIdentInfoMatch?: boolean;
     /** 用户授权范围列表，ident_info: 身份信息，signtask_init: 发起签署任务，resource_for_sign: 签署相关数据资源 */
-    requestAuthScope?: string[];
+    requestAuthScope?: Array<string>;
     /** 重定向地址 */
     redirectUrl?: string;
 }
@@ -81,7 +90,7 @@ export interface GetBasicInfoResponse {
     /** 授权状态，unauthorized: 未授权，authorized: 已授权 */
     bindingStatus: string;
     /** 返回企业实际授权的范围，企业授权范围列表逗号分隔,ident_info, signtask_init, resource_for_sign */
-    authScope?: string[];
+    authScope?: Array<string>;
     /** 实名认证状态，unidentified，identified，ident_invalid */
     identStatus?: string;
     /** 企业用户有效状态，disable，enable */
@@ -98,7 +107,13 @@ export interface GetIdentityInfoResponse {
     openCorpId: string;
     /** 实名认证状态，unidentified，identified，ident_invalid */
     corpIdentStatus: string;
+    /**
+     * @type {CorpIdentInfo}
+     */
     corpIdentInfo?: CorpIdentInfo;
+    /**
+     * @type {CorpInfoExtend}
+     */
     corpInfoExtend?: CorpInfoExtend;
     /** 企业实名认证时所选择的认证方案：legal_rep、deputy_auth、payment、offline */
     corpIdentMethod: string;
@@ -141,9 +156,9 @@ export interface CorpIdentProgressInfo {
 /** getIdentityProgress 查询企业用户实名认证进度-请求参数结构体 */
 export interface GetIdentityProgressResponse {
     /**
-     * @type {CorpIdentProgressInfo} - 企业实名认证进度
+     * @type {Array<CorpIdentProgressInfo>} - 企业实名认证进度
      */
-    identProgressInfos: CorpIdentProgressInfo[];
+    identProgressInfos: Array<CorpIdentProgressInfo>;
 }
 /** addMember 申请添加企业成员-请求参数结构体 */
 export interface AddMemberRequest {

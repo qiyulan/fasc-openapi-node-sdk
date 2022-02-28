@@ -5,6 +5,11 @@ const client = new fascapi.accessTokenClient.Client({
   serverUrl: "https://sit-openapi.fadada.com/api/v5",
 })
 
-client.getAccessToken((err, req) => {
-  console.log(req)
-})
+client.getAccessToken().then(
+  (res) => {
+    console.log(JSON.stringify(res.data))
+  },
+  (err) => {
+    console.log(JSON.stringify(err.response.data))
+  }
+)

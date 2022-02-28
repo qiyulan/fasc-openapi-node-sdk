@@ -5,13 +5,12 @@ export default class Sign {
         timestamp: number;
         appSecret: string;
     }): string;
-    static formatSignString({ data, appId, signMethod, nonce, timestamp, accessToken, appSecret, }: {
+    static formatSignString({ data, appId, signMethod, nonce, timestamp, accessToken, }: {
         data: any;
         appId: string;
         signMethod: SignMethod;
         nonce: string;
         timestamp: number;
-        appSecret: string;
         accessToken?: string;
     }): string;
 }

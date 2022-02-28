@@ -58,15 +58,24 @@ export type EnableCorpResponse = null
 export interface GetAuthUrlRequest {
   /** 法大大平台为该企业在该应用appId范围内分配的唯一标识 */
   openCorpId: string
-  /** 企业身份信息 */
+  /**
+   * 企业身份信息
+   * @type {CorpIdentInfo}
+   */
   corpIdentInfo?: CorpIdentInfo
   /** 是否需要匹配企业身份信息一致 */
   corpIdentInfoMatch?: boolean
   /** 企业经办人的openUserId */
   operatorId: string
-  /** 企业经办人身份信息 */
+  /**
+   * 企业经办人身份信息
+   * @type {UserIdentInfo}
+   */
   operatorIdentInfo?: UserIdentInfo
-  /** 企业经办人补充信息 */
+  /**
+   * 企业经办人补充信息
+   * @type {UserInfoExtend}
+   */
   operatorInfoExtend?: UserInfoExtend
   /** 是否需要匹配企业经办人身份信息一致 */
   operatorIdentInfoMatch?: boolean
@@ -114,7 +123,13 @@ export interface GetIdentityInfoResponse {
   openCorpId: string
   /** 实名认证状态，unidentified，identified，ident_invalid */
   corpIdentStatus: string
+  /**
+   * @type {CorpIdentInfo}
+   */
   corpIdentInfo?: CorpIdentInfo
+  /**
+   * @type {CorpInfoExtend}
+   */
   corpInfoExtend?: CorpInfoExtend
   /** 企业实名认证时所选择的认证方案：legal_rep、deputy_auth、payment、offline */
   corpIdentMethod: string

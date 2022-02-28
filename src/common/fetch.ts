@@ -1,19 +1,27 @@
-import fetch, { RequestInit, Response } from "node-fetch"
-import HttpsProxyAgent = require("https-proxy-agent")
+import axios, { AxiosRequestConfig } from "axios"
+import https from "https"
 import { ProxyProfile } from "./interface"
 
+axios.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded"
+
 export default function (
-  url: string,
-  options: RequestInit,
+  { url, baseURL, method, headers, data }: AxiosRequestConfig,
   proxy?: ProxyProfile
-): Promise<Response> {
-  const instanceOptions = options || {}
-
-  if (!options.agent && proxy.proxyFlag) {
-    instanceOptions.agent = new (HttpsProxyAgent as any)(
-      proxy.proxyHost + proxy.proxyPort ? `:${proxy.proxyPort}` : ""
-    )
+) {
+  let requestOptions: AxiosRequestConfig = {
+    url,
+    baseURL,
+    method,
+    headers,
+    data,
+    withCredentials: true,
   }
-
-  return fetch(url, instanceOptions)
+  if (proxy.proxyFlag === true) {
+    requestOptions.proxy = {
+      host: proxy.proxyHost,
+      port: proxy.proxyPort,
+    }
+    requestOptions.httpsAgent = new https.Agent({ keepAlive: true })
+  }
+  return axios(requestOptions)
 }

@@ -29,9 +29,24 @@ export declare class Client extends AbstractClient {
      * 在企业操作授权前，法大大平台要求企业及其经办人必须先完成登录和实名认证 (即: Authorization的前提是必须先完成Authentication)
      */
     getAuthUrl(req: GetAuthUrlRequest, cb?: (error: string, res: GetAuthUrlResponse) => void): Promise<GetAuthUrlResponse>;
+    /**
+     * 获取企业的基本信息、认证状态、授权状态和范围等。注意：该接口返回的信息中不涉及隐私，因此不需要授权
+     */
     getBasicInfo(req: GetBasicInfoRequest, cb?: (error: string, res: GetBasicInfoResponse) => void): Promise<GetBasicInfoResponse>;
+    /**
+     * 用于获取企业的实名身份信息。注意：只有经过企业授权后，应用系统方可获得此信息
+     */
     getIdentityInfo(req: GetIdentityInfoRequest, cb?: (error: string, res: GetIdentityInfoResponse) => void): Promise<GetIdentityInfoResponse>;
+    /**
+     * 查询企业当前或最近进行的实名认证进度。如果当前有多条正在进行的企业实名认证进程，则都返回；如果有生效的企业实名认证进程，则只需返回最后生效的即可
+     */
     getIdentityProgress(req: GetIdentityProgressRequest, cb?: (error: string, res: GetIdentityProgressResponse) => void): Promise<GetIdentityProgressResponse>;
+    /**
+     * 为应用系统上用户发起申请加入指定企业。申请成功后，法大大会通过短信通知企业管理员审批
+     */
     addMember(req: AddMemberRequest, cb?: (error: string, res: AddMemberResponse) => void): Promise<AddMemberResponse>;
+    /**
+     * 查询企业成员是否已加入企业
+     */
     checkMemberStatus(req: CheckMemberStatusRequest, cb?: (error: string, res: CheckMemberStatusResponse) => void): Promise<CheckMemberStatusResponse>;
 }

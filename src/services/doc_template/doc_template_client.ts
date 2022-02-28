@@ -16,7 +16,7 @@ export class Client extends AbstractClient {
    * 查询文档模板列表，列表根据文档模板更新时间倒序排序返回
    */
   async getDocTemplateList(
-    req: GetDocTemplateListRequest,
+    req?: GetDocTemplateListRequest,
     cb?: (error: string, res: GetDocTemplateListResponse) => void
   ): Promise<GetDocTemplateListResponse> {
     return this.request({ url: "/doc-template/get-list", reqMethod: "POST", req, cb })

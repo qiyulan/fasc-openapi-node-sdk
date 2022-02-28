@@ -2,6 +2,9 @@ import { Field, OpenId } from "../../common/models"
 
 /** getDocTemplateList 查询文档模板列表-请求参数结构体 */
 export interface GetDocTemplateListRequest {
+  /**
+   * @type {OpenId}
+   */
   ownerId?: OpenId
   /** 查询条件 */
   listFilter?: {
@@ -54,5 +57,8 @@ export interface GetDocTemplateDetailResponse {
   docTemplateId: string
   docTemplateName: string
   docTemplateStatus: string
+  /**
+   * @type {Array<Field>}
+   */
   docFields: Array<Field>
 }

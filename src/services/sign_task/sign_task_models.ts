@@ -18,7 +18,10 @@ export interface Doc {
   docFileId?: string
   /** 文档模板ID */
   docTemplateId?: string
-  /** 可在文档中添加一些控件 */
+  /**
+   * 可在文档中添加一些控件
+   * @type {Array<Field>}
+   */
   docFields?: Array<Field>
 }
 
@@ -45,7 +48,10 @@ interface FillActorField {
 export interface FillActorWithTemplate {
   /** 填写方信息，必须设置Actor.actorType=filler */
   fillActor: Actor
-  /** 该填写方关联的填写控件列表，建立参与方和控件关系 */
+  /**
+   * 该填写方关联的填写控件列表，建立参与方和控件关系
+   * @type {Array<FillActorField>}
+   */
   actorFields?: Array<FillActorField>
 }
 
@@ -64,7 +70,10 @@ interface SignActorField {
 }
 
 export interface SignActorWithTemplate {
-  /** 签署方信息 */
+  /**
+   * 签署方信息
+   * @type {Actor}
+   */
   signActor: Actor
   /** 当签署任务流转到此参与方时，是否暂时阻塞：false(不阻塞)、true(阻塞)。默认为false*/
   blockHere?: boolean
@@ -256,13 +265,13 @@ export interface DocFieldValue {
 }
 
 /** getFieldFillValues 填写签署任务控件内容-请求参数结构体 */
-export interface GetFieldFillValuesRequest {
+export interface FillFieldValuesRequest {
   signTaskId: string
   docFieldValues?: Array<DocFieldValue>
 }
 
 /** getFieldFillValues 填写签署任务控件内容-响应参数结构体 */
-export type GetFieldFillValuesResponse = null
+export type FillFieldValuesResponse = null
 
 /** addAttach 添加签署任务附件-请求参数结构体 */
 export interface AddAttachRequest {

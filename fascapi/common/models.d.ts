@@ -122,8 +122,18 @@ export interface Notification {
 }
 /** 签署任务参与方 */
 export interface Actor {
+    /** 参与方类型，filler: 填充方、signer: 签署方、cc: 抄送方 */
     actorType: keyof ActorTypeEnum;
+    /** 参与方标识。在同一个签署任务中，同类型的各参与方标识不可重复 */
     actorId: string;
+    /** 参与方主体类型：corp、person */
+    actorIdentType: string;
+    /** 个人用户参与方信息。在actorIdentType=person(个人)时有效，但也可以不提供 */
+    actorUser?: ActorUser;
+    /** 企业参与方信息。在actorIdentType=corp(企业)时有效，但也可以不提供 */
+    actorCorp?: ActorCorp;
+    /** 定义是否及如何向该参与方发送通知。默认不通知，需要设置属性Notification.sendNotification=false */
+    notification: Notification;
 }
 /** 控件定位 */
 export interface FieldPosition {

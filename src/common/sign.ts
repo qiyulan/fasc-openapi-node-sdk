@@ -33,14 +33,12 @@ export default class Sign {
     nonce,
     timestamp,
     accessToken = null,
-    appSecret,
   }: {
     data: any
     appId: string
     signMethod: SignMethod
     nonce: string
     timestamp: number
-    appSecret: string
     accessToken?: string
   }): string {
     const data2JsonStr = JSON.stringify(data)

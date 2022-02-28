@@ -44,18 +44,33 @@ class Client extends abstract_client_1.AbstractClient {
     async getAuthUrl(req, cb) {
         return this.request({ url: "/corp/get-auth-url", req, reqMethod: "POST", cb });
     }
+    /**
+     * 获取企业的基本信息、认证状态、授权状态和范围等。注意：该接口返回的信息中不涉及隐私，因此不需要授权
+     */
     async getBasicInfo(req, cb) {
         return this.request({ url: "/corp/get", req, reqMethod: "POST", cb });
     }
+    /**
+     * 用于获取企业的实名身份信息。注意：只有经过企业授权后，应用系统方可获得此信息
+     */
     async getIdentityInfo(req, cb) {
         return this.request({ url: "/corp/get-identity-info", req, reqMethod: "POST", cb });
     }
+    /**
+     * 查询企业当前或最近进行的实名认证进度。如果当前有多条正在进行的企业实名认证进程，则都返回；如果有生效的企业实名认证进程，则只需返回最后生效的即可
+     */
     async getIdentityProgress(req, cb) {
         return this.request({ url: "/corp/get-identity-progress", req, reqMethod: "POST", cb });
     }
+    /**
+     * 为应用系统上用户发起申请加入指定企业。申请成功后，法大大会通过短信通知企业管理员审批
+     */
     async addMember(req, cb) {
         return this.request({ url: "/corp/member/add", req, reqMethod: "POST", cb });
     }
+    /**
+     * 查询企业成员是否已加入企业
+     */
     async checkMemberStatus(req, cb) {
         return this.request({ url: "/corp/member/status", req, reqMethod: "POST", cb });
     }

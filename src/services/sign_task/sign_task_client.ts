@@ -15,8 +15,8 @@ import {
   DeleteSignTaskFieldResponse,
   GetFieldUrlRequest,
   GetFieldUrlResponse,
-  GetFieldFillValuesRequest,
-  GetFieldFillValuesResponse,
+  FillFieldValuesRequest,
+  FillFieldValuesResponse,
   AddAttachRequest,
   AddAttachResponse,
   DeleteAttachRequest,
@@ -123,10 +123,10 @@ export class Client extends AbstractClient {
   /**
    * 在签署任务发起之前，向一些填写控件中预先填写内容
    */
-  async getFieldFillValues(
-    req: GetFieldFillValuesRequest,
-    cb?: (error: string, res: GetFieldFillValuesResponse) => void
-  ): Promise<GetFieldFillValuesResponse> {
+  async fillFieldValues(
+    req: FillFieldValuesRequest,
+    cb?: (error: string, res: FillFieldValuesResponse) => void
+  ): Promise<FillFieldValuesResponse> {
     return this.request({ url: "/sign-task/field/fill-values", reqMethod: "POST", req, cb })
   }
 

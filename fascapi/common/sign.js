@@ -14,7 +14,7 @@ class Sign {
         const hash = crypto.createHmac("sha256", timestampSecret).update(signText).digest("hex");
         return hash;
     }
-    static formatSignString({ data, appId, signMethod, nonce, timestamp, accessToken = null, appSecret, }) {
+    static formatSignString({ data, appId, signMethod, nonce, timestamp, accessToken = null, }) {
         const data2JsonStr = JSON.stringify(data);
         const signParams = {
             bizContent: data2JsonStr,

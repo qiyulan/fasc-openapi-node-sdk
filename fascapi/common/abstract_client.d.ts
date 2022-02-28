@@ -16,7 +16,6 @@ export interface RequestData {
 }
 declare type ResponseData = any;
 export declare class AbstractClient {
-    sdkVersion: string;
     credential: Credential;
     serverUrl: string;
     profile: ClientProfile;
@@ -30,6 +29,5 @@ export declare class AbstractClient {
     }): Promise<ResponseData>;
     private doRequest;
     private doRequestWithSign;
-    private parseResponse;
 }
 export {};
