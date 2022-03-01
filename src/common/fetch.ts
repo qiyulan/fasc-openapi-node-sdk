@@ -8,7 +8,7 @@ export default function (
   { url, baseURL, method, headers, data }: AxiosRequestConfig,
   proxy?: ProxyProfile
 ) {
-  let requestOptions: AxiosRequestConfig = {
+  const requestOptions: AxiosRequestConfig = {
     url,
     baseURL,
     method,

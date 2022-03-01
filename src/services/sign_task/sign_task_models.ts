@@ -1,4 +1,3 @@
-import { type } from "os"
 import { Actor, Field, OpenId, UserIdentInfo, UserInfoExtend } from "../../common/models"
 
 /** 您的业务应用系统中的业务场景信息，用于更好地定义业务场景和签署任务的关系 */
