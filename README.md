@@ -4,7 +4,7 @@
 
 # 依赖环境
 
-1. NODEJS 10.0.0 版本及以上
+1. NODEJS 12 版本及以上
 2. 在法大大平台开通相应应用
 3. 获取 appId、appSecret 及服务请求地址（serverUrl）
 

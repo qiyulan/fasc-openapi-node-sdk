@@ -27,8 +27,7 @@
   },
   "include": [
     /* 需要编译的文件 */
-    "src/**/*.ts",
-    "typings/**/*.ts"
+    "src/**/*.ts"
   ],
   "exclude": []
 }
