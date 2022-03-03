@@ -1,0 +1,80 @@
+# 简介
+
+欢迎使用法大大开发者工具套件（SDK），NODEJS SDK 是法大大电子合同和电子签云服务开放平台（FASC OPEN API）的配套工具。
+
+# 依赖环境
+
+1. NODEJS 10.0.0 版本及以上
+2. 在法大大平台开通相应应用
+3. 获取 appId、appSecret 及服务请求地址（serverUrl）
+
+# 获取安装
+
+通过 yarn 安装：
+
+> yarn add fasc-openapi-node-sdk
+
+通过 npm 安装：
+
+> npm install fasc-openapi-node-sdk
+
+下载包安装：
+
+1. 下载压缩包解压
+2. 复制 dist 目录下的 fascapi.js 文件（其余 ts 文件可根据需要自行提取）到项目文件夹下
+3. 在使用是通过 var fascapi = require('fascapi.js') 引入使用
+
+# 示例
+
+```js
+// 导入sdk
+const fascOpenApi = require('fasc-openapi-node-sdk);
+
+// 导入对应模块的client
+const UserClient = fascOpenApi.userClient.Client;
+
+// 配置信息
+const clientConfig = {
+  // 认证信息
+  credential: {
+    appId: 'appId值',
+    appSecret: 'appSecret值',
+    accessToken: 'accessToken值'
+  },
+  // 服务请求地址
+  serverUrl: '服务请求地址'
+}
+
+// 实例化模块的client对象
+const client = new UserClient(clientConfig)
+// 通过client对象调用想要访问的接口，传入请求对象以及响应回调函数
+client.getUserInfo({openUserId: 'openUserId'}).then(
+  res => {
+    console.log(res)
+  },
+  err => {
+    console.error('error: ', err)
+  }
+)
+
+```
+
+SDK 目前支持以下模块，对应 client 可支持具体的业务方法：
+
+| 模块               | 模块中文名       | 模块说明                                                               |
+| ------------------ | ---------------- | ---------------------------------------------------------------------- |
+| accessTokenClient  | 服务访问凭证     | 获取服务访问凭证                                                       |
+| billingClient      | 计费             | 获取计费页面链接，用于账户信息查询或套餐订购                           |
+| corpClient         | 企业用户账号管理 | 包含企业用户信息增删改查、认证、授权                                   |
+| corpManageClient   | 企业管理         | 对指定模块进行管理操作，如印章管理、模板管理等                         |
+| docTemplateClient  | 文档模板管理     | 包含文档模板列表、详情查询                                             |
+| fileClient         | 文件管理         | 包含文件和附件上传                                                     |
+| signTaskClient     | 签署任务管理     | 包含签署任务的创建、维护、各个流程节点的流转操作，以及签署任务文件下载 |
+| signTemplateClient | 签署模板管理     | 包含签署模板列表、详情查询                                             |
+| userClient         | 个人用户管理     | 包含个人用户信息增删改查、认证、授权                                   |
+
+实例化 `client` 的入参支持 `clientConfig` 数据结构和说明 详见 [ClientConfig](https://gitee.com/fadada-cloud/fasc-openapi-node-sdk/tree/master/src/common/interfaces.ts)
+
+## 更多示例
+
+更丰富的示例请前往 [demo](https://gitee.com/fadada-cloud/fasc-openapi-node-sdk-demo/tree/master) 中查看
