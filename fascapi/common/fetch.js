@@ -5,7 +5,7 @@ const axios_1 = (0, tslib_1.__importDefault)(require("axios"));
 const https_1 = (0, tslib_1.__importDefault)(require("https"));
 axios_1.default.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 function default_1({ url, baseURL, method, headers, data }, proxy) {
-    let requestOptions = {
+    const requestOptions = {
         url,
         baseURL,
         method,

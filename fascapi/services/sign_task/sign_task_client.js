@@ -109,6 +109,20 @@ class Client extends abstract_client_1.AbstractClient {
         return this.request({ url: "/sign-task/unblock", reqMethod: "POST", req, cb });
     }
     /**
+     * 催办签署任务
+     * 填写中、签署中状态的签署任务，对当前流程节点需要处理但未处理的填写人或签署人进行催办
+     */
+    async urgeSign(req, cb) {
+        return this.request({ url: "/sign-task/urge-sign", reqMethod: "POST", req, cb });
+    }
+    /**
+     * 获取模板管理链接
+     * 业务系统向法大大平台获取模板管理页面链接，该页面无需法大大账号登录，用于对指定企业主体的模板进行管理操作
+     */
+    async getPageManageUrl(req, cb) {
+        return this.request({ url: "/template/get-pagemanage-url", reqMethod: "POST", req, cb });
+    }
+    /**
      * 若创建签署任务时设定不自动结束(autoFinish=false)，则在所有签署方都完成签署后，需要调动本接口驱动签署任务结束。
      * 签署任务结束后，会形成签署完结的合同，且不可再对该签署任务做任何动作
      */

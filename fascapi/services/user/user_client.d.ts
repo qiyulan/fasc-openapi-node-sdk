@@ -1,5 +1,5 @@
 import { AbstractClient } from "../../common/abstract_client";
-import { AddUserRequest, AddUserResponse, UpdateUserRequest, UpdateUserResponse, DeleteUserRequest, DeleteUserResponse, DisableUserRequest, DisableUserResponse, EnableUserRequest, EnableUserResponse, GetAuthUrlRequest, GetAuthUrlResponse, GetUserInfoRequest, GetUserInfoResponse, GetIdentityInfoRequest, GetIdentityInfoResponse } from "./user_models";
+import { AddUserRequest, AddUserResponse, UpdateUserRequest, UpdateUserResponse, DeleteUserRequest, DeleteUserResponse, DisableUserRequest, DisableUserResponse, EnableUserRequest, EnableUserResponse, GetAuthUrlRequest, GetAuthUrlResponse, GetUserInfoRequest, GetUserInfoResponse, GetIdentityInfoRequest, GetIdentityInfoResponse, GetIdentityProgressRequest, GetIdentityProgressResponse } from "./user_models";
 import { ClientConfig } from "../../common/interface";
 export declare class Client extends AbstractClient {
     constructor(clientConfig: ClientConfig);
@@ -40,5 +40,5 @@ export declare class Client extends AbstractClient {
     /**
      * 查询用户当前或最近进行的实名认证进度
      */
-    getIdentityProgress(req: GetIdentityInfoRequest, cb?: (error: string, res: GetIdentityInfoResponse) => void): Promise<GetIdentityInfoResponse>;
+    getIdentityProgress(req: GetIdentityProgressRequest, cb?: (error: string, res: GetIdentityProgressResponse) => void): Promise<GetIdentityProgressResponse>;
 }

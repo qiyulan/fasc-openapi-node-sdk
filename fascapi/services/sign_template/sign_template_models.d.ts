@@ -1,4 +1,5 @@
 import { Field, OpenId } from "../../common/models";
+import { Attach } from "../sign_task/sign_task_models";
 /** getSignTemplateList 查询签署模板列表-请求参数结构体*/
 export interface GetSignTemplateListRequest {
     /** 模板归属方 */
@@ -100,6 +101,8 @@ export interface GetSignTemplateDetailResponse {
     signTemplateStatus: string;
     /** 文档列表 */
     doc?: Array<Doc>;
+    /** 附件列表 */
+    attachs?: Array<Omit<Attach, "attachFileId">>;
     /** 填写是否有序，默认为false */
     fillInOrder?: boolean;
     /** 签署是否有序，默认为false */

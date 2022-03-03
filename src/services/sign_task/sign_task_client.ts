@@ -35,6 +35,10 @@ import {
   BlockSignTaskResponse,
   UnblockSignTaskRequest,
   UnblockSignTaskResponse,
+  UrgeSignRequest,
+  UrgeSignResponse,
+  GetPageManageUrlRequest,
+  GetPageManageUrlResponse,
   FinishSignTaskRequest,
   FinishSignTaskResponse,
   GetSignTaskDetailRequest,
@@ -218,6 +222,28 @@ export class Client extends AbstractClient {
     cb?: (error: string, res: UnblockSignTaskResponse) => void
   ): Promise<UnblockSignTaskResponse> {
     return this.request({ url: "/sign-task/unblock", reqMethod: "POST", req, cb })
+  }
+
+  /**
+   * 催办签署任务
+   * 填写中、签署中状态的签署任务，对当前流程节点需要处理但未处理的填写人或签署人进行催办
+   */
+  async urgeSign(
+    req: UrgeSignRequest,
+    cb?: (error: string, res: UrgeSignResponse) => void
+  ): Promise<UrgeSignResponse> {
+    return this.request({ url: "/sign-task/urge-sign", reqMethod: "POST", req, cb })
+  }
+
+  /**
+   * 获取模板管理链接
+   * 业务系统向法大大平台获取模板管理页面链接，该页面无需法大大账号登录，用于对指定企业主体的模板进行管理操作
+   */
+  async getPageManageUrl(
+    req: GetPageManageUrlRequest,
+    cb?: (error: string, res: GetPageManageUrlResponse) => void
+  ): Promise<GetPageManageUrlResponse> {
+    return this.request({ url: "/template/get-pagemanage-url", reqMethod: "POST", req, cb })
   }
 
   /**

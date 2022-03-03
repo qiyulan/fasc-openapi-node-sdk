@@ -376,6 +376,25 @@ export interface UnblockSignTaskRequest {
 /** unblockSignTask 解阻签署任务-响应参数结构体 */
 export type UnblockSignTaskResponse = null
 
+/** urgeSign 催办签署任务-请求参数结构体 */
+export interface UrgeSignRequest {
+  signTaskId: string
+}
+
+/** getUrgeSign 催办签署任务-响应参数结构体 */
+export type UrgeSignResponse = null
+
+/** getPageManageUrl 获取模板管理链接-请求参数结构体 */
+export interface GetPageManageUrlRequest {
+  openCorpId: string
+  redirectUrl?: string
+}
+
+/** getPageManageUrl 获取模板管理链接-响应参数结构体 */
+export interface GetPageManageUrlResponse {
+  pUrl: string
+}
+
 /** finishSignTask 结束签署任务-请求参数结构体 */
 export interface FinishSignTaskRequest {
   signTaskId: string
