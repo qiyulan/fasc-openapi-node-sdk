@@ -14,7 +14,7 @@
 
 1. 获取 [fasc-openapi-nodejs-sdk](git+https://gitee.com/fadada-cloud/fasc-openapi-nodejs-sdk.git) 的码云安装地址
 2. 打开 package.json 文件，在 dependencies 中加入如下代码：
->  "fasc-api-node-sdk": "git+https://gitee.com/fadada-cloud/fasc-openapi-nodejs-sdk.git"
+>  "fasc-openapi-node-sdk": "git+https://gitee.com/fadada-cloud/fasc-openapi-nodejs-sdk.git"
 3. 进入项目根目录下，执行如下命令：
 >  yarn install 或者 npm install
 
