@@ -10,15 +10,15 @@
 
 # 获取安装
 
-通过 yarn 安装：
+## 通过 yarn / npm 安装：
 
-> yarn add fasc-openapi-node-sdk
+1. 获取 [fasc-openapi-nodejs-sdk](git+https://gitee.com/fadada-cloud/fasc-openapi-nodejs-sdk.git) 的码云安装地址
+2. 打开 package.json 文件，在 dependencies 中加入如下代码：
+>  "fasc-api-node-sdk": "git+https://gitee.com/fadada-cloud/fasc-openapi-nodejs-sdk.git"
+3. 进入项目根目录下，执行如下命令：
+>  yarn install 或者 npm install
 
-通过 npm 安装：
-
-> npm install fasc-openapi-node-sdk
-
-下载包安装：
+## 下载包安装：
 
 1. 下载压缩包解压
 2. 复制 dist 目录下的 fascapi.js 文件（其余 ts 文件可根据需要自行提取）到项目文件夹下
