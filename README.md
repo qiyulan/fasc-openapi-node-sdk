@@ -70,6 +70,7 @@ SDK 目前支持以下模块，对应 client 可支持具体的业务方法：
 | docTemplateClient  | 文档模板管理     | 包含文档模板列表、详情查询                                             |
 | fileClient         | 文件管理         | 包含文件和附件上传                                                     |
 | signTaskClient     | 签署任务管理     | 包含签署任务的创建、维护、各个流程节点的流转操作，以及签署任务文件下载 |
+| templateClient | 企业模板管理  | 企业模板管理PUI |
 | signTemplateClient | 签署模板管理     | 包含签署模板列表、详情查询                                             |
 | userClient         | 个人用户管理     | 包含个人用户信息增删改查、认证、授权                                   |
 
