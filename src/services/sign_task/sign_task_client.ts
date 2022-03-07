@@ -37,8 +37,6 @@ import {
   UnblockSignTaskResponse,
   UrgeSignRequest,
   UrgeSignResponse,
-  GetPageManageUrlRequest,
-  GetPageManageUrlResponse,
   FinishSignTaskRequest,
   FinishSignTaskResponse,
   GetSignTaskDetailRequest,
@@ -235,16 +233,7 @@ export class Client extends AbstractClient {
     return this.request({ url: "/sign-task/urge-sign", reqMethod: "POST", req, cb })
   }
 
-  /**
-   * 获取模板管理链接
-   * 业务系统向法大大平台获取模板管理页面链接，该页面无需法大大账号登录，用于对指定企业主体的模板进行管理操作
-   */
-  async getPageManageUrl(
-    req: GetPageManageUrlRequest,
-    cb?: (error: string, res: GetPageManageUrlResponse) => void
-  ): Promise<GetPageManageUrlResponse> {
-    return this.request({ url: "/template/get-pagemanage-url", reqMethod: "POST", req, cb })
-  }
+
 
   /**
    * 若创建签署任务时设定不自动结束(autoFinish=false)，则在所有签署方都完成签署后，需要调动本接口驱动签署任务结束。
