@@ -1,6 +1,35 @@
+# FASC OpenApi Node SDK 说明
+
 # 简介
 
 欢迎使用法大大开发者工具套件（SDK），NODEJS SDK 是法大大电子合同和电子签云服务开放平台（FASC OPEN API）的配套工具。
+
+# 目录结构
+- SDK项目层级     
+```js
+fascapi
+	- services  // client客户端。
+	- common // 包含了http,hash工具类方法 和全局常量等。
+	- model // 主要常用数据模型定义。
+```
+
+- SDK 目前支持以下模块，对应 client 可支持具体的业务方法：
+
+| 模块               | 模块中文名       | 模块说明                                                               |
+| ------------------ | ---------------- | ---------------------------------------------------------------------- |
+| accessTokenClient  | 服务访问凭证     | 获取服务访问凭证                                                       |
+| userClient         | 个人用户管理     | 包含个人用户信息增删改查、认证、授权                                   |
+| corpClient         | 企业用户账号管理 | 包含企业用户信息增删改查、认证、授权                                   |
+| fileClient         | 文件管理         | 包含文件和附件上传                                                     |
+| docTemplateClient  | 文档模板管理     | 包含文档模板列表、详情查询                                             |
+| signTemplateClient | 签署模板管理     | 包含签署模板列表、详情查询                                             |
+| signTaskClient     | 签署任务管理     | 包含签署任务的创建、维护、各个流程节点的流转操作，以及签署任务文件下载 |
+| templateClient | 企业模板管理  | 企业模板管理PUI |
+| billingClient      | 计费             | 获取计费页面链接，用于账户信息查询或套餐订购                           |
+| corpManageClient   | 企业管理         | 对指定模块进行管理操作，如印章管理等                         |
+
+实例化 `client` 的入参支持 `clientConfig` 数据结构和说明 详见 [ClientConfig](https://gitee.com/fadada-cloud/fasc-openapi-node-sdk/blob/master/src/common/interface.ts)
+
 
 # 依赖环境
 
@@ -59,23 +88,13 @@ client.getUserInfo({openUserId: 'openUserId'}).then(
 
 ```
 
-SDK 目前支持以下模块，对应 client 可支持具体的业务方法：
-
-| 模块               | 模块中文名       | 模块说明                                                               |
-| ------------------ | ---------------- | ---------------------------------------------------------------------- |
-| accessTokenClient  | 服务访问凭证     | 获取服务访问凭证                                                       |
-| billingClient      | 计费             | 获取计费页面链接，用于账户信息查询或套餐订购                           |
-| corpClient         | 企业用户账号管理 | 包含企业用户信息增删改查、认证、授权                                   |
-| corpManageClient   | 企业管理         | 对指定模块进行管理操作，如印章管理、模板管理等                         |
-| docTemplateClient  | 文档模板管理     | 包含文档模板列表、详情查询                                             |
-| fileClient         | 文件管理         | 包含文件和附件上传                                                     |
-| signTaskClient     | 签署任务管理     | 包含签署任务的创建、维护、各个流程节点的流转操作，以及签署任务文件下载 |
-| templateClient | 企业模板管理  | 企业模板管理PUI |
-| signTemplateClient | 签署模板管理     | 包含签署模板列表、详情查询                                             |
-| userClient         | 个人用户管理     | 包含个人用户信息增删改查、认证、授权                                   |
-
-实例化 `client` 的入参支持 `clientConfig` 数据结构和说明 详见 [ClientConfig](https://gitee.com/fadada-cloud/fasc-openapi-node-sdk/tree/master/src/common/interfaces.ts)
 
 ## 更多示例
 
-更丰富的示例请前往 [demo](https://gitee.com/fadada-cloud/fasc-openapi-node-sdk-demo/tree/master) 中查看
+更丰富的示例请前往 [demo](https://gitee.com/fadada-cloud/fasc-openapi-node-sdk-demo/master) 中查看
+
+# 参考
+
+FASC OpenAPI (服务端) 接口文档
+
+https://dev.fadada.com/api-doc/W6MIOHNFNT/90M5Y9AS1ZWEWHLE
