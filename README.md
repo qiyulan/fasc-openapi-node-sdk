@@ -24,6 +24,7 @@ fascapi
 | docTemplateClient  | 文档模板管理     | 包含文档模板列表、详情查询                                             |
 | signTemplateClient | 签署模板管理     | 包含签署模板列表、详情查询                                             |
 | signTaskClient     | 签署任务管理     | 包含签署任务的创建、维护、各个流程节点的流转操作，以及签署任务文件下载 |
+| templateClient | 企业模板管理  | 企业模板管理PUI |
 | billingClient      | 计费             | 获取计费页面链接，用于账户信息查询或套餐订购                           |
 | corpManageClient   | 企业管理         | 对指定模块进行管理操作，如印章管理等                         |
 

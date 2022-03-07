@@ -1,6 +1,6 @@
 import { AbstractClient } from "../../common/abstract_client";
 import { ClientConfig } from "../../common/interface";
-import { CreateSignTaskRequest, CreateSignTaskResponse, CreateWithTemplateRequest, CreateWithTemplateResponse, AddSignTaskDocRequest, AddSignTaskDocResponse, DeleteSignTaskDocRequest, DeleteSignTaskDocResponse, AddSignTaskFieldRequest, AddSignTaskFieldResponse, DeleteSignTaskFieldRequest, DeleteSignTaskFieldResponse, GetFieldUrlRequest, GetFieldUrlResponse, FillFieldValuesRequest, FillFieldValuesResponse, AddAttachRequest, AddAttachResponse, DeleteAttachRequest, DeleteAttachResponse, AddActorRequest, AddActorResponse, DeleteActorRequest, DeleteActorResponse, InitiateSignTaskRequest, InitiateSignTaskResponse, CancelSignTaskRequest, CancelSignTaskResponse, FinalizeSignTaskDocRequest, FinalizeSignTaskDocResponse, BlockSignTaskRequest, BlockSignTaskResponse, UnblockSignTaskRequest, UnblockSignTaskResponse, UrgeSignRequest, UrgeSignResponse, GetPageManageUrlRequest, GetPageManageUrlResponse, FinishSignTaskRequest, FinishSignTaskResponse, GetSignTaskDetailRequest, GetSignTaskDetailResponse, DownloadFilesRequest, DownloadFilesResponse, GetSignTaskUrlRequest, GetSignTaskUrlResponse } from "./sign_task_models";
+import { CreateSignTaskRequest, CreateSignTaskResponse, CreateWithTemplateRequest, CreateWithTemplateResponse, AddSignTaskDocRequest, AddSignTaskDocResponse, DeleteSignTaskDocRequest, DeleteSignTaskDocResponse, AddSignTaskFieldRequest, AddSignTaskFieldResponse, DeleteSignTaskFieldRequest, DeleteSignTaskFieldResponse, GetFieldUrlRequest, GetFieldUrlResponse, FillFieldValuesRequest, FillFieldValuesResponse, AddAttachRequest, AddAttachResponse, DeleteAttachRequest, DeleteAttachResponse, AddActorRequest, AddActorResponse, DeleteActorRequest, DeleteActorResponse, InitiateSignTaskRequest, InitiateSignTaskResponse, CancelSignTaskRequest, CancelSignTaskResponse, FinalizeSignTaskDocRequest, FinalizeSignTaskDocResponse, BlockSignTaskRequest, BlockSignTaskResponse, UnblockSignTaskRequest, UnblockSignTaskResponse, UrgeSignRequest, UrgeSignResponse, FinishSignTaskRequest, FinishSignTaskResponse, GetSignTaskDetailRequest, GetSignTaskDetailResponse, DownloadFilesRequest, DownloadFilesResponse, GetSignTaskUrlRequest, GetSignTaskUrlResponse } from "./sign_task_models";
 export declare class Client extends AbstractClient {
     constructor(clientConfig: ClientConfig);
     /**
@@ -76,11 +76,6 @@ export declare class Client extends AbstractClient {
      * 填写中、签署中状态的签署任务，对当前流程节点需要处理但未处理的填写人或签署人进行催办
      */
     urgeSign(req: UrgeSignRequest, cb?: (error: string, res: UrgeSignResponse) => void): Promise<UrgeSignResponse>;
-    /**
-     * 获取模板管理链接
-     * 业务系统向法大大平台获取模板管理页面链接，该页面无需法大大账号登录，用于对指定企业主体的模板进行管理操作
-     */
-    getPageManageUrl(req: GetPageManageUrlRequest, cb?: (error: string, res: GetPageManageUrlResponse) => void): Promise<GetPageManageUrlResponse>;
     /**
      * 若创建签署任务时设定不自动结束(autoFinish=false)，则在所有签署方都完成签署后，需要调动本接口驱动签署任务结束。
      * 签署任务结束后，会形成签署完结的合同，且不可再对该签署任务做任何动作

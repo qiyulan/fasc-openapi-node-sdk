@@ -44,7 +44,7 @@ var require$$6__default = /*#__PURE__*/_interopDefaultLegacy(require$$6);
 var require$$4__default$1 = /*#__PURE__*/_interopDefaultLegacy(require$$4$1);
 var require$$8__default = /*#__PURE__*/_interopDefaultLegacy(require$$8);
 
-var Models$8 = /*#__PURE__*/Object.freeze({
+var Models$9 = /*#__PURE__*/Object.freeze({
   __proto__: null
 });
 
@@ -15201,7 +15201,7 @@ class AbstractClient {
     }
 }
 
-class Client$8 extends AbstractClient {
+class Client$9 extends AbstractClient {
     constructor(clientConfig) {
         super(clientConfig);
     }
@@ -15264,15 +15264,15 @@ class Client$8 extends AbstractClient {
 }
 
 const userClient = {
-    Client: Client$8,
-    Models: Models$8,
+    Client: Client$9,
+    Models: Models$9,
 };
 
-var Models$7 = /*#__PURE__*/Object.freeze({
+var Models$8 = /*#__PURE__*/Object.freeze({
   __proto__: null
 });
 
-class Client$7 extends AbstractClient {
+class Client$8 extends AbstractClient {
     constructor(clientConfig) {
         super(clientConfig);
     }
@@ -15286,11 +15286,11 @@ class Client$7 extends AbstractClient {
 }
 
 const accessTokenClient = {
-    Client: Client$7,
-    Models: Models$7,
+    Client: Client$8,
+    Models: Models$8,
 };
 
-class Client$6 extends AbstractClient {
+class Client$7 extends AbstractClient {
     constructor(clientConfig) {
         super(clientConfig);
     }
@@ -15302,20 +15302,20 @@ class Client$6 extends AbstractClient {
     }
 }
 
-var Models$6 = /*#__PURE__*/Object.freeze({
+var Models$7 = /*#__PURE__*/Object.freeze({
   __proto__: null
 });
 
 const billingClient = {
-    Client: Client$6,
-    Models: Models$6,
+    Client: Client$7,
+    Models: Models$7,
 };
 
-var Models$5 = /*#__PURE__*/Object.freeze({
+var Models$6 = /*#__PURE__*/Object.freeze({
   __proto__: null
 });
 
-class Client$5 extends AbstractClient {
+class Client$6 extends AbstractClient {
     constructor(clientConfig) {
         super(clientConfig);
     }
@@ -15390,15 +15390,15 @@ class Client$5 extends AbstractClient {
 }
 
 const corpClient = {
-    Client: Client$5,
-    Models: Models$5,
+    Client: Client$6,
+    Models: Models$6,
 };
 
-var Models$4 = /*#__PURE__*/Object.freeze({
+var Models$5 = /*#__PURE__*/Object.freeze({
   __proto__: null
 });
 
-class Client$4 extends AbstractClient {
+class Client$5 extends AbstractClient {
     constructor(clientConfig) {
         super(clientConfig);
     }
@@ -15411,11 +15411,11 @@ class Client$4 extends AbstractClient {
 }
 
 const corpManageClient = {
-    Client: Client$4,
-    Models: Models$4,
+    Client: Client$5,
+    Models: Models$5,
 };
 
-class Client$3 extends AbstractClient {
+class Client$4 extends AbstractClient {
     constructor(clientConfig) {
         super(clientConfig);
     }
@@ -15433,16 +15433,16 @@ class Client$3 extends AbstractClient {
     }
 }
 
-var Models$3 = /*#__PURE__*/Object.freeze({
+var Models$4 = /*#__PURE__*/Object.freeze({
   __proto__: null
 });
 
 const docTemplateClient = {
-    Client: Client$3,
-    Models: Models$3,
+    Client: Client$4,
+    Models: Models$4,
 };
 
-class Client$2 extends AbstractClient {
+class Client$3 extends AbstractClient {
     constructor(clientConfig) {
         super(clientConfig);
     }
@@ -15461,16 +15461,16 @@ class Client$2 extends AbstractClient {
     }
 }
 
-var Models$2 = /*#__PURE__*/Object.freeze({
+var Models$3 = /*#__PURE__*/Object.freeze({
   __proto__: null
 });
 
 const fileClient = {
-    Client: Client$2,
-    Models: Models$2,
+    Client: Client$3,
+    Models: Models$3,
 };
 
-class Client$1 extends AbstractClient {
+class Client$2 extends AbstractClient {
     constructor(clientConfig) {
         super(clientConfig);
     }
@@ -15584,13 +15584,6 @@ class Client$1 extends AbstractClient {
         return this.request({ url: "/sign-task/urge-sign", reqMethod: "POST", req, cb });
     }
     /**
-     * 获取模板管理链接
-     * 业务系统向法大大平台获取模板管理页面链接，该页面无需法大大账号登录，用于对指定企业主体的模板进行管理操作
-     */
-    async getPageManageUrl(req, cb) {
-        return this.request({ url: "/template/get-pagemanage-url", reqMethod: "POST", req, cb });
-    }
-    /**
      * 若创建签署任务时设定不自动结束(autoFinish=false)，则在所有签署方都完成签署后，需要调动本接口驱动签署任务结束。
      * 签署任务结束后，会形成签署完结的合同，且不可再对该签署任务做任何动作
      */
@@ -15617,16 +15610,16 @@ class Client$1 extends AbstractClient {
     }
 }
 
-var Models$1 = /*#__PURE__*/Object.freeze({
+var Models$2 = /*#__PURE__*/Object.freeze({
   __proto__: null
 });
 
 const signTaskClient = {
-    Client: Client$1,
-    Models: Models$1,
+    Client: Client$2,
+    Models: Models$2,
 };
 
-class Client extends AbstractClient {
+class Client$1 extends AbstractClient {
     constructor(clientConfig) {
         super(clientConfig);
     }
@@ -15644,13 +15637,35 @@ class Client extends AbstractClient {
     }
 }
 
-var Models = /*#__PURE__*/Object.freeze({
+var Models$1 = /*#__PURE__*/Object.freeze({
   __proto__: null
 });
 
 const signTemplateClient = {
+    Client: Client$1,
+    Models: Models$1,
+};
+
+class Client extends AbstractClient {
+    constructor(clientConfig) {
+        super(clientConfig);
+    }
+    /**
+    * 获取模板管理链接
+    * 业务系统向法大大平台获取模板管理页面链接，该页面无需法大大账号登录，用于对指定企业主体的模板进行管理操作
+    */
+    async getPageManageUrl(req, cb) {
+        return this.request({ url: "/template/get-pagemanage-url", reqMethod: "POST", req, cb });
+    }
+}
+
+var Models = /*#__PURE__*/Object.freeze({
+  __proto__: null
+});
+
+const templateClient = {
     Client,
-    Models,
+    Models
 };
 
 exports.accessTokenClient = accessTokenClient;
@@ -15661,4 +15676,5 @@ exports.docTemplateClient = docTemplateClient;
 exports.fileClient = fileClient;
 exports.signTaskClient = signTaskClient;
 exports.signTemplateClient = signTemplateClient;
+exports.templateClient = templateClient;
 exports.userClient = userClient;
