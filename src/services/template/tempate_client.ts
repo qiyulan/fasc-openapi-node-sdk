@@ -1,7 +1,6 @@
 import { AbstractClient } from "../../common/abstract_client"
 import { ClientConfig } from "../../common/interface"
-import {   GetPageManageUrlRequest,
-  GetPageManageUrlResponse, } from "./template_models"
+import { GetPageManageUrlRequest, GetPageManageUrlResponse } from "./template_models"
 
 export class Client extends AbstractClient {
   constructor(clientConfig: ClientConfig) {
