@@ -7,3 +7,4 @@ export { docTemplateClient } from "./doc_template";
 export { fileClient } from "./file";
 export { signTaskClient } from "./sign_task";
 export { signTemplateClient } from "./sign_template";
+export { templateClient } from './template';
