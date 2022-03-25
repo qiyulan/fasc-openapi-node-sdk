@@ -17,12 +17,6 @@ import {
   GetBasicInfoResponse,
   GetIdentityInfoRequest,
   GetIdentityInfoResponse,
-  GetIdentityProgressRequest,
-  GetIdentityProgressResponse,
-  AddMemberRequest,
-  AddMemberResponse,
-  CheckMemberStatusRequest,
-  CheckMemberStatusResponse,
 } from "./crop_model"
 
 export class Client extends AbstractClient {
@@ -112,33 +106,4 @@ export class Client extends AbstractClient {
     return this.request({ url: "/corp/get-identity-info", req, reqMethod: "POST", cb })
   }
 
-  /**
-   * 查询企业当前或最近进行的实名认证进度。如果当前有多条正在进行的企业实名认证进程，则都返回；如果有生效的企业实名认证进程，则只需返回最后生效的即可
-   */
-  async getIdentityProgress(
-    req: GetIdentityProgressRequest,
-    cb?: (error: string, res: GetIdentityProgressResponse) => void
-  ): Promise<GetIdentityProgressResponse> {
-    return this.request({ url: "/corp/get-identity-progress", req, reqMethod: "POST", cb })
-  }
-
-  /**
-   * 为应用系统上用户发起申请加入指定企业。申请成功后，法大大会通过短信通知企业管理员审批
-   */
-  async addMember(
-    req: AddMemberRequest,
-    cb?: (error: string, res: AddMemberResponse) => void
-  ): Promise<AddMemberResponse> {
-    return this.request({ url: "/corp/member/add", req, reqMethod: "POST", cb })
-  }
-
-  /**
-   * 查询企业成员是否已加入企业
-   */
-  async checkMemberStatus(
-    req: CheckMemberStatusRequest,
-    cb?: (error: string, res: CheckMemberStatusResponse) => void
-  ): Promise<CheckMemberStatusResponse> {
-    return this.request({ url: "/corp/member/status", req, reqMethod: "POST", cb })
-  }
 }

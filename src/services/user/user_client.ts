@@ -15,9 +15,7 @@ import {
   GetUserInfoRequest,
   GetUserInfoResponse,
   GetIdentityInfoRequest,
-  GetIdentityInfoResponse,
-  GetIdentityProgressRequest,
-  GetIdentityProgressResponse,
+  GetIdentityInfoResponse
 } from "./user_models"
 import { ClientConfig } from "../../common/interface"
 
@@ -106,15 +104,5 @@ export class Client extends AbstractClient {
     cb?: (error: string, res: GetIdentityInfoResponse) => void
   ): Promise<GetIdentityInfoResponse> {
     return this.request({ url: "/user/get-identity-info", req, reqMethod: "POST", cb })
-  }
-
-  /**
-   * 查询用户当前或最近进行的实名认证进度
-   */
-  async getIdentityProgress(
-    req: GetIdentityProgressRequest,
-    cb?: (error: string, res: GetIdentityProgressResponse) => void
-  ): Promise<GetIdentityProgressResponse> {
-    return this.request({ url: "/user/get-identity-progress", req, reqMethod: "POST", cb })
   }
 }

@@ -138,20 +138,3 @@ export interface GetIdentityInfoResponse {
   /** 认证通过时间。格式为：Unix标准时间戳，精确到毫秒 */
   identSuccessTime?: string
 }
-
-/** 查询个人用户实名认证进度-请求参数结构体 */
-export interface GetIdentityProgressRequest {
-  openUserId: string
-}
-
-/** 查询个人用户实名认证进度-响应参数结构体 */
-export interface GetIdentityProgressResponse {
-  /** 实名认证进展状态：no_start: 未认证，identifying: 认证中，checking: 审核中，success: 认证通过，failed: 认证不通过 */
-  identProcessStatus: string
-  /** 实名认证状态更新时间。格式为：Unix标准时间戳，精确到毫秒 */
-  identUpdateTime: string
-  /** 用户实名认证时所选择的认证方案，mobile: 实名手机号认证，face: 人脸识别认证，bank: 个人银行卡认证，offline: 人工审核认证 */
-  identMethod?: string
-  /** 如果identProcessStatus是认证不通过，则该参数可能可以说明原因 */
-  identFailedReason?: string
-}
