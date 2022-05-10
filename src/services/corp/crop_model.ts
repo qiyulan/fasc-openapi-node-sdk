@@ -54,6 +54,15 @@ export interface EnableCorpRequest {
 /** enableCorp 恢复企业用户返回参数结构体 */
 export type EnableCorpResponse = null
 
+/** unbindCorp 解绑企业用户-请求参数结构体 */
+export interface UnbindCorpRequest {
+  /** 法大大平台为该企业在该应用appId范围内分配的唯一标识 */
+  openCorpId: string
+}
+
+/** unbindCorp 解绑企业用户返回参数结构体 */
+export type UnbindCorpResponse = null
+
 /** getAuthUrl 获取企业用户授权链接-请求参数结构体 */
 export interface GetAuthUrlRequest {
   /** 法大大平台为该企业在该应用appId范围内分配的唯一标识 */
