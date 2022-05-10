@@ -11,6 +11,8 @@ import {
   DisableCorpResponse,
   EnableCorpRequest,
   EnableCorpResponse,
+  UnbindCorpRequest,
+  UnbindCorpResponse,
   GetAuthUrlRequest,
   GetAuthUrlResponse,
   GetBasicInfoRequest,
@@ -46,7 +48,7 @@ export class Client extends AbstractClient {
   }
 
   /**
-   * 删除企业。删除后再次使用相同的clientCorpId添加该企业时，可能返回新的openCorpId
+   * 删除企业。删除后再次使用相同的clientCorpId添加该企业时，返回新的openCorpId
    */
   async deleteCorp(
     req: DeleteCorpRequest,
@@ -74,6 +76,16 @@ export class Client extends AbstractClient {
   ): Promise<EnableCorpResponse> {
     return this.request({ url: "/corp/enable", req, reqMethod: "POST", cb })
   }
+
+    /**
+   * 将已禁用的企业用户再次激活。激活后，该企业用户可继续通过该应用系统使用法大大平台服务
+   */
+     async unbindCorp(
+      req: UnbindCorpRequest,
+      cb?: (error: string, res: UnbindCorpRequest) => void
+    ): Promise<UnbindCorpResponse> {
+      return this.request({ url: "/corp/unbind", req, reqMethod: "POST", cb })
+    }
 
   /**
    * 应用系统向法大大平台获取一个页面链接，用于提醒企业经办人进行授权操作，以授权应用系统访问该企业在法大大平台的某些数据和操作权限。

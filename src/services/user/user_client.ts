@@ -10,6 +10,8 @@ import {
   DisableUserResponse,
   EnableUserRequest,
   EnableUserResponse,
+  UnbindUserRequest,
+  UnbindUserResponse,
   GetAuthUrlRequest,
   GetAuthUrlResponse,
   GetUserInfoRequest,
@@ -46,7 +48,7 @@ export class Client extends AbstractClient {
   }
 
   /**
-   * 删除个人用户。删除后再次使用相同的clientUserId添加个人用户时，可能返回新的openUserId
+   * 删除个人用户。删除后再次使用相同的clientUserId添加个人用户时，返回新的openUserId
    */
   async deleteUser(
     req: DeleteUserRequest,
@@ -74,6 +76,16 @@ export class Client extends AbstractClient {
   ): Promise<EnableUserResponse> {
     return this.request({ url: "/user/enable", req, reqMethod: "POST", cb })
   }
+
+    /**
+   * 将已禁用的用户再次激活。激活后，该用户可继续通过该应用系统使用法大大平台服务
+   */
+     async unbindUser(
+      req: UnbindUserRequest,
+      cb?: (error: string, res: UnbindUserResponse) => void
+    ): Promise<UnbindUserResponse> {
+      return this.request({ url: "/user/unbind", req, reqMethod: "POST", cb })
+    }
 
   /**
    * 应用系统向法大大平台获取一个页面链接，用于提醒用户进行授权操作，以授权应用系统访问用户在法大大平台的某些数据资源和操作权限。

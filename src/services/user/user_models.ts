@@ -81,6 +81,14 @@ export interface EnableUserRequest {
 /** enableUser 恢复个人用户-响应参数结构体 */
 export type EnableUserResponse = null
 
+/** unbindUser 解绑个人用户-请求参数结构体 */
+export interface UnbindUserRequest {
+  openUserId: string
+}
+
+/** unbindUser 解绑个人用户-响应参数结构体 */
+export type UnbindUserResponse = null
+
 /** 获取个人用户授权链接-请求参数结构体 */
 export interface GetAuthUrlRequest {
   openUserId: string
