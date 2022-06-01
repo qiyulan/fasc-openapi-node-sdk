@@ -29,5 +29,6 @@ export declare class AbstractClient {
     }): Promise<ResponseData>;
     private doRequest;
     private doRequestWithSign;
+    private formatParams;
 }
 export {};

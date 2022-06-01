@@ -26,7 +26,8 @@ fascapi
 | signTaskClient     | 签署任务管理     | 包含签署任务的创建、维护、各个流程节点的流转操作，以及签署任务文件下载 |
 | templateClient | 企业模板管理  | 企业模板管理PUI |
 | billingClient      | 计费             | 获取计费页面链接，用于账户信息查询或套餐订购                           |
-| corpManageClient   | 企业管理         | 对指定模块进行管理操作，如印章管理等                         |
+| corpManageClient   | 企业管理         | 对指定模块进行管理操作，如印章管理、模板管理等                         |
+| Fdd.EUI.Client | EUI页面链接管理 | 对构造类EUI页面链接进行管理操作，如新企业授权等 |
 
 实例化 `client` 的入参支持 `clientConfig` 数据结构和说明 详见 [ClientConfig](https://gitee.com/fadada-cloud/fasc-openapi-node-sdk/blob/master/src/common/interface.ts)
 
@@ -92,6 +93,14 @@ client.getUserInfo({openUserId: 'openUserId'}).then(
 ## 更多示例
 
 更丰富的示例请前往 [demo](https://gitee.com/fadada-cloud/fasc-openapi-node-sdk-demo/master) 中查看
+
+## 版本说明
+5.0.8 - 2022-06-01   基于FASC OpenAPI 5.0.8版本
+
+- Fdd.User.Client新增方法【解绑个人用户账号】
+- Fdd.Corp.Client新增方法【解绑企业用户账号】
+- 新增Fdd.EUI.Client， 提供方法【构造企业用户授权链接】
+
 
 # 参考
 

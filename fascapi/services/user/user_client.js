@@ -20,7 +20,7 @@ class Client extends abstract_client_1.AbstractClient {
         return this.request({ url: "/user/update", req, reqMethod: "POST", cb });
     }
     /**
-     * 删除个人用户。删除后再次使用相同的clientUserId添加个人用户时，可能返回新的openUserId
+     * 删除个人用户。删除后再次使用相同的clientUserId添加个人用户时，返回新的openUserId
      */
     async deleteUser(req, cb) {
         return this.request({ url: "/user/delete", req, reqMethod: "POST", cb });
@@ -36,6 +36,12 @@ class Client extends abstract_client_1.AbstractClient {
      */
     async enableUser(req, cb) {
         return this.request({ url: "/user/enable", req, reqMethod: "POST", cb });
+    }
+    /**
+   * 将已禁用的用户再次激活。激活后，该用户可继续通过该应用系统使用法大大平台服务
+   */
+    async unbindUser(req, cb) {
+        return this.request({ url: "/user/unbind", req, reqMethod: "POST", cb });
     }
     /**
      * 应用系统向法大大平台获取一个页面链接，用于提醒用户进行授权操作，以授权应用系统访问用户在法大大平台的某些数据资源和操作权限。
@@ -55,12 +61,6 @@ class Client extends abstract_client_1.AbstractClient {
      */
     async getIdentInfo(req, cb) {
         return this.request({ url: "/user/get-identity-info", req, reqMethod: "POST", cb });
-    }
-    /**
-     * 查询用户当前或最近进行的实名认证进度
-     */
-    async getIdentityProgress(req, cb) {
-        return this.request({ url: "/user/get-identity-progress", req, reqMethod: "POST", cb });
     }
 }
 exports.Client = Client;

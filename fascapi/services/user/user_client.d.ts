@@ -1,5 +1,5 @@
 import { AbstractClient } from "../../common/abstract_client";
-import { AddUserRequest, AddUserResponse, UpdateUserRequest, UpdateUserResponse, DeleteUserRequest, DeleteUserResponse, DisableUserRequest, DisableUserResponse, EnableUserRequest, EnableUserResponse, GetAuthUrlRequest, GetAuthUrlResponse, GetUserInfoRequest, GetUserInfoResponse, GetIdentityInfoRequest, GetIdentityInfoResponse, GetIdentityProgressRequest, GetIdentityProgressResponse } from "./user_models";
+import { AddUserRequest, AddUserResponse, UpdateUserRequest, UpdateUserResponse, DeleteUserRequest, DeleteUserResponse, DisableUserRequest, DisableUserResponse, EnableUserRequest, EnableUserResponse, UnbindUserRequest, UnbindUserResponse, GetAuthUrlRequest, GetAuthUrlResponse, GetUserInfoRequest, GetUserInfoResponse, GetIdentityInfoRequest, GetIdentityInfoResponse } from "./user_models";
 import { ClientConfig } from "../../common/interface";
 export declare class Client extends AbstractClient {
     constructor(clientConfig: ClientConfig);
@@ -13,7 +13,7 @@ export declare class Client extends AbstractClient {
      */
     updateUser(req: UpdateUserRequest, cb?: (error: string, res: UpdateUserResponse) => void): Promise<UpdateUserResponse>;
     /**
-     * 删除个人用户。删除后再次使用相同的clientUserId添加个人用户时，可能返回新的openUserId
+     * 删除个人用户。删除后再次使用相同的clientUserId添加个人用户时，返回新的openUserId
      */
     deleteUser(req: DeleteUserRequest, cb?: (error: string, res: DeleteUserResponse) => void): Promise<DeleteUserResponse>;
     /**
@@ -24,6 +24,10 @@ export declare class Client extends AbstractClient {
      * 将已禁用的用户再次激活。激活后，该用户可继续通过该应用系统使用法大大平台服务
      */
     enableUser(req: EnableUserRequest, cb?: (error: string, res: EnableUserResponse) => void): Promise<EnableUserResponse>;
+    /**
+   * 将已禁用的用户再次激活。激活后，该用户可继续通过该应用系统使用法大大平台服务
+   */
+    unbindUser(req: UnbindUserRequest, cb?: (error: string, res: UnbindUserResponse) => void): Promise<UnbindUserResponse>;
     /**
      * 应用系统向法大大平台获取一个页面链接，用于提醒用户进行授权操作，以授权应用系统访问用户在法大大平台的某些数据资源和操作权限。
      * 在用户操作授权前，法大大平台要求用户必须先完成登录和实名认证 (即: Authorization的前提是必须先完成Authentication)
@@ -37,8 +41,4 @@ export declare class Client extends AbstractClient {
      * 用于获取个人用户的身份信息
      */
     getIdentInfo(req: GetIdentityInfoRequest, cb?: (error: string, res: GetIdentityInfoResponse) => void): Promise<GetIdentityInfoResponse>;
-    /**
-     * 查询用户当前或最近进行的实名认证进度
-     */
-    getIdentityProgress(req: GetIdentityProgressRequest, cb?: (error: string, res: GetIdentityProgressResponse) => void): Promise<GetIdentityProgressResponse>;
 }

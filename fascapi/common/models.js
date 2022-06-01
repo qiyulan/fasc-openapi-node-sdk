@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ActorTypeEnum = exports.CorpIdentTypeEnum = exports.IdTypeEnum = exports.IdentTypeEnum = exports.SignMethod = void 0;
+exports.EuiEnvironmentEnum = exports.ActorTypeEnum = exports.CorpIdentTypeEnum = exports.IdTypeEnum = exports.IdentTypeEnum = exports.SignMethod = void 0;
 var SignMethod;
 (function (SignMethod) {
     SignMethod["hamcsha256"] = "HMAC-SHA256";
@@ -49,3 +49,10 @@ var ActorTypeEnum;
     /** 抄送方 */
     ActorTypeEnum["CC"] = "cc";
 })(ActorTypeEnum = exports.ActorTypeEnum || (exports.ActorTypeEnum = {}));
+/** eui环境枚举 */
+var EuiEnvironmentEnum;
+(function (EuiEnvironmentEnum) {
+    EuiEnvironmentEnum["SIT"] = "sit";
+    EuiEnvironmentEnum["UAT"] = "uat";
+    EuiEnvironmentEnum["PROD"] = "prod";
+})(EuiEnvironmentEnum = exports.EuiEnvironmentEnum || (exports.EuiEnvironmentEnum = {}));

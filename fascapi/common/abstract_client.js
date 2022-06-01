@@ -69,7 +69,7 @@ class AbstractClient {
         else {
             url += "?bizContent=" + encodeURIComponent(JSON.stringify(data) || "");
         }
-        const signStr = sign_1.default.formatSignString({
+        const params = this.formatParams({
             data,
             appId: this.credential.appId,
             signMethod: this.profile.signMethod,
@@ -77,6 +77,7 @@ class AbstractClient {
             timestamp,
             accessToken: this.credential.accessToken,
         });
+        const signStr = sign_1.default.formatSignString(params);
         const signature = sign_1.default.sign({
             signStr,
             timestamp,
@@ -99,6 +100,23 @@ class AbstractClient {
             timeout: this.profile.reqTimeout * 1000,
         };
         return await (0, fetch_1.default)(fetchParams, this.profile.proxyProfile);
+    }
+    formatParams({ data, appId, signMethod, nonce, timestamp, accessToken = null, }) {
+        const signParams = {
+            bizContent: JSON.stringify(data || ''),
+            "X-FASC-App-Id": appId,
+            "X-FASC-Sign-Type": signMethod,
+            "X-FASC-Nonce": nonce,
+            "X-FASC-Timestamp": timestamp,
+        };
+        if (accessToken !== null) {
+            signParams["X-FASC-AccessToken"] = accessToken;
+        }
+        else {
+            signParams["X-FASC-Grant-Type"] = "client_credential";
+            delete signParams.bizContent;
+        }
+        return signParams;
     }
 }
 exports.AbstractClient = AbstractClient;
