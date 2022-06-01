@@ -41,6 +41,12 @@ export declare enum ActorTypeEnum {
     /** 抄送方 */
     CC = "cc"
 }
+/** eui环境枚举 */
+export declare enum EuiEnvironmentEnum {
+    SIT = "sit",
+    UAT = "uat",
+    PROD = "prod"
+}
 /** 统一标识应用系统上的用户(个人或企业) */
 export interface OpenId {
     /** 主体类型 */

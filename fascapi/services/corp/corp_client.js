@@ -20,7 +20,7 @@ class Client extends abstract_client_1.AbstractClient {
         return this.request({ url: "/corp/update", req, reqMethod: "POST", cb });
     }
     /**
-     * 删除企业。删除后再次使用相同的clientCorpId添加该企业时，可能返回新的openCorpId
+     * 删除企业。删除后再次使用相同的clientCorpId添加该企业时，返回新的openCorpId
      */
     async deleteCorp(req, cb) {
         return this.request({ url: "/corp/delete", req, reqMethod: "POST", cb });
@@ -36,6 +36,12 @@ class Client extends abstract_client_1.AbstractClient {
      */
     async enableCorp(req, cb) {
         return this.request({ url: "/corp/enable", req, reqMethod: "POST", cb });
+    }
+    /**
+   * 将已禁用的企业用户再次激活。激活后，该企业用户可继续通过该应用系统使用法大大平台服务
+   */
+    async unbindCorp(req, cb) {
+        return this.request({ url: "/corp/unbind", req, reqMethod: "POST", cb });
     }
     /**
      * 应用系统向法大大平台获取一个页面链接，用于提醒企业经办人进行授权操作，以授权应用系统访问该企业在法大大平台的某些数据和操作权限。
@@ -55,24 +61,6 @@ class Client extends abstract_client_1.AbstractClient {
      */
     async getIdentityInfo(req, cb) {
         return this.request({ url: "/corp/get-identity-info", req, reqMethod: "POST", cb });
-    }
-    /**
-     * 查询企业当前或最近进行的实名认证进度。如果当前有多条正在进行的企业实名认证进程，则都返回；如果有生效的企业实名认证进程，则只需返回最后生效的即可
-     */
-    async getIdentityProgress(req, cb) {
-        return this.request({ url: "/corp/get-identity-progress", req, reqMethod: "POST", cb });
-    }
-    /**
-     * 为应用系统上用户发起申请加入指定企业。申请成功后，法大大会通过短信通知企业管理员审批
-     */
-    async addMember(req, cb) {
-        return this.request({ url: "/corp/member/add", req, reqMethod: "POST", cb });
-    }
-    /**
-     * 查询企业成员是否已加入企业
-     */
-    async checkMemberStatus(req, cb) {
-        return this.request({ url: "/corp/member/status", req, reqMethod: "POST", cb });
     }
 }
 exports.Client = Client;

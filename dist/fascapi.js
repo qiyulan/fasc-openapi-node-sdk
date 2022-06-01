@@ -44,7 +44,7 @@ var require$$6__default = /*#__PURE__*/_interopDefaultLegacy(require$$6);
 var require$$4__default$1 = /*#__PURE__*/_interopDefaultLegacy(require$$4$1);
 var require$$8__default = /*#__PURE__*/_interopDefaultLegacy(require$$8);
 
-var Models$9 = /*#__PURE__*/Object.freeze({
+var Models$a = /*#__PURE__*/Object.freeze({
   __proto__: null
 });
 
@@ -12144,28 +12144,14 @@ class Sign {
         const hash = crypto__namespace.createHmac("sha256", timestampSecret).update(signText).digest("hex");
         return hash;
     }
-    static formatSignString({ data, appId, signMethod, nonce, timestamp, accessToken = null, }) {
-        const data2JsonStr = JSON.stringify(data);
-        const signParams = {
-            bizContent: data2JsonStr,
-            "X-FASC-App-Id": appId,
-            "X-FASC-Sign-Type": signMethod,
-            "X-FASC-Nonce": nonce,
-            "X-FASC-Timestamp": timestamp,
-        };
-        if (accessToken !== null) {
-            signParams["X-FASC-AccessToken"] = accessToken;
-        }
-        else {
-            signParams["X-FASC-Grant-Type"] = "client_credential";
-            delete signParams.bizContent;
-        }
+    static formatSignString(signParams) {
+        let params = { ...signParams };
         let strParam = "";
         // 去除字节流参数
-        removeStream(signParams);
+        removeStream(params);
         // 去除值为空的字段
-        deepRemoveNull(signParams);
-        const keys = Object.keys(signParams);
+        params = deepRemoveNull(params);
+        const keys = Object.keys(params);
         // 排序
         keys.sort();
         // 参数拼接，去除重复的key
@@ -12173,8 +12159,7 @@ class Sign {
             if (!keys.hasOwnProperty(k)) {
                 continue;
             }
-            //k = k.replace(/_/g, '.');
-            strParam += "&" + keys[k] + "=" + signParams[keys[k]];
+            strParam += "&" + keys[k] + "=" + params[keys[k]];
         }
         const signStr = strParam.slice(1);
         return signStr;
@@ -12195,7 +12180,7 @@ function deepRemoveNull(obj) {
         const result = {};
         for (const key in obj) {
             const value = obj[key];
-            if (!isNull(value)) {
+            if (!isBlank(value)) {
                 result[key] = deepRemoveNull(value);
             }
         }
@@ -12212,10 +12197,15 @@ function isArray$1(x) {
     return Array.isArray(x);
 }
 function isObject$1(x) {
-    return typeof x === "object" && !isArray$1(x) && !isStream_1(x) && !isBuffer$1(x) && x !== null;
+    return typeof x === "object" && !isArray$1(x) && !isStream_1(x) && !isBuffer$1(x);
 }
-function isNull(x) {
-    return x === null;
+function isBlank(x) {
+    if (typeof x === 'string') {
+        return x.trim() === '';
+    }
+    else {
+        return x === null || x === undefined;
+    }
 }
 
 var axios$2 = {exports: {}};
@@ -15089,6 +15079,13 @@ var ActorTypeEnum;
     /** 抄送方 */
     ActorTypeEnum["CC"] = "cc";
 })(ActorTypeEnum || (ActorTypeEnum = {}));
+/** eui环境枚举 */
+var EuiEnvironmentEnum;
+(function (EuiEnvironmentEnum) {
+    EuiEnvironmentEnum["SIT"] = "sit";
+    EuiEnvironmentEnum["UAT"] = "uat";
+    EuiEnvironmentEnum["PROD"] = "prod";
+})(EuiEnvironmentEnum || (EuiEnvironmentEnum = {}));
 
 class FascOpenApiSDKHttpException extends Error {
     constructor(error, requestId = "") {
@@ -15168,7 +15165,7 @@ class AbstractClient {
         else {
             url += "?bizContent=" + encodeURIComponent(JSON.stringify(data) || "");
         }
-        const signStr = Sign.formatSignString({
+        const params = this.formatParams({
             data,
             appId: this.credential.appId,
             signMethod: this.profile.signMethod,
@@ -15176,6 +15173,7 @@ class AbstractClient {
             timestamp,
             accessToken: this.credential.accessToken,
         });
+        const signStr = Sign.formatSignString(params);
         const signature = Sign.sign({
             signStr,
             timestamp,
@@ -15199,9 +15197,26 @@ class AbstractClient {
         };
         return await fetch(fetchParams, this.profile.proxyProfile);
     }
+    formatParams({ data, appId, signMethod, nonce, timestamp, accessToken = null, }) {
+        const signParams = {
+            bizContent: JSON.stringify(data || ''),
+            "X-FASC-App-Id": appId,
+            "X-FASC-Sign-Type": signMethod,
+            "X-FASC-Nonce": nonce,
+            "X-FASC-Timestamp": timestamp,
+        };
+        if (accessToken !== null) {
+            signParams["X-FASC-AccessToken"] = accessToken;
+        }
+        else {
+            signParams["X-FASC-Grant-Type"] = "client_credential";
+            delete signParams.bizContent;
+        }
+        return signParams;
+    }
 }
 
-class Client$9 extends AbstractClient {
+class Client$a extends AbstractClient {
     constructor(clientConfig) {
         super(clientConfig);
     }
@@ -15219,7 +15234,7 @@ class Client$9 extends AbstractClient {
         return this.request({ url: "/user/update", req, reqMethod: "POST", cb });
     }
     /**
-     * 删除个人用户。删除后再次使用相同的clientUserId添加个人用户时，可能返回新的openUserId
+     * 删除个人用户。删除后再次使用相同的clientUserId添加个人用户时，返回新的openUserId
      */
     async deleteUser(req, cb) {
         return this.request({ url: "/user/delete", req, reqMethod: "POST", cb });
@@ -15235,6 +15250,12 @@ class Client$9 extends AbstractClient {
      */
     async enableUser(req, cb) {
         return this.request({ url: "/user/enable", req, reqMethod: "POST", cb });
+    }
+    /**
+   * 将已禁用的用户再次激活。激活后，该用户可继续通过该应用系统使用法大大平台服务
+   */
+    async unbindUser(req, cb) {
+        return this.request({ url: "/user/unbind", req, reqMethod: "POST", cb });
     }
     /**
      * 应用系统向法大大平台获取一个页面链接，用于提醒用户进行授权操作，以授权应用系统访问用户在法大大平台的某些数据资源和操作权限。
@@ -15255,24 +15276,18 @@ class Client$9 extends AbstractClient {
     async getIdentInfo(req, cb) {
         return this.request({ url: "/user/get-identity-info", req, reqMethod: "POST", cb });
     }
-    /**
-     * 查询用户当前或最近进行的实名认证进度
-     */
-    async getIdentityProgress(req, cb) {
-        return this.request({ url: "/user/get-identity-progress", req, reqMethod: "POST", cb });
-    }
 }
 
 const userClient = {
-    Client: Client$9,
-    Models: Models$9,
+    Client: Client$a,
+    Models: Models$a,
 };
 
-var Models$8 = /*#__PURE__*/Object.freeze({
+var Models$9 = /*#__PURE__*/Object.freeze({
   __proto__: null
 });
 
-class Client$8 extends AbstractClient {
+class Client$9 extends AbstractClient {
     constructor(clientConfig) {
         super(clientConfig);
     }
@@ -15286,11 +15301,11 @@ class Client$8 extends AbstractClient {
 }
 
 const accessTokenClient = {
-    Client: Client$8,
-    Models: Models$8,
+    Client: Client$9,
+    Models: Models$9,
 };
 
-class Client$7 extends AbstractClient {
+class Client$8 extends AbstractClient {
     constructor(clientConfig) {
         super(clientConfig);
     }
@@ -15302,20 +15317,20 @@ class Client$7 extends AbstractClient {
     }
 }
 
-var Models$7 = /*#__PURE__*/Object.freeze({
+var Models$8 = /*#__PURE__*/Object.freeze({
   __proto__: null
 });
 
 const billingClient = {
-    Client: Client$7,
-    Models: Models$7,
+    Client: Client$8,
+    Models: Models$8,
 };
 
-var Models$6 = /*#__PURE__*/Object.freeze({
+var Models$7 = /*#__PURE__*/Object.freeze({
   __proto__: null
 });
 
-class Client$6 extends AbstractClient {
+class Client$7 extends AbstractClient {
     constructor(clientConfig) {
         super(clientConfig);
     }
@@ -15333,7 +15348,7 @@ class Client$6 extends AbstractClient {
         return this.request({ url: "/corp/update", req, reqMethod: "POST", cb });
     }
     /**
-     * 删除企业。删除后再次使用相同的clientCorpId添加该企业时，可能返回新的openCorpId
+     * 删除企业。删除后再次使用相同的clientCorpId添加该企业时，返回新的openCorpId
      */
     async deleteCorp(req, cb) {
         return this.request({ url: "/corp/delete", req, reqMethod: "POST", cb });
@@ -15349,6 +15364,12 @@ class Client$6 extends AbstractClient {
      */
     async enableCorp(req, cb) {
         return this.request({ url: "/corp/enable", req, reqMethod: "POST", cb });
+    }
+    /**
+   * 将已禁用的企业用户再次激活。激活后，该企业用户可继续通过该应用系统使用法大大平台服务
+   */
+    async unbindCorp(req, cb) {
+        return this.request({ url: "/corp/unbind", req, reqMethod: "POST", cb });
     }
     /**
      * 应用系统向法大大平台获取一个页面链接，用于提醒企业经办人进行授权操作，以授权应用系统访问该企业在法大大平台的某些数据和操作权限。
@@ -15369,36 +15390,18 @@ class Client$6 extends AbstractClient {
     async getIdentityInfo(req, cb) {
         return this.request({ url: "/corp/get-identity-info", req, reqMethod: "POST", cb });
     }
-    /**
-     * 查询企业当前或最近进行的实名认证进度。如果当前有多条正在进行的企业实名认证进程，则都返回；如果有生效的企业实名认证进程，则只需返回最后生效的即可
-     */
-    async getIdentityProgress(req, cb) {
-        return this.request({ url: "/corp/get-identity-progress", req, reqMethod: "POST", cb });
-    }
-    /**
-     * 为应用系统上用户发起申请加入指定企业。申请成功后，法大大会通过短信通知企业管理员审批
-     */
-    async addMember(req, cb) {
-        return this.request({ url: "/corp/member/add", req, reqMethod: "POST", cb });
-    }
-    /**
-     * 查询企业成员是否已加入企业
-     */
-    async checkMemberStatus(req, cb) {
-        return this.request({ url: "/corp/member/status", req, reqMethod: "POST", cb });
-    }
 }
 
 const corpClient = {
-    Client: Client$6,
-    Models: Models$6,
+    Client: Client$7,
+    Models: Models$7,
 };
 
-var Models$5 = /*#__PURE__*/Object.freeze({
+var Models$6 = /*#__PURE__*/Object.freeze({
   __proto__: null
 });
 
-class Client$5 extends AbstractClient {
+class Client$6 extends AbstractClient {
     constructor(clientConfig) {
         super(clientConfig);
     }
@@ -15411,11 +15414,11 @@ class Client$5 extends AbstractClient {
 }
 
 const corpManageClient = {
-    Client: Client$5,
-    Models: Models$5,
+    Client: Client$6,
+    Models: Models$6,
 };
 
-class Client$4 extends AbstractClient {
+class Client$5 extends AbstractClient {
     constructor(clientConfig) {
         super(clientConfig);
     }
@@ -15433,16 +15436,16 @@ class Client$4 extends AbstractClient {
     }
 }
 
-var Models$4 = /*#__PURE__*/Object.freeze({
+var Models$5 = /*#__PURE__*/Object.freeze({
   __proto__: null
 });
 
 const docTemplateClient = {
-    Client: Client$4,
-    Models: Models$4,
+    Client: Client$5,
+    Models: Models$5,
 };
 
-class Client$3 extends AbstractClient {
+class Client$4 extends AbstractClient {
     constructor(clientConfig) {
         super(clientConfig);
     }
@@ -15461,16 +15464,16 @@ class Client$3 extends AbstractClient {
     }
 }
 
-var Models$3 = /*#__PURE__*/Object.freeze({
+var Models$4 = /*#__PURE__*/Object.freeze({
   __proto__: null
 });
 
 const fileClient = {
-    Client: Client$3,
-    Models: Models$3,
+    Client: Client$4,
+    Models: Models$4,
 };
 
-class Client$2 extends AbstractClient {
+class Client$3 extends AbstractClient {
     constructor(clientConfig) {
         super(clientConfig);
     }
@@ -15610,16 +15613,16 @@ class Client$2 extends AbstractClient {
     }
 }
 
-var Models$2 = /*#__PURE__*/Object.freeze({
+var Models$3 = /*#__PURE__*/Object.freeze({
   __proto__: null
 });
 
 const signTaskClient = {
-    Client: Client$2,
-    Models: Models$2,
+    Client: Client$3,
+    Models: Models$3,
 };
 
-class Client$1 extends AbstractClient {
+class Client$2 extends AbstractClient {
     constructor(clientConfig) {
         super(clientConfig);
     }
@@ -15637,16 +15640,16 @@ class Client$1 extends AbstractClient {
     }
 }
 
-var Models$1 = /*#__PURE__*/Object.freeze({
+var Models$2 = /*#__PURE__*/Object.freeze({
   __proto__: null
 });
 
 const signTemplateClient = {
-    Client: Client$1,
-    Models: Models$1,
+    Client: Client$2,
+    Models: Models$2,
 };
 
-class Client extends AbstractClient {
+class Client$1 extends AbstractClient {
     constructor(clientConfig) {
         super(clientConfig);
     }
@@ -15659,13 +15662,61 @@ class Client extends AbstractClient {
     }
 }
 
-var Models = /*#__PURE__*/Object.freeze({
+var Models$1 = /*#__PURE__*/Object.freeze({
   __proto__: null
 });
 
 const templateClient = {
+    Client: Client$1,
+    Models: Models$1
+};
+
+var Models = /*#__PURE__*/Object.freeze({
+  __proto__: null
+});
+
+const SYMBOL = '%s';
+const EnvEnvironmentMap = new Map([
+    [EuiEnvironmentEnum.SIT, `https://${SYMBOL}.sit-e.fadada.com`],
+    [EuiEnvironmentEnum.UAT, `https://${SYMBOL}.uat-e.fadada.com`],
+    [EuiEnvironmentEnum.PROD, `https://${SYMBOL}.e.fadada.com`],
+]);
+class Client extends AbstractClient {
+    constructor(clientConfig) {
+        super(clientConfig);
+    }
+    getOpenCorpAuthorizeUrl(data, environmentEnum) {
+        const { openCorpId, corpName, authScopes, redirectUrl } = data;
+        const timestamp = new Date().getTime();
+        const appId = this.credential.appId.toUpperCase();
+        const signParams = {
+            appId,
+            openCorpId,
+            corpName,
+            authScopes,
+            redirectUrl
+        };
+        const signStr = Sign.formatSignString(signParams);
+        const signature = Sign.sign({
+            signStr,
+            timestamp,
+            appSecret: this.credential.appSecret,
+        });
+        const params = new require$$5.URLSearchParams();
+        params.append('openCorpId', openCorpId);
+        params.append('corpName', corpName);
+        params.append('authScopes', authScopes);
+        params.append('redirectUrl', redirectUrl);
+        params.append('timestamp', String(timestamp));
+        params.append('signature', signature);
+        const host = EnvEnvironmentMap.get(environmentEnum).replace(SYMBOL, appId);
+        return (host + '/authorize/list?' + decodeURIComponent(params.toString()));
+    }
+}
+
+const euiClient = {
     Client,
-    Models
+    Models,
 };
 
 exports.accessTokenClient = accessTokenClient;
@@ -15673,6 +15724,7 @@ exports.billingClient = billingClient;
 exports.corpClient = corpClient;
 exports.corpManageClient = corpManageClient;
 exports.docTemplateClient = docTemplateClient;
+exports.euiClient = euiClient;
 exports.fileClient = fileClient;
 exports.signTaskClient = signTaskClient;
 exports.signTemplateClient = signTemplateClient;

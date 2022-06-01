@@ -14,28 +14,14 @@ class Sign {
         const hash = crypto.createHmac("sha256", timestampSecret).update(signText).digest("hex");
         return hash;
     }
-    static formatSignString({ data, appId, signMethod, nonce, timestamp, accessToken = null, }) {
-        const data2JsonStr = JSON.stringify(data);
-        const signParams = {
-            bizContent: data2JsonStr,
-            "X-FASC-App-Id": appId,
-            "X-FASC-Sign-Type": signMethod,
-            "X-FASC-Nonce": nonce,
-            "X-FASC-Timestamp": timestamp,
-        };
-        if (accessToken !== null) {
-            signParams["X-FASC-AccessToken"] = accessToken;
-        }
-        else {
-            signParams["X-FASC-Grant-Type"] = "client_credential";
-            delete signParams.bizContent;
-        }
+    static formatSignString(signParams) {
+        let params = { ...signParams };
         let strParam = "";
         // 去除字节流参数
-        removeStream(signParams);
+        removeStream(params);
         // 去除值为空的字段
-        deepRemoveNull(signParams);
-        const keys = Object.keys(signParams);
+        params = deepRemoveNull(params);
+        const keys = Object.keys(params);
         // 排序
         keys.sort();
         // 参数拼接，去除重复的key
@@ -43,8 +29,7 @@ class Sign {
             if (!keys.hasOwnProperty(k)) {
                 continue;
             }
-            //k = k.replace(/_/g, '.');
-            strParam += "&" + keys[k] + "=" + signParams[keys[k]];
+            strParam += "&" + keys[k] + "=" + params[keys[k]];
         }
         const signStr = strParam.slice(1);
         return signStr;
@@ -66,7 +51,7 @@ function deepRemoveNull(obj) {
         const result = {};
         for (const key in obj) {
             const value = obj[key];
-            if (!isNull(value)) {
+            if (!isBlank(value)) {
                 result[key] = deepRemoveNull(value);
             }
         }
@@ -83,8 +68,16 @@ function isArray(x) {
     return Array.isArray(x);
 }
 function isObject(x) {
-    return typeof x === "object" && !isArray(x) && !(0, is_stream_1.default)(x) && !isBuffer(x) && x !== null;
+    return typeof x === "object" && !isArray(x) && !(0, is_stream_1.default)(x) && !isBuffer(x);
 }
 function isNull(x) {
     return x === null;
+}
+function isBlank(x) {
+    if (typeof x === 'string') {
+        return x.trim() === '';
+    }
+    else {
+        return x === null || x === undefined;
+    }
 }

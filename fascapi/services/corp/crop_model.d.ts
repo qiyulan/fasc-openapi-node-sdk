@@ -43,6 +43,13 @@ export interface EnableCorpRequest {
 }
 /** enableCorp 恢复企业用户返回参数结构体 */
 export declare type EnableCorpResponse = null;
+/** unbindCorp 解绑企业用户-请求参数结构体 */
+export interface UnbindCorpRequest {
+    /** 法大大平台为该企业在该应用appId范围内分配的唯一标识 */
+    openCorpId: string;
+}
+/** unbindCorp 解绑企业用户返回参数结构体 */
+export declare type UnbindCorpResponse = null;
 /** getAuthUrl 获取企业用户授权链接-请求参数结构体 */
 export interface GetAuthUrlRequest {
     /** 法大大平台为该企业在该应用appId范围内分配的唯一标识 */
@@ -127,57 +134,4 @@ export interface GetIdentityInfoResponse {
     identSubmitTime?: string;
     /** 认证通过时间。格式为：Unix标准时间戳，精确到毫秒 */
     identSuccessTime?: string;
-}
-/** getIdentityProgress 查询企业用户实名认证进度-请求参数结构体 */
-export interface GetIdentityProgressRequest {
-    /** 法大大平台为该企业在该应用appId范围内分配的唯一标识 */
-    openCorpId: string;
-    /** 企业实名认证经办人的openUserId */
-    operatorId?: string;
-}
-export interface CorpIdentProgressInfo {
-    /** 企业实名认证状态：no_start、identifying、checking、checked、success、failed */
-    corpIdentProcessStatus: string;
-    /** 企业实名状态更新时间。格式为：Unix标准时间戳，精确到毫秒 */
-    corpIdentUpdateTime: string;
-    /** 企业实名认证时所选择的认证方案：legal_rep、deputy_auth、payment、offline */
-    corpIdentMethod?: string;
-    /** 如果corpIdentProcessStatus是认证不通过，则该参数可能可以说明原因 */
-    corpIdentFailedReason?: string;
-    /** 企业实名认证经办人的openUserId */
-    operatorId: string;
-    /** 企业经办人实名认证状态：no_start、identifying、checking、checked、success、failed */
-    operatorIdentProcessStatus: string;
-    /** 企业经办人实名认证时所选择的认证方案： legal_rep、deputy_auth、payment、offline */
-    operatorIdentMethod: string;
-    /** 如果operatorIdentProcessStatus是认证不通过，则该参数可能可以说明原 */
-    operatorIdentFailedReason?: string;
-}
-/** getIdentityProgress 查询企业用户实名认证进度-请求参数结构体 */
-export interface GetIdentityProgressResponse {
-    /**
-     * @type {Array<CorpIdentProgressInfo>} - 企业实名认证进度
-     */
-    identProgressInfos: Array<CorpIdentProgressInfo>;
-}
-/** addMember 申请添加企业成员-请求参数结构体 */
-export interface AddMemberRequest {
-    /** 申请加入企业的成员openUserId */
-    memberId: string;
-    /** 申请加入的企业 */
-    openCorpId: string;
-}
-/** addMember 申请添加企业成员-响应参数结构体 */
-export declare type AddMemberResponse = null;
-/** checkMemberStatus 查询企业成员状态-请求参数结构体 */
-export interface CheckMemberStatusRequest {
-    /** 申请加入企业的成员openUserId */
-    memberId: string;
-    /** 申请加入的企业 */
-    openCorpId: string;
-}
-/** checkMemberStatus 查询企业成员状态-响应参数结构体 */
-export interface CheckMemberStatusResponse {
-    /** 企业成员添加状态：joined、unjoined  */
-    status: string;
 }

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.templateClient = exports.signTemplateClient = exports.signTaskClient = exports.fileClient = exports.docTemplateClient = exports.corpManageClient = exports.corpClient = exports.billingClient = exports.accessTokenClient = exports.userClient = void 0;
+exports.euiClient = exports.templateClient = exports.signTemplateClient = exports.signTaskClient = exports.fileClient = exports.docTemplateClient = exports.corpManageClient = exports.corpClient = exports.billingClient = exports.accessTokenClient = exports.userClient = void 0;
 var user_1 = require("./user");
 Object.defineProperty(exports, "userClient", { enumerable: true, get: function () { return user_1.userClient; } });
 var access_token_1 = require("./access_token");
@@ -21,3 +21,5 @@ var sign_template_1 = require("./sign_template");
 Object.defineProperty(exports, "signTemplateClient", { enumerable: true, get: function () { return sign_template_1.signTemplateClient; } });
 var template_1 = require("./template");
 Object.defineProperty(exports, "templateClient", { enumerable: true, get: function () { return template_1.templateClient; } });
+var eui_1 = require("./eui");
+Object.defineProperty(exports, "euiClient", { enumerable: true, get: function () { return eui_1.euiClient; } });

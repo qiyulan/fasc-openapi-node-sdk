@@ -1,7 +1,9 @@
 import * as crypto from "crypto"
 import isStream from "is-stream"
-import { RequestData } from "./abstract_client"
-import { SignMethod } from "./models"
+
+interface Obj {
+  [propName: string]: any
+}
 
 export default class Sign {
   static sign({
@@ -10,7 +12,7 @@ export default class Sign {
     appSecret,
   }: {
     signStr: string
-    timestamp: number
+    timestamp: number | string
     appSecret: string
   }): string {
     // SHA256算法加密排序后的字符串
@@ -26,43 +28,14 @@ export default class Sign {
     return hash
   }
 
-  static formatSignString({
-    data,
-    appId,
-    signMethod,
-    nonce,
-    timestamp,
-    accessToken = null,
-  }: {
-    data: any
-    appId: string
-    signMethod: SignMethod
-    nonce: string
-    timestamp: number
-    accessToken?: string
-  }): string {
-    const data2JsonStr = JSON.stringify(data)
-    const signParams: RequestData = {
-      bizContent: data2JsonStr,
-      "X-FASC-App-Id": appId,
-      "X-FASC-Sign-Type": signMethod,
-      "X-FASC-Nonce": nonce,
-      "X-FASC-Timestamp": timestamp,
-    }
-
-    if (accessToken !== null) {
-      signParams["X-FASC-AccessToken"] = accessToken
-    } else {
-      signParams["X-FASC-Grant-Type"] = "client_credential"
-      delete signParams.bizContent
-    }
-
+  static formatSignString(signParams: Obj): string {
+    let params = {...signParams}
     let strParam = ""
     // 去除字节流参数
-    removeStream(signParams)
+    removeStream(params)
     // 去除值为空的字段
-    deepRemoveNull(signParams)
-    const keys = Object.keys(signParams)
+    params = deepRemoveNull(params)
+    const keys = Object.keys(params)
     // 排序
     keys.sort()
     // 参数拼接，去除重复的key
@@ -70,8 +43,7 @@ export default class Sign {
       if (!keys.hasOwnProperty(k)) {
         continue
       }
-      //k = k.replace(/_/g, '.');
-      strParam += "&" + keys[k] + "=" + signParams[keys[k] as keyof RequestData]
+      strParam += "&" + keys[k] + "=" + params[keys[k] as keyof Obj]
     }
     const signStr = strParam.slice(1)
     return signStr
@@ -93,7 +65,7 @@ function deepRemoveNull(obj: any) {
     const result: any = {}
     for (const key in obj) {
       const value = obj[key]
-      if (!isNull(value)) {
+      if (!isBlank(value)) {
         result[key] = deepRemoveNull(value)
       }
     }
@@ -112,9 +84,17 @@ function isArray(x: any): boolean {
 }
 
 function isObject(x: any): boolean {
-  return typeof x === "object" && !isArray(x) && !isStream(x) && !isBuffer(x) && x !== null
+  return typeof x === "object" && !isArray(x) && !isStream(x) && !isBuffer(x)
 }
 
 function isNull(x: any): boolean {
   return x === null
+}
+
+function isBlank(x: any): boolean {
+  if (typeof x === 'string') {
+    return x.trim() === ''
+  } else {
+    return x === null || x === undefined
+  }
 }

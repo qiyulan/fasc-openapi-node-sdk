@@ -1,16 +1,12 @@
-import { SignMethod } from "./models";
+interface Obj {
+    [propName: string]: any;
+}
 export default class Sign {
     static sign({ signStr, timestamp, appSecret, }: {
         signStr: string;
-        timestamp: number;
+        timestamp: number | string;
         appSecret: string;
     }): string;
-    static formatSignString({ data, appId, signMethod, nonce, timestamp, accessToken, }: {
-        data: any;
-        appId: string;
-        signMethod: SignMethod;
-        nonce: string;
-        timestamp: number;
-        accessToken?: string;
-    }): string;
+    static formatSignString(signParams: Obj): string;
 }
+export {};
