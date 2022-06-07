@@ -57,9 +57,8 @@ export class Client extends AbstractClient {
    */
   async createSignTask(
     req: CreateSignTaskRequest,
-    cb?: (error: string, res: CreateSignTaskResponse) => void
   ): Promise<CreateSignTaskResponse> {
-    return this.request({ url: "/sign-task/create", reqMethod: "POST", req, cb })
+    return this.request({ url: "/sign-task/create", reqMethod: "POST", req })
   }
 
   /**
@@ -67,9 +66,8 @@ export class Client extends AbstractClient {
    */
   async createWithTemplate(
     req: CreateWithTemplateRequest,
-    cb?: (error: string, res: CreateWithTemplateResponse) => void
   ): Promise<CreateWithTemplateResponse> {
-    return this.request({ url: "/sign-task/create-with-template", reqMethod: "POST", req, cb })
+    return this.request({ url: "/sign-task/create-with-template", reqMethod: "POST", req })
   }
 
   /**
@@ -77,9 +75,8 @@ export class Client extends AbstractClient {
    */
   async addSignTaskDoc(
     req: AddSignTaskDocRequest,
-    cb?: (error: string, res: AddSignTaskDocResponse) => void
   ): Promise<AddSignTaskDocResponse> {
-    return this.request({ url: "/sign-task/doc/add", reqMethod: "POST", req, cb })
+    return this.request({ url: "/sign-task/doc/add", reqMethod: "POST", req })
   }
 
   /**
@@ -87,9 +84,8 @@ export class Client extends AbstractClient {
    */
   async deleteSignTaskDoc(
     req: DeleteSignTaskDocRequest,
-    cb?: (error: string, res: DeleteSignTaskDocResponse) => void
   ): Promise<DeleteSignTaskDocResponse> {
-    return this.request({ url: "/sign-task/doc/delete", reqMethod: "POST", req, cb })
+    return this.request({ url: "/sign-task/doc/delete", reqMethod: "POST", req })
   }
 
   /**
@@ -97,9 +93,8 @@ export class Client extends AbstractClient {
    */
   async addSignTaskField(
     req: AddSignTaskFieldRequest,
-    cb?: (error: string, res: AddSignTaskFieldResponse) => void
   ): Promise<AddSignTaskFieldResponse> {
-    return this.request({ url: "/sign-task/field/add", reqMethod: "POST", req, cb })
+    return this.request({ url: "/sign-task/field/add", reqMethod: "POST", req })
   }
 
   /**
@@ -107,9 +102,8 @@ export class Client extends AbstractClient {
    */
   async deleteSignTaskField(
     req: DeleteSignTaskFieldRequest,
-    cb?: (error: string, res: DeleteSignTaskFieldResponse) => void
   ): Promise<DeleteSignTaskFieldResponse> {
-    return this.request({ url: "/sign-task/field/delete", reqMethod: "POST", req, cb })
+    return this.request({ url: "/sign-task/field/delete", reqMethod: "POST", req })
   }
 
   /**
@@ -117,9 +111,8 @@ export class Client extends AbstractClient {
    */
   async getFieldUrl(
     req: GetFieldUrlRequest,
-    cb?: (error: string, res: GetFieldUrlResponse) => void
   ): Promise<GetFieldUrlResponse> {
-    return this.request({ url: "/sign-task/field/get-url", reqMethod: "POST", req, cb })
+    return this.request({ url: "/sign-task/field/get-url", reqMethod: "POST", req })
   }
 
   /**
@@ -127,9 +120,8 @@ export class Client extends AbstractClient {
    */
   async fillFieldValues(
     req: FillFieldValuesRequest,
-    cb?: (error: string, res: FillFieldValuesResponse) => void
   ): Promise<FillFieldValuesResponse> {
-    return this.request({ url: "/sign-task/field/fill-values", reqMethod: "POST", req, cb })
+    return this.request({ url: "/sign-task/field/fill-values", reqMethod: "POST", req })
   }
 
   /**
@@ -137,9 +129,8 @@ export class Client extends AbstractClient {
    */
   async addAttach(
     req: AddAttachRequest,
-    cb?: (error: string, res: AddAttachResponse) => void
   ): Promise<AddAttachResponse> {
-    return this.request({ url: "/sign-task/attach/add", reqMethod: "POST", req, cb })
+    return this.request({ url: "/sign-task/attach/add", reqMethod: "POST", req })
   }
 
   /**
@@ -147,9 +138,8 @@ export class Client extends AbstractClient {
    */
   async deleteAttach(
     req: DeleteAttachRequest,
-    cb?: (error: string, res: DeleteAttachResponse) => void
   ): Promise<DeleteAttachResponse> {
-    return this.request({ url: "/sign-task/attach/delete", reqMethod: "POST", req, cb })
+    return this.request({ url: "/sign-task/attach/delete", reqMethod: "POST", req })
   }
 
   /**
@@ -157,9 +147,8 @@ export class Client extends AbstractClient {
    */
   async addActor(
     req: AddActorRequest,
-    cb?: (error: string, res: AddActorResponse) => void
   ): Promise<AddActorResponse> {
-    return this.request({ url: "/sign-task/actor/add", reqMethod: "POST", req, cb })
+    return this.request({ url: "/sign-task/actor/add", reqMethod: "POST", req })
   }
 
   /**
@@ -167,9 +156,8 @@ export class Client extends AbstractClient {
    */
   async deleteActor(
     req: DeleteActorRequest,
-    cb?: (error: string, res: DeleteActorResponse) => void
   ): Promise<DeleteActorResponse> {
-    return this.request({ url: "/sign-task/actor/delete", reqMethod: "POST", req, cb })
+    return this.request({ url: "/sign-task/actor/delete", reqMethod: "POST", req })
   }
 
   /**
@@ -177,9 +165,8 @@ export class Client extends AbstractClient {
    */
   async initiateSignTask(
     req: InitiateSignTaskRequest,
-    cb?: (error: string, res: InitiateSignTaskResponse) => void
   ): Promise<InitiateSignTaskResponse> {
-    return this.request({ url: "/sign-task/initiate", reqMethod: "POST", req, cb })
+    return this.request({ url: "/sign-task/initiate", reqMethod: "POST", req })
   }
 
   /**
@@ -187,9 +174,8 @@ export class Client extends AbstractClient {
    */
   async cancelSignTask(
     req: CancelSignTaskRequest,
-    cb?: (error: string, res: CancelSignTaskResponse) => void
   ): Promise<CancelSignTaskResponse> {
-    return this.request({ url: "/sign-task/cancel", reqMethod: "POST", req, cb })
+    return this.request({ url: "/sign-task/cancel", reqMethod: "POST", req })
   }
 
   /**
@@ -197,9 +183,8 @@ export class Client extends AbstractClient {
    */
   async finalizeSignTaskDoc(
     req: FinalizeSignTaskDocRequest,
-    cb?: (error: string, res: FinalizeSignTaskDocResponse) => void
   ): Promise<FinalizeSignTaskDocResponse> {
-    return this.request({ url: "/sign-task/doc/finalize", reqMethod: "POST", req, cb })
+    return this.request({ url: "/sign-task/doc/finalize", reqMethod: "POST", req })
   }
 
   /**
@@ -207,9 +192,8 @@ export class Client extends AbstractClient {
    */
   async blockSignTask(
     req: BlockSignTaskRequest,
-    cb?: (error: string, res: BlockSignTaskResponse) => void
   ): Promise<BlockSignTaskResponse> {
-    return this.request({ url: "/sign-task/block", reqMethod: "POST", req, cb })
+    return this.request({ url: "/sign-task/block", reqMethod: "POST", req })
   }
 
   /**
@@ -217,9 +201,8 @@ export class Client extends AbstractClient {
    */
   async unblockSignTask(
     req: UnblockSignTaskRequest,
-    cb?: (error: string, res: UnblockSignTaskResponse) => void
   ): Promise<UnblockSignTaskResponse> {
-    return this.request({ url: "/sign-task/unblock", reqMethod: "POST", req, cb })
+    return this.request({ url: "/sign-task/unblock", reqMethod: "POST", req })
   }
 
   /**
@@ -228,9 +211,8 @@ export class Client extends AbstractClient {
    */
   async urgeSign(
     req: UrgeSignRequest,
-    cb?: (error: string, res: UrgeSignResponse) => void
   ): Promise<UrgeSignResponse> {
-    return this.request({ url: "/sign-task/urge-sign", reqMethod: "POST", req, cb })
+    return this.request({ url: "/sign-task/urge-sign", reqMethod: "POST", req })
   }
 
 
@@ -241,9 +223,8 @@ export class Client extends AbstractClient {
    */
   async finishSignTask(
     req: FinishSignTaskRequest,
-    cb?: (error: string, res: FinishSignTaskResponse) => void
   ): Promise<FinishSignTaskResponse> {
-    return this.request({ url: "/sign-task/finish", reqMethod: "POST", req, cb })
+    return this.request({ url: "/sign-task/finish", reqMethod: "POST", req })
   }
 
   /**
@@ -251,9 +232,8 @@ export class Client extends AbstractClient {
    */
   async getSignTaskDetail(
     req: GetSignTaskDetailRequest,
-    cb?: (error: string, res: GetSignTaskDetailResponse) => void
   ): Promise<GetSignTaskDetailResponse> {
-    return this.request({ url: "/sign-task/get-detail", reqMethod: "POST", req, cb })
+    return this.request({ url: "/sign-task/get-detail", reqMethod: "POST", req })
   }
 
   /**
@@ -261,9 +241,8 @@ export class Client extends AbstractClient {
    */
   async downloadFiles(
     req: DownloadFilesRequest,
-    cb?: (error: string, res: DownloadFilesResponse) => void
   ): Promise<DownloadFilesResponse> {
-    return this.request({ url: "/sign-task/download-files", reqMethod: "POST", req, cb })
+    return this.request({ url: "/sign-task/download-files", reqMethod: "POST", req })
   }
 
   /**
@@ -271,8 +250,7 @@ export class Client extends AbstractClient {
    */
   async getSignTaskUrl(
     req: GetSignTaskUrlRequest,
-    cb?: (error: string, res: GetSignTaskUrlResponse) => void
   ): Promise<GetSignTaskUrlResponse> {
-    return this.request({ url: "/sign-task/get-url", reqMethod: "POST", req, cb })
+    return this.request({ url: "/sign-task/get-url", reqMethod: "POST", req })
   }
 }

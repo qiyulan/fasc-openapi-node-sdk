@@ -10,6 +10,7 @@ var require$$3 = require('http');
 var require$$4 = require('https');
 var require$$5 = require('url');
 var require$$6 = require('fs');
+var require$$0$2 = require('tty');
 var require$$4$1 = require('assert');
 var require$$8 = require('zlib');
 
@@ -41,12 +42,15 @@ var require$$3__default = /*#__PURE__*/_interopDefaultLegacy(require$$3);
 var require$$4__default = /*#__PURE__*/_interopDefaultLegacy(require$$4);
 var require$$5__default = /*#__PURE__*/_interopDefaultLegacy(require$$5);
 var require$$6__default = /*#__PURE__*/_interopDefaultLegacy(require$$6);
+var require$$0__default$1 = /*#__PURE__*/_interopDefaultLegacy(require$$0$2);
 var require$$4__default$1 = /*#__PURE__*/_interopDefaultLegacy(require$$4$1);
 var require$$8__default = /*#__PURE__*/_interopDefaultLegacy(require$$8);
 
 var Models$a = /*#__PURE__*/Object.freeze({
   __proto__: null
 });
+
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 var Stream$2 = require$$0__default["default"].Stream;
 var util$2 = require$$1__default["default"];
@@ -11617,10 +11621,10 @@ var asynckit = asynckit$1;
 var populate = populate$1;
 
 // Public API
-var form_data = FormData;
+var form_data = FormData$2;
 
 // make it a Stream
-util.inherits(FormData, CombinedStream);
+util.inherits(FormData$2, CombinedStream);
 
 /**
  * Create readable "multipart/form-data" streams.
@@ -11630,9 +11634,9 @@ util.inherits(FormData, CombinedStream);
  * @constructor
  * @param {Object} options - Properties to be added/overriden for FormData and CombinedStream
  */
-function FormData(options) {
-  if (!(this instanceof FormData)) {
-    return new FormData(options);
+function FormData$2(options) {
+  if (!(this instanceof FormData$2)) {
+    return new FormData$2(options);
   }
 
   this._overheadLength = 0;
@@ -11647,10 +11651,10 @@ function FormData(options) {
   }
 }
 
-FormData.LINE_BREAK = '\r\n';
-FormData.DEFAULT_CONTENT_TYPE = 'application/octet-stream';
+FormData$2.LINE_BREAK = '\r\n';
+FormData$2.DEFAULT_CONTENT_TYPE = 'application/octet-stream';
 
-FormData.prototype.append = function(field, value, options) {
+FormData$2.prototype.append = function(field, value, options) {
 
   options = options || {};
 
@@ -11685,7 +11689,7 @@ FormData.prototype.append = function(field, value, options) {
   this._trackLength(header, value, options);
 };
 
-FormData.prototype._trackLength = function(header, value, options) {
+FormData$2.prototype._trackLength = function(header, value, options) {
   var valueLength = 0;
 
   // used w/ getLengthSync(), when length is known.
@@ -11705,7 +11709,7 @@ FormData.prototype._trackLength = function(header, value, options) {
   // @check why add CRLF? does this account for custom/multiple CRLFs?
   this._overheadLength +=
     Buffer.byteLength(header) +
-    FormData.LINE_BREAK.length;
+    FormData$2.LINE_BREAK.length;
 
   // empty or either doesn't have path or not an http response or not a stream
   if (!value || ( !value.path && !(value.readable && value.hasOwnProperty('httpVersion')) && !(value instanceof Stream))) {
@@ -11718,7 +11722,7 @@ FormData.prototype._trackLength = function(header, value, options) {
   }
 };
 
-FormData.prototype._lengthRetriever = function(value, callback) {
+FormData$2.prototype._lengthRetriever = function(value, callback) {
 
   if (value.hasOwnProperty('fd')) {
 
@@ -11773,7 +11777,7 @@ FormData.prototype._lengthRetriever = function(value, callback) {
   }
 };
 
-FormData.prototype._multiPartHeader = function(field, value, options) {
+FormData$2.prototype._multiPartHeader = function(field, value, options) {
   // custom header specified (as string)?
   // it becomes responsible for boundary
   // (e.g. to handle extra CRLFs on .NET servers)
@@ -11814,14 +11818,14 @@ FormData.prototype._multiPartHeader = function(field, value, options) {
 
     // add non-empty headers.
     if (header.length) {
-      contents += prop + ': ' + header.join('; ') + FormData.LINE_BREAK;
+      contents += prop + ': ' + header.join('; ') + FormData$2.LINE_BREAK;
     }
   }
 
-  return '--' + this.getBoundary() + FormData.LINE_BREAK + contents + FormData.LINE_BREAK;
+  return '--' + this.getBoundary() + FormData$2.LINE_BREAK + contents + FormData$2.LINE_BREAK;
 };
 
-FormData.prototype._getContentDisposition = function(value, options) {
+FormData$2.prototype._getContentDisposition = function(value, options) {
 
   var filename
     , contentDisposition
@@ -11847,7 +11851,7 @@ FormData.prototype._getContentDisposition = function(value, options) {
   return contentDisposition;
 };
 
-FormData.prototype._getContentType = function(value, options) {
+FormData$2.prototype._getContentType = function(value, options) {
 
   // use custom content-type above all
   var contentType = options.contentType;
@@ -11874,15 +11878,15 @@ FormData.prototype._getContentType = function(value, options) {
 
   // fallback to the default content type if `value` is not simple value
   if (!contentType && typeof value == 'object') {
-    contentType = FormData.DEFAULT_CONTENT_TYPE;
+    contentType = FormData$2.DEFAULT_CONTENT_TYPE;
   }
 
   return contentType;
 };
 
-FormData.prototype._multiPartFooter = function() {
+FormData$2.prototype._multiPartFooter = function() {
   return function(next) {
-    var footer = FormData.LINE_BREAK;
+    var footer = FormData$2.LINE_BREAK;
 
     var lastPart = (this._streams.length === 0);
     if (lastPart) {
@@ -11893,11 +11897,11 @@ FormData.prototype._multiPartFooter = function() {
   }.bind(this);
 };
 
-FormData.prototype._lastBoundary = function() {
-  return '--' + this.getBoundary() + '--' + FormData.LINE_BREAK;
+FormData$2.prototype._lastBoundary = function() {
+  return '--' + this.getBoundary() + '--' + FormData$2.LINE_BREAK;
 };
 
-FormData.prototype.getHeaders = function(userHeaders) {
+FormData$2.prototype.getHeaders = function(userHeaders) {
   var header;
   var formHeaders = {
     'content-type': 'multipart/form-data; boundary=' + this.getBoundary()
@@ -11912,11 +11916,11 @@ FormData.prototype.getHeaders = function(userHeaders) {
   return formHeaders;
 };
 
-FormData.prototype.setBoundary = function(boundary) {
+FormData$2.prototype.setBoundary = function(boundary) {
   this._boundary = boundary;
 };
 
-FormData.prototype.getBoundary = function() {
+FormData$2.prototype.getBoundary = function() {
   if (!this._boundary) {
     this._generateBoundary();
   }
@@ -11924,7 +11928,7 @@ FormData.prototype.getBoundary = function() {
   return this._boundary;
 };
 
-FormData.prototype.getBuffer = function() {
+FormData$2.prototype.getBuffer = function() {
   var dataBuffer = new Buffer.alloc( 0 );
   var boundary = this.getBoundary();
 
@@ -11941,7 +11945,7 @@ FormData.prototype.getBuffer = function() {
 
       // Add break after content.
       if (typeof this._streams[i] !== 'string' || this._streams[i].substring( 2, boundary.length + 2 ) !== boundary) {
-        dataBuffer = Buffer.concat( [dataBuffer, Buffer.from(FormData.LINE_BREAK)] );
+        dataBuffer = Buffer.concat( [dataBuffer, Buffer.from(FormData$2.LINE_BREAK)] );
       }
     }
   }
@@ -11950,7 +11954,7 @@ FormData.prototype.getBuffer = function() {
   return Buffer.concat( [dataBuffer, Buffer.from(this._lastBoundary())] );
 };
 
-FormData.prototype._generateBoundary = function() {
+FormData$2.prototype._generateBoundary = function() {
   // This generates a 50 character boundary similar to those used by Firefox.
   // They are optimized for boyer-moore parsing.
   var boundary = '--------------------------';
@@ -11964,7 +11968,7 @@ FormData.prototype._generateBoundary = function() {
 // Note: getLengthSync DOESN'T calculate streams length
 // As workaround one can calculate file size manually
 // and add it as knownLength option
-FormData.prototype.getLengthSync = function() {
+FormData$2.prototype.getLengthSync = function() {
   var knownLength = this._overheadLength + this._valueLength;
 
   // Don't get confused, there are 3 "internal" streams for each keyval pair
@@ -11987,7 +11991,7 @@ FormData.prototype.getLengthSync = function() {
 // Public API to check if length of added values is known
 // https://github.com/form-data/form-data/issues/196
 // https://github.com/form-data/form-data/issues/262
-FormData.prototype.hasKnownLength = function() {
+FormData$2.prototype.hasKnownLength = function() {
   var hasKnownLength = true;
 
   if (this._valuesToMeasure.length) {
@@ -11997,7 +12001,7 @@ FormData.prototype.hasKnownLength = function() {
   return hasKnownLength;
 };
 
-FormData.prototype.getLength = function(cb) {
+FormData$2.prototype.getLength = function(cb) {
   var knownLength = this._overheadLength + this._valueLength;
 
   if (this._streams.length) {
@@ -12023,7 +12027,7 @@ FormData.prototype.getLength = function(cb) {
   });
 };
 
-FormData.prototype.submit = function(params, cb) {
+FormData$2.prototype.submit = function(params, cb) {
   var request
     , options
     , defaults = {method: 'post'}
@@ -12094,7 +12098,7 @@ FormData.prototype.submit = function(params, cb) {
   return request;
 };
 
-FormData.prototype._error = function(err) {
+FormData$2.prototype._error = function(err) {
   if (!this.error) {
     this.error = err;
     this.pause();
@@ -12102,9 +12106,1485 @@ FormData.prototype._error = function(err) {
   }
 };
 
-FormData.prototype.toString = function () {
+FormData$2.prototype.toString = function () {
   return '[object FormData]';
 };
+
+var dist = {};
+
+var src = {exports: {}};
+
+var browser = {exports: {}};
+
+/**
+ * Helpers.
+ */
+
+var s = 1000;
+var m = s * 60;
+var h = m * 60;
+var d = h * 24;
+var w = d * 7;
+var y = d * 365.25;
+
+/**
+ * Parse or format the given `val`.
+ *
+ * Options:
+ *
+ *  - `long` verbose formatting [false]
+ *
+ * @param {String|Number} val
+ * @param {Object} [options]
+ * @throws {Error} throw an error if val is not a non-empty string or a number
+ * @return {String|Number}
+ * @api public
+ */
+
+var ms = function(val, options) {
+  options = options || {};
+  var type = typeof val;
+  if (type === 'string' && val.length > 0) {
+    return parse(val);
+  } else if (type === 'number' && isFinite(val)) {
+    return options.long ? fmtLong(val) : fmtShort(val);
+  }
+  throw new Error(
+    'val is not a non-empty string or a valid number. val=' +
+      JSON.stringify(val)
+  );
+};
+
+/**
+ * Parse the given `str` and return milliseconds.
+ *
+ * @param {String} str
+ * @return {Number}
+ * @api private
+ */
+
+function parse(str) {
+  str = String(str);
+  if (str.length > 100) {
+    return;
+  }
+  var match = /^(-?(?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(
+    str
+  );
+  if (!match) {
+    return;
+  }
+  var n = parseFloat(match[1]);
+  var type = (match[2] || 'ms').toLowerCase();
+  switch (type) {
+    case 'years':
+    case 'year':
+    case 'yrs':
+    case 'yr':
+    case 'y':
+      return n * y;
+    case 'weeks':
+    case 'week':
+    case 'w':
+      return n * w;
+    case 'days':
+    case 'day':
+    case 'd':
+      return n * d;
+    case 'hours':
+    case 'hour':
+    case 'hrs':
+    case 'hr':
+    case 'h':
+      return n * h;
+    case 'minutes':
+    case 'minute':
+    case 'mins':
+    case 'min':
+    case 'm':
+      return n * m;
+    case 'seconds':
+    case 'second':
+    case 'secs':
+    case 'sec':
+    case 's':
+      return n * s;
+    case 'milliseconds':
+    case 'millisecond':
+    case 'msecs':
+    case 'msec':
+    case 'ms':
+      return n;
+    default:
+      return undefined;
+  }
+}
+
+/**
+ * Short format for `ms`.
+ *
+ * @param {Number} ms
+ * @return {String}
+ * @api private
+ */
+
+function fmtShort(ms) {
+  var msAbs = Math.abs(ms);
+  if (msAbs >= d) {
+    return Math.round(ms / d) + 'd';
+  }
+  if (msAbs >= h) {
+    return Math.round(ms / h) + 'h';
+  }
+  if (msAbs >= m) {
+    return Math.round(ms / m) + 'm';
+  }
+  if (msAbs >= s) {
+    return Math.round(ms / s) + 's';
+  }
+  return ms + 'ms';
+}
+
+/**
+ * Long format for `ms`.
+ *
+ * @param {Number} ms
+ * @return {String}
+ * @api private
+ */
+
+function fmtLong(ms) {
+  var msAbs = Math.abs(ms);
+  if (msAbs >= d) {
+    return plural(ms, msAbs, d, 'day');
+  }
+  if (msAbs >= h) {
+    return plural(ms, msAbs, h, 'hour');
+  }
+  if (msAbs >= m) {
+    return plural(ms, msAbs, m, 'minute');
+  }
+  if (msAbs >= s) {
+    return plural(ms, msAbs, s, 'second');
+  }
+  return ms + ' ms';
+}
+
+/**
+ * Pluralization helper.
+ */
+
+function plural(ms, msAbs, n, name) {
+  var isPlural = msAbs >= n * 1.5;
+  return Math.round(ms / n) + ' ' + name + (isPlural ? 's' : '');
+}
+
+/**
+ * This is the common logic for both the Node.js and web browser
+ * implementations of `debug()`.
+ */
+
+function setup(env) {
+	createDebug.debug = createDebug;
+	createDebug.default = createDebug;
+	createDebug.coerce = coerce;
+	createDebug.disable = disable;
+	createDebug.enable = enable;
+	createDebug.enabled = enabled;
+	createDebug.humanize = ms;
+	createDebug.destroy = destroy;
+
+	Object.keys(env).forEach(key => {
+		createDebug[key] = env[key];
+	});
+
+	/**
+	* The currently active debug mode names, and names to skip.
+	*/
+
+	createDebug.names = [];
+	createDebug.skips = [];
+
+	/**
+	* Map of special "%n" handling functions, for the debug "format" argument.
+	*
+	* Valid key names are a single, lower or upper-case letter, i.e. "n" and "N".
+	*/
+	createDebug.formatters = {};
+
+	/**
+	* Selects a color for a debug namespace
+	* @param {String} namespace The namespace string for the debug instance to be colored
+	* @return {Number|String} An ANSI color code for the given namespace
+	* @api private
+	*/
+	function selectColor(namespace) {
+		let hash = 0;
+
+		for (let i = 0; i < namespace.length; i++) {
+			hash = ((hash << 5) - hash) + namespace.charCodeAt(i);
+			hash |= 0; // Convert to 32bit integer
+		}
+
+		return createDebug.colors[Math.abs(hash) % createDebug.colors.length];
+	}
+	createDebug.selectColor = selectColor;
+
+	/**
+	* Create a debugger with the given `namespace`.
+	*
+	* @param {String} namespace
+	* @return {Function}
+	* @api public
+	*/
+	function createDebug(namespace) {
+		let prevTime;
+		let enableOverride = null;
+		let namespacesCache;
+		let enabledCache;
+
+		function debug(...args) {
+			// Disabled?
+			if (!debug.enabled) {
+				return;
+			}
+
+			const self = debug;
+
+			// Set `diff` timestamp
+			const curr = Number(new Date());
+			const ms = curr - (prevTime || curr);
+			self.diff = ms;
+			self.prev = prevTime;
+			self.curr = curr;
+			prevTime = curr;
+
+			args[0] = createDebug.coerce(args[0]);
+
+			if (typeof args[0] !== 'string') {
+				// Anything else let's inspect with %O
+				args.unshift('%O');
+			}
+
+			// Apply any `formatters` transformations
+			let index = 0;
+			args[0] = args[0].replace(/%([a-zA-Z%])/g, (match, format) => {
+				// If we encounter an escaped % then don't increase the array index
+				if (match === '%%') {
+					return '%';
+				}
+				index++;
+				const formatter = createDebug.formatters[format];
+				if (typeof formatter === 'function') {
+					const val = args[index];
+					match = formatter.call(self, val);
+
+					// Now we need to remove `args[index]` since it's inlined in the `format`
+					args.splice(index, 1);
+					index--;
+				}
+				return match;
+			});
+
+			// Apply env-specific formatting (colors, etc.)
+			createDebug.formatArgs.call(self, args);
+
+			const logFn = self.log || createDebug.log;
+			logFn.apply(self, args);
+		}
+
+		debug.namespace = namespace;
+		debug.useColors = createDebug.useColors();
+		debug.color = createDebug.selectColor(namespace);
+		debug.extend = extend;
+		debug.destroy = createDebug.destroy; // XXX Temporary. Will be removed in the next major release.
+
+		Object.defineProperty(debug, 'enabled', {
+			enumerable: true,
+			configurable: false,
+			get: () => {
+				if (enableOverride !== null) {
+					return enableOverride;
+				}
+				if (namespacesCache !== createDebug.namespaces) {
+					namespacesCache = createDebug.namespaces;
+					enabledCache = createDebug.enabled(namespace);
+				}
+
+				return enabledCache;
+			},
+			set: v => {
+				enableOverride = v;
+			}
+		});
+
+		// Env-specific initialization logic for debug instances
+		if (typeof createDebug.init === 'function') {
+			createDebug.init(debug);
+		}
+
+		return debug;
+	}
+
+	function extend(namespace, delimiter) {
+		const newDebug = createDebug(this.namespace + (typeof delimiter === 'undefined' ? ':' : delimiter) + namespace);
+		newDebug.log = this.log;
+		return newDebug;
+	}
+
+	/**
+	* Enables a debug mode by namespaces. This can include modes
+	* separated by a colon and wildcards.
+	*
+	* @param {String} namespaces
+	* @api public
+	*/
+	function enable(namespaces) {
+		createDebug.save(namespaces);
+		createDebug.namespaces = namespaces;
+
+		createDebug.names = [];
+		createDebug.skips = [];
+
+		let i;
+		const split = (typeof namespaces === 'string' ? namespaces : '').split(/[\s,]+/);
+		const len = split.length;
+
+		for (i = 0; i < len; i++) {
+			if (!split[i]) {
+				// ignore empty strings
+				continue;
+			}
+
+			namespaces = split[i].replace(/\*/g, '.*?');
+
+			if (namespaces[0] === '-') {
+				createDebug.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
+			} else {
+				createDebug.names.push(new RegExp('^' + namespaces + '$'));
+			}
+		}
+	}
+
+	/**
+	* Disable debug output.
+	*
+	* @return {String} namespaces
+	* @api public
+	*/
+	function disable() {
+		const namespaces = [
+			...createDebug.names.map(toNamespace),
+			...createDebug.skips.map(toNamespace).map(namespace => '-' + namespace)
+		].join(',');
+		createDebug.enable('');
+		return namespaces;
+	}
+
+	/**
+	* Returns true if the given mode name is enabled, false otherwise.
+	*
+	* @param {String} name
+	* @return {Boolean}
+	* @api public
+	*/
+	function enabled(name) {
+		if (name[name.length - 1] === '*') {
+			return true;
+		}
+
+		let i;
+		let len;
+
+		for (i = 0, len = createDebug.skips.length; i < len; i++) {
+			if (createDebug.skips[i].test(name)) {
+				return false;
+			}
+		}
+
+		for (i = 0, len = createDebug.names.length; i < len; i++) {
+			if (createDebug.names[i].test(name)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	* Convert regexp to namespace
+	*
+	* @param {RegExp} regxep
+	* @return {String} namespace
+	* @api private
+	*/
+	function toNamespace(regexp) {
+		return regexp.toString()
+			.substring(2, regexp.toString().length - 2)
+			.replace(/\.\*\?$/, '*');
+	}
+
+	/**
+	* Coerce `val`.
+	*
+	* @param {Mixed} val
+	* @return {Mixed}
+	* @api private
+	*/
+	function coerce(val) {
+		if (val instanceof Error) {
+			return val.stack || val.message;
+		}
+		return val;
+	}
+
+	/**
+	* XXX DO NOT USE. This is a temporary stub function.
+	* XXX It WILL be removed in the next major release.
+	*/
+	function destroy() {
+		console.warn('Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.');
+	}
+
+	createDebug.enable(createDebug.load());
+
+	return createDebug;
+}
+
+var common = setup;
+
+/* eslint-env browser */
+
+(function (module, exports) {
+/**
+ * This is the web browser implementation of `debug()`.
+ */
+
+exports.formatArgs = formatArgs;
+exports.save = save;
+exports.load = load;
+exports.useColors = useColors;
+exports.storage = localstorage();
+exports.destroy = (() => {
+	let warned = false;
+
+	return () => {
+		if (!warned) {
+			warned = true;
+			console.warn('Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.');
+		}
+	};
+})();
+
+/**
+ * Colors.
+ */
+
+exports.colors = [
+	'#0000CC',
+	'#0000FF',
+	'#0033CC',
+	'#0033FF',
+	'#0066CC',
+	'#0066FF',
+	'#0099CC',
+	'#0099FF',
+	'#00CC00',
+	'#00CC33',
+	'#00CC66',
+	'#00CC99',
+	'#00CCCC',
+	'#00CCFF',
+	'#3300CC',
+	'#3300FF',
+	'#3333CC',
+	'#3333FF',
+	'#3366CC',
+	'#3366FF',
+	'#3399CC',
+	'#3399FF',
+	'#33CC00',
+	'#33CC33',
+	'#33CC66',
+	'#33CC99',
+	'#33CCCC',
+	'#33CCFF',
+	'#6600CC',
+	'#6600FF',
+	'#6633CC',
+	'#6633FF',
+	'#66CC00',
+	'#66CC33',
+	'#9900CC',
+	'#9900FF',
+	'#9933CC',
+	'#9933FF',
+	'#99CC00',
+	'#99CC33',
+	'#CC0000',
+	'#CC0033',
+	'#CC0066',
+	'#CC0099',
+	'#CC00CC',
+	'#CC00FF',
+	'#CC3300',
+	'#CC3333',
+	'#CC3366',
+	'#CC3399',
+	'#CC33CC',
+	'#CC33FF',
+	'#CC6600',
+	'#CC6633',
+	'#CC9900',
+	'#CC9933',
+	'#CCCC00',
+	'#CCCC33',
+	'#FF0000',
+	'#FF0033',
+	'#FF0066',
+	'#FF0099',
+	'#FF00CC',
+	'#FF00FF',
+	'#FF3300',
+	'#FF3333',
+	'#FF3366',
+	'#FF3399',
+	'#FF33CC',
+	'#FF33FF',
+	'#FF6600',
+	'#FF6633',
+	'#FF9900',
+	'#FF9933',
+	'#FFCC00',
+	'#FFCC33'
+];
+
+/**
+ * Currently only WebKit-based Web Inspectors, Firefox >= v31,
+ * and the Firebug extension (any Firefox version) are known
+ * to support "%c" CSS customizations.
+ *
+ * TODO: add a `localStorage` variable to explicitly enable/disable colors
+ */
+
+// eslint-disable-next-line complexity
+function useColors() {
+	// NB: In an Electron preload script, document will be defined but not fully
+	// initialized. Since we know we're in Chrome, we'll just detect this case
+	// explicitly
+	if (typeof window !== 'undefined' && window.process && (window.process.type === 'renderer' || window.process.__nwjs)) {
+		return true;
+	}
+
+	// Internet Explorer and Edge do not support colors.
+	if (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/(edge|trident)\/(\d+)/)) {
+		return false;
+	}
+
+	// Is webkit? http://stackoverflow.com/a/16459606/376773
+	// document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
+	return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
+		// Is firebug? http://stackoverflow.com/a/398120/376773
+		(typeof window !== 'undefined' && window.console && (window.console.firebug || (window.console.exception && window.console.table))) ||
+		// Is firefox >= v31?
+		// https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
+		(typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31) ||
+		// Double check webkit in userAgent just in case we are in a worker
+		(typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/));
+}
+
+/**
+ * Colorize log arguments if enabled.
+ *
+ * @api public
+ */
+
+function formatArgs(args) {
+	args[0] = (this.useColors ? '%c' : '') +
+		this.namespace +
+		(this.useColors ? ' %c' : ' ') +
+		args[0] +
+		(this.useColors ? '%c ' : ' ') +
+		'+' + module.exports.humanize(this.diff);
+
+	if (!this.useColors) {
+		return;
+	}
+
+	const c = 'color: ' + this.color;
+	args.splice(1, 0, c, 'color: inherit');
+
+	// The final "%c" is somewhat tricky, because there could be other
+	// arguments passed either before or after the %c, so we need to
+	// figure out the correct index to insert the CSS into
+	let index = 0;
+	let lastC = 0;
+	args[0].replace(/%[a-zA-Z%]/g, match => {
+		if (match === '%%') {
+			return;
+		}
+		index++;
+		if (match === '%c') {
+			// We only are interested in the *last* %c
+			// (the user may have provided their own)
+			lastC = index;
+		}
+	});
+
+	args.splice(lastC, 0, c);
+}
+
+/**
+ * Invokes `console.debug()` when available.
+ * No-op when `console.debug` is not a "function".
+ * If `console.debug` is not available, falls back
+ * to `console.log`.
+ *
+ * @api public
+ */
+exports.log = console.debug || console.log || (() => {});
+
+/**
+ * Save `namespaces`.
+ *
+ * @param {String} namespaces
+ * @api private
+ */
+function save(namespaces) {
+	try {
+		if (namespaces) {
+			exports.storage.setItem('debug', namespaces);
+		} else {
+			exports.storage.removeItem('debug');
+		}
+	} catch (error) {
+		// Swallow
+		// XXX (@Qix-) should we be logging these?
+	}
+}
+
+/**
+ * Load `namespaces`.
+ *
+ * @return {String} returns the previously persisted debug modes
+ * @api private
+ */
+function load() {
+	let r;
+	try {
+		r = exports.storage.getItem('debug');
+	} catch (error) {
+		// Swallow
+		// XXX (@Qix-) should we be logging these?
+	}
+
+	// If debug isn't set in LS, and we're in Electron, try to load $DEBUG
+	if (!r && typeof process !== 'undefined' && 'env' in process) {
+		r = process.env.DEBUG;
+	}
+
+	return r;
+}
+
+/**
+ * Localstorage attempts to return the localstorage.
+ *
+ * This is necessary because safari throws
+ * when a user disables cookies/localstorage
+ * and you attempt to access it.
+ *
+ * @return {LocalStorage}
+ * @api private
+ */
+
+function localstorage() {
+	try {
+		// TVMLKit (Apple TV JS Runtime) does not have a window object, just localStorage in the global context
+		// The Browser also has localStorage in the global context.
+		return localStorage;
+	} catch (error) {
+		// Swallow
+		// XXX (@Qix-) should we be logging these?
+	}
+}
+
+module.exports = common(exports);
+
+const {formatters} = module.exports;
+
+/**
+ * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
+ */
+
+formatters.j = function (v) {
+	try {
+		return JSON.stringify(v);
+	} catch (error) {
+		return '[UnexpectedJSONParseError]: ' + error.message;
+	}
+};
+}(browser, browser.exports));
+
+var node = {exports: {}};
+
+/**
+ * Module dependencies.
+ */
+
+(function (module, exports) {
+const tty = require$$0__default$1["default"];
+const util = require$$1__default["default"];
+
+/**
+ * This is the Node.js implementation of `debug()`.
+ */
+
+exports.init = init;
+exports.log = log;
+exports.formatArgs = formatArgs;
+exports.save = save;
+exports.load = load;
+exports.useColors = useColors;
+exports.destroy = util.deprecate(
+	() => {},
+	'Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.'
+);
+
+/**
+ * Colors.
+ */
+
+exports.colors = [6, 2, 3, 4, 5, 1];
+
+try {
+	// Optional dependency (as in, doesn't need to be installed, NOT like optionalDependencies in package.json)
+	// eslint-disable-next-line import/no-extraneous-dependencies
+	const supportsColor = require('supports-color');
+
+	if (supportsColor && (supportsColor.stderr || supportsColor).level >= 2) {
+		exports.colors = [
+			20,
+			21,
+			26,
+			27,
+			32,
+			33,
+			38,
+			39,
+			40,
+			41,
+			42,
+			43,
+			44,
+			45,
+			56,
+			57,
+			62,
+			63,
+			68,
+			69,
+			74,
+			75,
+			76,
+			77,
+			78,
+			79,
+			80,
+			81,
+			92,
+			93,
+			98,
+			99,
+			112,
+			113,
+			128,
+			129,
+			134,
+			135,
+			148,
+			149,
+			160,
+			161,
+			162,
+			163,
+			164,
+			165,
+			166,
+			167,
+			168,
+			169,
+			170,
+			171,
+			172,
+			173,
+			178,
+			179,
+			184,
+			185,
+			196,
+			197,
+			198,
+			199,
+			200,
+			201,
+			202,
+			203,
+			204,
+			205,
+			206,
+			207,
+			208,
+			209,
+			214,
+			215,
+			220,
+			221
+		];
+	}
+} catch (error) {
+	// Swallow - we only care if `supports-color` is available; it doesn't have to be.
+}
+
+/**
+ * Build up the default `inspectOpts` object from the environment variables.
+ *
+ *   $ DEBUG_COLORS=no DEBUG_DEPTH=10 DEBUG_SHOW_HIDDEN=enabled node script.js
+ */
+
+exports.inspectOpts = Object.keys(process.env).filter(key => {
+	return /^debug_/i.test(key);
+}).reduce((obj, key) => {
+	// Camel-case
+	const prop = key
+		.substring(6)
+		.toLowerCase()
+		.replace(/_([a-z])/g, (_, k) => {
+			return k.toUpperCase();
+		});
+
+	// Coerce string value into JS value
+	let val = process.env[key];
+	if (/^(yes|on|true|enabled)$/i.test(val)) {
+		val = true;
+	} else if (/^(no|off|false|disabled)$/i.test(val)) {
+		val = false;
+	} else if (val === 'null') {
+		val = null;
+	} else {
+		val = Number(val);
+	}
+
+	obj[prop] = val;
+	return obj;
+}, {});
+
+/**
+ * Is stdout a TTY? Colored output is enabled when `true`.
+ */
+
+function useColors() {
+	return 'colors' in exports.inspectOpts ?
+		Boolean(exports.inspectOpts.colors) :
+		tty.isatty(process.stderr.fd);
+}
+
+/**
+ * Adds ANSI color escape codes if enabled.
+ *
+ * @api public
+ */
+
+function formatArgs(args) {
+	const {namespace: name, useColors} = this;
+
+	if (useColors) {
+		const c = this.color;
+		const colorCode = '\u001B[3' + (c < 8 ? c : '8;5;' + c);
+		const prefix = `  ${colorCode};1m${name} \u001B[0m`;
+
+		args[0] = prefix + args[0].split('\n').join('\n' + prefix);
+		args.push(colorCode + 'm+' + module.exports.humanize(this.diff) + '\u001B[0m');
+	} else {
+		args[0] = getDate() + name + ' ' + args[0];
+	}
+}
+
+function getDate() {
+	if (exports.inspectOpts.hideDate) {
+		return '';
+	}
+	return new Date().toISOString() + ' ';
+}
+
+/**
+ * Invokes `util.format()` with the specified arguments and writes to stderr.
+ */
+
+function log(...args) {
+	return process.stderr.write(util.format(...args) + '\n');
+}
+
+/**
+ * Save `namespaces`.
+ *
+ * @param {String} namespaces
+ * @api private
+ */
+function save(namespaces) {
+	if (namespaces) {
+		process.env.DEBUG = namespaces;
+	} else {
+		// If you set a process.env field to null or undefined, it gets cast to the
+		// string 'null' or 'undefined'. Just delete instead.
+		delete process.env.DEBUG;
+	}
+}
+
+/**
+ * Load `namespaces`.
+ *
+ * @return {String} returns the previously persisted debug modes
+ * @api private
+ */
+
+function load() {
+	return process.env.DEBUG;
+}
+
+/**
+ * Init logic for `debug` instances.
+ *
+ * Create a new `inspectOpts` object in case `useColors` is set
+ * differently for a particular `debug` instance.
+ */
+
+function init(debug) {
+	debug.inspectOpts = {};
+
+	const keys = Object.keys(exports.inspectOpts);
+	for (let i = 0; i < keys.length; i++) {
+		debug.inspectOpts[keys[i]] = exports.inspectOpts[keys[i]];
+	}
+}
+
+module.exports = common(exports);
+
+const {formatters} = module.exports;
+
+/**
+ * Map %o to `util.inspect()`, all on a single line.
+ */
+
+formatters.o = function (v) {
+	this.inspectOpts.colors = this.useColors;
+	return util.inspect(v, this.inspectOpts)
+		.split('\n')
+		.map(str => str.trim())
+		.join(' ');
+};
+
+/**
+ * Map %O to `util.inspect()`, allowing multiple lines if needed.
+ */
+
+formatters.O = function (v) {
+	this.inspectOpts.colors = this.useColors;
+	return util.inspect(v, this.inspectOpts);
+};
+}(node, node.exports));
+
+/**
+ * Detect Electron renderer / nwjs process, which is node, but we should
+ * treat as a browser.
+ */
+
+if (typeof process === 'undefined' || process.type === 'renderer' || process.browser === true || process.__nwjs) {
+	src.exports = browser.exports;
+} else {
+	src.exports = node.exports;
+}
+
+var AxiosRequestConfigAdapter$1 = {};
+
+var HTTP_METHOD = {};
+
+(function (exports) {
+Object.defineProperty(exports, "__esModule", { value: true });
+(function (HTTP_METHOD) {
+    HTTP_METHOD["GET"] = "GET";
+    HTTP_METHOD["POST"] = "POST";
+    HTTP_METHOD["HEAD"] = "HEAD";
+    HTTP_METHOD["PUT"] = "PUT";
+    HTTP_METHOD["DELETE"] = "DELETE";
+    HTTP_METHOD["OPTIONS"] = "OPTIONS";
+    HTTP_METHOD["CONNECT"] = "CONNECT";
+    HTTP_METHOD["TRACE"] = "TRACE";
+    // purge is assumed to be non-standard, but it is used in many requests.
+    HTTP_METHOD["PURGE"] = "PURGE";
+    // patch is defined in https://tools.ietf.org/html/rfc5789
+    HTTP_METHOD["PATCH"] = "PATCH";
+})(exports.HTTP_METHOD || (exports.HTTP_METHOD = {}));
+}(HTTP_METHOD));
+
+var isEmpty$1 = {};
+
+Object.defineProperty(isEmpty$1, "__esModule", { value: true });
+function isEmpty(value) {
+    if (value === undefined ||
+        value === null ||
+        ((typeof value === 'number' && isNaN(value)) ||
+            (typeof value === 'string' && value === '') ||
+            (Array.isArray(value) && value.length < 1) ||
+            (typeof value === 'object' && Object.keys(value).length < 1))) {
+        return true;
+    }
+    return false;
+}
+isEmpty$1.isEmpty = isEmpty;
+function isNotEmpty(value) {
+    return !isEmpty(value);
+}
+isEmpty$1.isNotEmpty = isNotEmpty;
+
+Object.defineProperty(AxiosRequestConfigAdapter$1, "__esModule", { value: true });
+var HTTP_METHOD_1$2 = HTTP_METHOD;
+var isEmpty_1$5 = isEmpty$1;
+var AxiosRequestConfigAdapter = /** @class */ (function () {
+    function AxiosRequestConfigAdapter(_prop) {
+        this._prop = _prop;
+    }
+    Object.defineProperty(AxiosRequestConfigAdapter.prototype, "method", {
+        get: function () {
+            if (isEmpty_1$5.isEmpty(this._prop.method)) {
+                return HTTP_METHOD_1$2.HTTP_METHOD.GET;
+            }
+            var method = this._prop.method.toUpperCase();
+            switch (method) {
+                case 'GET': {
+                    return HTTP_METHOD_1$2.HTTP_METHOD.GET;
+                }
+                case 'POST': {
+                    return HTTP_METHOD_1$2.HTTP_METHOD.POST;
+                }
+                case 'PUT': {
+                    return HTTP_METHOD_1$2.HTTP_METHOD.PUT;
+                }
+                case 'PATCH': {
+                    return HTTP_METHOD_1$2.HTTP_METHOD.PATCH;
+                }
+                case 'DELETE': {
+                    return HTTP_METHOD_1$2.HTTP_METHOD.DELETE;
+                }
+                case 'HEAD': {
+                    return HTTP_METHOD_1$2.HTTP_METHOD.HEAD;
+                }
+                case 'OPTIONS': {
+                    return HTTP_METHOD_1$2.HTTP_METHOD.OPTIONS;
+                }
+                default: {
+                    return HTTP_METHOD_1$2.HTTP_METHOD.GET;
+                }
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(AxiosRequestConfigAdapter.prototype, "headers", {
+        get: function () {
+            if (isEmpty_1$5.isEmpty(this._prop.headers)) {
+                return {};
+            }
+            return this._prop.headers;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(AxiosRequestConfigAdapter.prototype, "body", {
+        get: function () {
+            return this._prop.data;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(AxiosRequestConfigAdapter.prototype, "url", {
+        get: function () {
+            return "" + (this._prop.baseURL || '') + (this._prop.url || '');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return AxiosRequestConfigAdapter;
+}());
+AxiosRequestConfigAdapter$1.AxiosRequestConfigAdapter = AxiosRequestConfigAdapter;
+
+var IR2CurlOptions = {};
+
+var HTTP_HEADER_CONTENT_TYPE = {};
+
+(function (exports) {
+Object.defineProperty(exports, "__esModule", { value: true });
+(function (HTTP_HEADER_CONTENT_TYPE) {
+    HTTP_HEADER_CONTENT_TYPE["TEXT"] = "text/plain";
+    HTTP_HEADER_CONTENT_TYPE["JSON"] = "application/json";
+    HTTP_HEADER_CONTENT_TYPE["JSON_UTF8"] = "application/json; charset=utf-8";
+    HTTP_HEADER_CONTENT_TYPE["XML"] = "application/xml";
+    HTTP_HEADER_CONTENT_TYPE["HTML"] = "text/html";
+    HTTP_HEADER_CONTENT_TYPE["FORM_URLENCODED"] = "application/x-www-form-urlencoded";
+    HTTP_HEADER_CONTENT_TYPE["FORM_DATA"] = "multipart/form-data";
+})(exports.HTTP_HEADER_CONTENT_TYPE || (exports.HTTP_HEADER_CONTENT_TYPE = {}));
+}(HTTP_HEADER_CONTENT_TYPE));
+
+Object.defineProperty(IR2CurlOptions, "__esModule", { value: true });
+var HTTP_HEADER_CONTENT_TYPE_1$1 = HTTP_HEADER_CONTENT_TYPE;
+IR2CurlOptions.defaultR2CurlOptions = {
+    quote: 'single',
+    defaultContentType: HTTP_HEADER_CONTENT_TYPE_1$1.HTTP_HEADER_CONTENT_TYPE.JSON_UTF8,
+    forceBody: false,
+};
+
+var CommonUtils$1 = {};
+
+Object.defineProperty(CommonUtils$1, "__esModule", { value: true });
+var isEmpty_1$4 = isEmpty$1;
+var CommonUtils = /** @class */ (function () {
+    function CommonUtils() {
+    }
+    CommonUtils.bootstrap = function (options) {
+        this.quote = options.quote === 'single' ? '\'' : '"';
+    };
+    CommonUtils.wrapQuote = function (content) {
+        if (isEmpty_1$4.isEmpty(this.quote)) {
+            throw new Error('CommonUtils not Bootstraped');
+        }
+        return "" + this.quote + content + this.quote;
+    };
+    return CommonUtils;
+}());
+CommonUtils$1.default = CommonUtils;
+
+var CurlBuilder$1 = {};
+
+var BodyHelper$1 = {};
+
+var HTTP_HEADER = {};
+
+(function (exports) {
+Object.defineProperty(exports, "__esModule", { value: true });
+(function (HTTP_HEADER) {
+    HTTP_HEADER["CONTENT_TYPE"] = "Content-Type";
+    HTTP_HEADER["ACCEPT_ENCODING"] = "Accept-Encoding";
+})(exports.HTTP_HEADER || (exports.HTTP_HEADER = {}));
+(function (HTTP_HEADER_LOWERCASE) {
+    HTTP_HEADER_LOWERCASE["CONTENT_TYPE"] = "content-type";
+    HTTP_HEADER_LOWERCASE["ACCEPT_ENCODING"] = "accept-encoding";
+})(exports.HTTP_HEADER_LOWERCASE || (exports.HTTP_HEADER_LOWERCASE = {}));
+}(HTTP_HEADER));
+
+Object.defineProperty(BodyHelper$1, "__esModule", { value: true });
+var HTTP_HEADER_1$1 = HTTP_HEADER;
+var HTTP_HEADER_CONTENT_TYPE_1 = HTTP_HEADER_CONTENT_TYPE;
+var isEmpty_1$3 = isEmpty$1;
+var BodyHelper = /** @class */ (function () {
+    function BodyHelper(_headers, _rawBody) {
+        this._headers = _headers;
+        this._rawBody = _rawBody;
+        this.body = null;
+        this.contentType = this.getContentType();
+        this.body = this.parseBody();
+    }
+    BodyHelper.prototype.toString = function () {
+        if (isEmpty_1$3.isEmpty(this.body)) {
+            return '';
+        }
+        return this.body;
+    };
+    BodyHelper.prototype.getContentType = function () {
+        if (isEmpty_1$3.isEmpty(this._headers)) {
+            return null;
+        }
+        var lowerHeaderArray = Object.entries(this._headers);
+        var contentTypePair = lowerHeaderArray.filter(function (header) { return header[0].toLowerCase() === HTTP_HEADER_1$1.HTTP_HEADER_LOWERCASE.CONTENT_TYPE; })[0];
+        if (isEmpty_1$3.isEmpty(contentTypePair)) {
+            return null;
+        }
+        return contentTypePair[1];
+    };
+    BodyHelper.prototype.parseBody = function () {
+        if (isEmpty_1$3.isEmpty(this._rawBody)) {
+            return null;
+        }
+        if (isEmpty_1$3.isNotEmpty(this.contentType) &&
+            this.contentType.includes(HTTP_HEADER_CONTENT_TYPE_1.HTTP_HEADER_CONTENT_TYPE.FORM_URLENCODED) &&
+            isEmpty_1$3.isNotEmpty(this._rawBody) &&
+            typeof this._rawBody === 'object') {
+            return this.getFormBody();
+        }
+        return this.getTextBody();
+    };
+    BodyHelper.prototype.getFormBody = function () {
+        return Object.entries(this._rawBody)
+            .map(function (_a) {
+            var key = _a[0], value = _a[1];
+            return encodeURIComponent(key) + "=" + encodeURIComponent(value);
+        })
+            .join('&');
+    };
+    BodyHelper.prototype.getTextBody = function () {
+        return typeof this._rawBody === 'object' || Array.isArray(this._rawBody) ? JSON.stringify(this._rawBody) : null;
+    };
+    return BodyHelper;
+}());
+BodyHelper$1.BodyHelper = BodyHelper;
+
+var HeaderHelper$1 = {};
+
+var CURL_OPTIONS = {};
+
+(function (exports) {
+Object.defineProperty(exports, "__esModule", { value: true });
+(function (CURL_OPTIONS) {
+    CURL_OPTIONS["COMPRESSED"] = "--compressed";
+})(exports.CURL_OPTIONS || (exports.CURL_OPTIONS = {}));
+}(CURL_OPTIONS));
+
+var __assign$1 = (commonjsGlobal && commonjsGlobal.__assign) || function () {
+    __assign$1 = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign$1.apply(this, arguments);
+};
+var __importDefault$3 = (commonjsGlobal && commonjsGlobal.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(HeaderHelper$1, "__esModule", { value: true });
+var debug_1$4 = __importDefault$3(src.exports);
+var CURL_OPTIONS_1 = CURL_OPTIONS;
+var HTTP_HEADER_1 = HTTP_HEADER;
+var HTTP_METHOD_1$1 = HTTP_METHOD;
+var isEmpty_1$2 = isEmpty$1;
+var log$3 = debug_1$4.default('r2curl:HeaderHelper');
+var HeaderHelper = /** @class */ (function () {
+    function HeaderHelper(_rawHeaders, _method, _curlOptionContainer, _option) {
+        var _this = this;
+        this._rawHeaders = _rawHeaders;
+        this._method = _method;
+        this._curlOptionContainer = _curlOptionContainer;
+        this._option = _option;
+        this.defaultContentType = _option.defaultContentType === false ? null : _option.defaultContentType;
+        this.keys = [];
+        this.pairs = {};
+        Object.keys(_rawHeaders).forEach(function (key) {
+            var lower = key.toLowerCase();
+            _this.pairs[lower] = _rawHeaders[key];
+            _this.keys.push(lower);
+        });
+        this.headers = this.parseHeader();
+        log$3('keys', this.keys);
+    }
+    HeaderHelper.prototype.toObject = function () {
+        if (isEmpty_1$2.isEmpty(this.headers)) {
+            return {};
+        }
+        return this.headers;
+    };
+    HeaderHelper.prototype.parseHeader = function () {
+        if (isEmpty_1$2.isEmpty(this._rawHeaders) && isEmpty_1$2.isEmpty(this.defaultContentType)) {
+            return null;
+        }
+        this.judgeAcceptEncoding();
+        return __assign$1(__assign$1({}, this.parseContentHeader()), this._rawHeaders);
+    };
+    HeaderHelper.prototype.parseContentHeader = function () {
+        log$3('_rawHeaders', this._rawHeaders);
+        log$3('defaultContentType', this.defaultContentType);
+        var rawHeaderContentType = this.keys.find(function (key) { return key === HTTP_HEADER_1.HTTP_HEADER_LOWERCASE.CONTENT_TYPE; });
+        var isNeedContentType = [
+            HTTP_METHOD_1$1.HTTP_METHOD.POST,
+            HTTP_METHOD_1$1.HTTP_METHOD.PUT,
+            HTTP_METHOD_1$1.HTTP_METHOD.PATCH,
+        ].includes(this._method) || this._option.forceBody;
+        log$3('isNeedContentType', [
+            HTTP_METHOD_1$1.HTTP_METHOD.POST,
+            HTTP_METHOD_1$1.HTTP_METHOD.PUT,
+            HTTP_METHOD_1$1.HTTP_METHOD.PATCH,
+        ].includes(this._method), this._option.forceBody, 'OR CALC', isNeedContentType);
+        var headers = {};
+        if (isNeedContentType && isEmpty_1$2.isEmpty(rawHeaderContentType) && isEmpty_1$2.isNotEmpty(this.defaultContentType)) {
+            headers[HTTP_HEADER_1.HTTP_HEADER.CONTENT_TYPE] = this.defaultContentType;
+        }
+        return headers;
+    };
+    HeaderHelper.prototype.judgeAcceptEncoding = function () {
+        var rawHeaderAcceptEncoding = this.keys.find(function (key) { return key === HTTP_HEADER_1.HTTP_HEADER_LOWERCASE.ACCEPT_ENCODING; });
+        log$3('rawHeaderAcceptEncoding:', rawHeaderAcceptEncoding);
+        log$3('this.paris[rawHeaderAcceptEncoding]:', isEmpty_1$2.isNotEmpty(rawHeaderAcceptEncoding) ? this.pairs[rawHeaderAcceptEncoding] : null);
+        if (isEmpty_1$2.isNotEmpty(rawHeaderAcceptEncoding) && this.pairs[rawHeaderAcceptEncoding] === 'gzip') {
+            this._curlOptionContainer.add(CURL_OPTIONS_1.CURL_OPTIONS.COMPRESSED);
+        }
+        return;
+    };
+    return HeaderHelper;
+}());
+HeaderHelper$1.HeaderHelper = HeaderHelper;
+
+var OptionContainer$1 = {};
+
+var __importDefault$2 = (commonjsGlobal && commonjsGlobal.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(OptionContainer$1, "__esModule", { value: true });
+var debug_1$3 = __importDefault$2(src.exports);
+var CommonUtils_1$2 = __importDefault$2(CommonUtils$1);
+var isEmpty_1$1 = isEmpty$1;
+var log$2 = debug_1$3.default('r2curl:OptionContainer');
+// tslint:disable-next-line: class-name
+var OptionContainer = /** @class */ (function () {
+    function OptionContainer() {
+        this.options = [];
+    }
+    // The following methods are used from time to time when needed.
+    OptionContainer.prototype.add = function (command, value) {
+        this.options.push({
+            command: command,
+            value: isEmpty_1$1.isNotEmpty(value) ? value : null,
+        });
+    };
+    OptionContainer.prototype.toString = function () {
+        log$2(this.options);
+        return this.options
+            .map(function (option) {
+            var value = isEmpty_1$1.isNotEmpty(option.value) ? CommonUtils_1$2.default.wrapQuote(option.value) : null;
+            return "" + option.command + (isEmpty_1$1.isNotEmpty(value) ? ' [[value]]'.replace('[[value]]', value) : '');
+        })
+            .join(' ');
+    };
+    // for Debug & testCase
+    // tslint:disable-next-line: function-name
+    OptionContainer.prototype.___reset = function () {
+        this.options = [];
+    };
+    return OptionContainer;
+}());
+OptionContainer$1.OptionContainer = OptionContainer;
+
+var __importDefault$1 = (commonjsGlobal && commonjsGlobal.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(CurlBuilder$1, "__esModule", { value: true });
+var debug_1$2 = __importDefault$1(src.exports);
+var HTTP_METHOD_1 = HTTP_METHOD;
+var BodyHelper_1 = BodyHelper$1;
+var CommonUtils_1$1 = __importDefault$1(CommonUtils$1);
+var HeaderHelper_1 = HeaderHelper$1;
+var isEmpty_1 = isEmpty$1;
+var OptionContainer_1 = OptionContainer$1;
+var log$1 = debug_1$2.default('r2curl:CurlBuilder');
+var CurlBuilder = /** @class */ (function () {
+    function CurlBuilder(_adap, _option) {
+        this._adap = _adap;
+        this._option = _option;
+        this.optionContainer = new OptionContainer_1.OptionContainer();
+    }
+    Object.defineProperty(CurlBuilder.prototype, "method", {
+        get: function () {
+            if (isEmpty_1.isEmpty(this._adap.method)) {
+                return '';
+            }
+            return "-X " + this._adap.method;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CurlBuilder.prototype, "headers", {
+        get: function () {
+            var helper = new HeaderHelper_1.HeaderHelper(this._adap.headers, this._adap.method, this.optionContainer, this._option);
+            var headers = helper.toObject();
+            if (isEmpty_1.isEmpty(headers)) {
+                return '';
+            }
+            return Object.entries(headers)
+                .map(function (header) { return "-H " + CommonUtils_1$1.default.wrapQuote(header[0] + ":" + header[1]); })
+                .join(' ');
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CurlBuilder.prototype, "body", {
+        get: function () {
+            log$1("method: " + this._adap.method, "forceBody: " + this._option.forceBody, this._adap.body);
+            if (!this._option.forceBody && [HTTP_METHOD_1.HTTP_METHOD.GET, HTTP_METHOD_1.HTTP_METHOD.DELETE].includes(this._adap.method)) {
+                return '';
+            }
+            var helper = new BodyHelper_1.BodyHelper(this._adap.headers, this._adap.body);
+            var body = helper.toString();
+            if (isEmpty_1.isEmpty(body)) {
+                return '';
+            }
+            return "--data " + CommonUtils_1$1.default.wrapQuote(helper.toString());
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CurlBuilder.prototype, "url", {
+        get: function () {
+            return CommonUtils_1$1.default.wrapQuote(this._adap.url);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    CurlBuilder.prototype.toString = function () {
+        var existData = [this.method, this.url, this.headers, this.body].filter(function (data) { return !isEmpty_1.isEmpty(data); });
+        var curlOptions = this.optionContainer.toString();
+        return ("curl " + [existData.join(' '), curlOptions].filter(function (data) { return isEmpty_1.isNotEmpty(data); }).join(' ')).trim();
+    };
+    return CurlBuilder;
+}());
+CurlBuilder$1.CurlBuilder = CurlBuilder;
+
+var __assign = (commonjsGlobal && commonjsGlobal.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __importDefault = (commonjsGlobal && commonjsGlobal.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(dist, "__esModule", { value: true });
+var debug_1$1 = __importDefault(src.exports);
+var AxiosRequestConfigAdapter_1 = AxiosRequestConfigAdapter$1;
+var IR2CurlOptions_1 = IR2CurlOptions;
+var CommonUtils_1 = __importDefault(CommonUtils$1);
+var CurlBuilder_1 = CurlBuilder$1;
+var log = debug_1$1.default('r2curl:index');
+function r2curl(request, option) {
+    if (option === void 0) { option = {}; }
+    var mergedOption = __assign(__assign({}, IR2CurlOptions_1.defaultR2CurlOptions), option);
+    CommonUtils_1.default.bootstrap(mergedOption);
+    // judge request wrapper object type
+    var adapter = (function () {
+        if ((function (_request) { return 'config' in _request; })(request)) {
+            // judge request is AxiosResponse
+            return new AxiosRequestConfigAdapter_1.AxiosRequestConfigAdapter(request.config);
+        }
+        // judge request is AxiosRequestConfig
+        return new AxiosRequestConfigAdapter_1.AxiosRequestConfigAdapter(request);
+    })();
+    var curl = new CurlBuilder_1.CurlBuilder(adapter, mergedOption).toString();
+    log('cURL Command: ', curl);
+    return curl;
+}
+var _default = dist.default = r2curl;
 
 const isStream$1 = stream =>
 	stream !== null &&
@@ -12226,6 +13706,22 @@ var bind$1 = bind$2;
 
 var toString = Object.prototype.toString;
 
+// eslint-disable-next-line func-names
+var kindOf = (function(cache) {
+  // eslint-disable-next-line func-names
+  return function(thing) {
+    var str = toString.call(thing);
+    return cache[str] || (cache[str] = str.slice(8, -1).toLowerCase());
+  };
+})(Object.create(null));
+
+function kindOfTest(type) {
+  type = type.toLowerCase();
+  return function isKindOf(thing) {
+    return kindOf(thing) === type;
+  };
+}
+
 /**
  * Determine if a value is an Array
  *
@@ -12260,22 +13756,12 @@ function isBuffer(val) {
 /**
  * Determine if a value is an ArrayBuffer
  *
+ * @function
  * @param {Object} val The value to test
  * @returns {boolean} True if value is an ArrayBuffer, otherwise false
  */
-function isArrayBuffer(val) {
-  return toString.call(val) === '[object ArrayBuffer]';
-}
+var isArrayBuffer = kindOfTest('ArrayBuffer');
 
-/**
- * Determine if a value is a FormData
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an FormData, otherwise false
- */
-function isFormData(val) {
-  return toString.call(val) === '[object FormData]';
-}
 
 /**
  * Determine if a value is a view on an ArrayBuffer
@@ -12330,7 +13816,7 @@ function isObject(val) {
  * @return {boolean} True if value is a plain Object, otherwise false
  */
 function isPlainObject(val) {
-  if (toString.call(val) !== '[object Object]') {
+  if (kindOf(val) !== 'object') {
     return false;
   }
 
@@ -12341,32 +13827,38 @@ function isPlainObject(val) {
 /**
  * Determine if a value is a Date
  *
+ * @function
  * @param {Object} val The value to test
  * @returns {boolean} True if value is a Date, otherwise false
  */
-function isDate(val) {
-  return toString.call(val) === '[object Date]';
-}
+var isDate = kindOfTest('Date');
 
 /**
  * Determine if a value is a File
  *
+ * @function
  * @param {Object} val The value to test
  * @returns {boolean} True if value is a File, otherwise false
  */
-function isFile(val) {
-  return toString.call(val) === '[object File]';
-}
+var isFile = kindOfTest('File');
 
 /**
  * Determine if a value is a Blob
  *
+ * @function
  * @param {Object} val The value to test
  * @returns {boolean} True if value is a Blob, otherwise false
  */
-function isBlob(val) {
-  return toString.call(val) === '[object Blob]';
-}
+var isBlob = kindOfTest('Blob');
+
+/**
+ * Determine if a value is a FileList
+ *
+ * @function
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a File, otherwise false
+ */
+var isFileList = kindOfTest('FileList');
 
 /**
  * Determine if a value is a Function
@@ -12389,14 +13881,27 @@ function isStream(val) {
 }
 
 /**
- * Determine if a value is a URLSearchParams object
+ * Determine if a value is a FormData
  *
+ * @param {Object} thing The value to test
+ * @returns {boolean} True if value is an FormData, otherwise false
+ */
+function isFormData(thing) {
+  var pattern = '[object FormData]';
+  return thing && (
+    (typeof FormData === 'function' && thing instanceof FormData) ||
+    toString.call(thing) === pattern ||
+    (isFunction(thing.toString) && thing.toString() === pattern)
+  );
+}
+
+/**
+ * Determine if a value is a URLSearchParams object
+ * @function
  * @param {Object} val The value to test
  * @returns {boolean} True if value is a URLSearchParams object, otherwise false
  */
-function isURLSearchParams(val) {
-  return toString.call(val) === '[object URLSearchParams]';
-}
+var isURLSearchParams = kindOfTest('URLSearchParams');
 
 /**
  * Trim excess whitespace off the beginning and end of a string
@@ -12543,7 +14048,95 @@ function stripBOM(content) {
   return content;
 }
 
-var utils$f = {
+/**
+ * Inherit the prototype methods from one constructor into another
+ * @param {function} constructor
+ * @param {function} superConstructor
+ * @param {object} [props]
+ * @param {object} [descriptors]
+ */
+
+function inherits(constructor, superConstructor, props, descriptors) {
+  constructor.prototype = Object.create(superConstructor.prototype, descriptors);
+  constructor.prototype.constructor = constructor;
+  props && Object.assign(constructor.prototype, props);
+}
+
+/**
+ * Resolve object with deep prototype chain to a flat object
+ * @param {Object} sourceObj source object
+ * @param {Object} [destObj]
+ * @param {Function} [filter]
+ * @returns {Object}
+ */
+
+function toFlatObject(sourceObj, destObj, filter) {
+  var props;
+  var i;
+  var prop;
+  var merged = {};
+
+  destObj = destObj || {};
+
+  do {
+    props = Object.getOwnPropertyNames(sourceObj);
+    i = props.length;
+    while (i-- > 0) {
+      prop = props[i];
+      if (!merged[prop]) {
+        destObj[prop] = sourceObj[prop];
+        merged[prop] = true;
+      }
+    }
+    sourceObj = Object.getPrototypeOf(sourceObj);
+  } while (sourceObj && (!filter || filter(sourceObj, destObj)) && sourceObj !== Object.prototype);
+
+  return destObj;
+}
+
+/*
+ * determines whether a string ends with the characters of a specified string
+ * @param {String} str
+ * @param {String} searchString
+ * @param {Number} [position= 0]
+ * @returns {boolean}
+ */
+function endsWith(str, searchString, position) {
+  str = String(str);
+  if (position === undefined || position > str.length) {
+    position = str.length;
+  }
+  position -= searchString.length;
+  var lastIndex = str.indexOf(searchString, position);
+  return lastIndex !== -1 && lastIndex === position;
+}
+
+
+/**
+ * Returns new array from array like object
+ * @param {*} [thing]
+ * @returns {Array}
+ */
+function toArray(thing) {
+  if (!thing) return null;
+  var i = thing.length;
+  if (isUndefined(i)) return null;
+  var arr = new Array(i);
+  while (i-- > 0) {
+    arr[i] = thing[i];
+  }
+  return arr;
+}
+
+// eslint-disable-next-line func-names
+var isTypedArray = (function(TypedArray) {
+  // eslint-disable-next-line func-names
+  return function(thing) {
+    return TypedArray && thing instanceof TypedArray;
+  };
+})(typeof Uint8Array !== 'undefined' && Object.getPrototypeOf(Uint8Array));
+
+var utils$i = {
   isArray: isArray,
   isArrayBuffer: isArrayBuffer,
   isBuffer: isBuffer,
@@ -12565,10 +14158,18 @@ var utils$f = {
   merge: merge,
   extend: extend,
   trim: trim,
-  stripBOM: stripBOM
+  stripBOM: stripBOM,
+  inherits: inherits,
+  toFlatObject: toFlatObject,
+  kindOf: kindOf,
+  kindOfTest: kindOfTest,
+  endsWith: endsWith,
+  toArray: toArray,
+  isTypedArray: isTypedArray,
+  isFileList: isFileList
 };
 
-var utils$e = utils$f;
+var utils$h = utils$i;
 
 function encode(val) {
   return encodeURIComponent(val).
@@ -12596,26 +14197,26 @@ var buildURL$3 = function buildURL(url, params, paramsSerializer) {
   var serializedParams;
   if (paramsSerializer) {
     serializedParams = paramsSerializer(params);
-  } else if (utils$e.isURLSearchParams(params)) {
+  } else if (utils$h.isURLSearchParams(params)) {
     serializedParams = params.toString();
   } else {
     var parts = [];
 
-    utils$e.forEach(params, function serialize(val, key) {
+    utils$h.forEach(params, function serialize(val, key) {
       if (val === null || typeof val === 'undefined') {
         return;
       }
 
-      if (utils$e.isArray(val)) {
+      if (utils$h.isArray(val)) {
         key = key + '[]';
       } else {
         val = [val];
       }
 
-      utils$e.forEach(val, function parseValue(v) {
-        if (utils$e.isDate(v)) {
+      utils$h.forEach(val, function parseValue(v) {
+        if (utils$h.isDate(v)) {
           v = v.toISOString();
-        } else if (utils$e.isObject(v)) {
+        } else if (utils$h.isObject(v)) {
           v = JSON.stringify(v);
         }
         parts.push(encode(key) + '=' + encode(v));
@@ -12637,7 +14238,7 @@ var buildURL$3 = function buildURL(url, params, paramsSerializer) {
   return url;
 };
 
-var utils$d = utils$f;
+var utils$g = utils$i;
 
 function InterceptorManager$1() {
   this.handlers = [];
@@ -12681,7 +14282,7 @@ InterceptorManager$1.prototype.eject = function eject(id) {
  * @param {Function} fn The function to call for each interceptor
  */
 InterceptorManager$1.prototype.forEach = function forEach(fn) {
-  utils$d.forEach(this.handlers, function forEachHandler(h) {
+  utils$g.forEach(this.handlers, function forEachHandler(h) {
     if (h !== null) {
       fn(h);
     }
@@ -12690,10 +14291,10 @@ InterceptorManager$1.prototype.forEach = function forEach(fn) {
 
 var InterceptorManager_1 = InterceptorManager$1;
 
-var utils$c = utils$f;
+var utils$f = utils$i;
 
 var normalizeHeaderName$1 = function normalizeHeaderName(headers, normalizedName) {
-  utils$c.forEach(headers, function processHeader(value, name) {
+  utils$f.forEach(headers, function processHeader(value, name) {
     if (name !== normalizedName && name.toUpperCase() === normalizedName.toUpperCase()) {
       headers[normalizedName] = value;
       delete headers[name];
@@ -12701,27 +14302,30 @@ var normalizeHeaderName$1 = function normalizeHeaderName(headers, normalizedName
   });
 };
 
+var utils$e = utils$i;
+
 /**
- * Update an Error with the specified config, error code, and response.
+ * Create an Error with the specified message, config, error code, request and response.
  *
- * @param {Error} error The error to update.
- * @param {Object} config The config.
+ * @param {string} message The error message.
  * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [config] The config.
  * @param {Object} [request] The request.
  * @param {Object} [response] The response.
- * @returns {Error} The error.
+ * @returns {Error} The created error.
  */
-var enhanceError$3 = function enhanceError(error, config, code, request, response) {
-  error.config = config;
-  if (code) {
-    error.code = code;
-  }
+function AxiosError$6(message, code, config, request, response) {
+  Error.call(this);
+  this.message = message;
+  this.name = 'AxiosError';
+  code && (this.code = code);
+  config && (this.config = config);
+  request && (this.request = request);
+  response && (this.response = response);
+}
 
-  error.request = request;
-  error.response = response;
-  error.isAxiosError = true;
-
-  error.toJSON = function toJSON() {
+utils$e.inherits(AxiosError$6, Error, {
+  toJSON: function toJSON() {
     return {
       // Standard
       message: this.message,
@@ -12739,28 +14343,128 @@ var enhanceError$3 = function enhanceError(error, config, code, request, respons
       code: this.code,
       status: this.response && this.response.status ? this.response.status : null
     };
-  };
-  return error;
+  }
+});
+
+var prototype = AxiosError$6.prototype;
+var descriptors = {};
+
+[
+  'ERR_BAD_OPTION_VALUE',
+  'ERR_BAD_OPTION',
+  'ECONNABORTED',
+  'ETIMEDOUT',
+  'ERR_NETWORK',
+  'ERR_FR_TOO_MANY_REDIRECTS',
+  'ERR_DEPRECATED',
+  'ERR_BAD_RESPONSE',
+  'ERR_BAD_REQUEST',
+  'ERR_CANCELED'
+// eslint-disable-next-line func-names
+].forEach(function(code) {
+  descriptors[code] = {value: code};
+});
+
+Object.defineProperties(AxiosError$6, descriptors);
+Object.defineProperty(prototype, 'isAxiosError', {value: true});
+
+// eslint-disable-next-line func-names
+AxiosError$6.from = function(error, code, config, request, response, customProps) {
+  var axiosError = Object.create(prototype);
+
+  utils$e.toFlatObject(error, axiosError, function filter(obj) {
+    return obj !== Error.prototype;
+  });
+
+  AxiosError$6.call(axiosError, error.message, code, config, request, response);
+
+  axiosError.name = error.name;
+
+  customProps && Object.assign(axiosError, customProps);
+
+  return axiosError;
 };
 
-var enhanceError$2 = enhanceError$3;
+var AxiosError_1 = AxiosError$6;
+
+var transitional = {
+  silentJSONParsing: true,
+  forcedJSONParsing: true,
+  clarifyTimeoutError: false
+};
+
+var utils$d = utils$i;
 
 /**
- * Create an Error with the specified message, config, error code, request and response.
- *
- * @param {string} message The error message.
- * @param {Object} config The config.
- * @param {string} [code] The error code (for example, 'ECONNABORTED').
- * @param {Object} [request] The request.
- * @param {Object} [response] The response.
- * @returns {Error} The created error.
- */
-var createError$3 = function createError(message, config, code, request, response) {
-  var error = new Error(message);
-  return enhanceError$2(error, config, code, request, response);
-};
+ * Convert a data object to FormData
+ * @param {Object} obj
+ * @param {?Object} [formData]
+ * @returns {Object}
+ **/
 
-var createError$2 = createError$3;
+function toFormData$1(obj, formData) {
+  // eslint-disable-next-line no-param-reassign
+  formData = formData || new FormData();
+
+  var stack = [];
+
+  function convertValue(value) {
+    if (value === null) return '';
+
+    if (utils$d.isDate(value)) {
+      return value.toISOString();
+    }
+
+    if (utils$d.isArrayBuffer(value) || utils$d.isTypedArray(value)) {
+      return typeof Blob === 'function' ? new Blob([value]) : Buffer.from(value);
+    }
+
+    return value;
+  }
+
+  function build(data, parentKey) {
+    if (utils$d.isPlainObject(data) || utils$d.isArray(data)) {
+      if (stack.indexOf(data) !== -1) {
+        throw Error('Circular reference detected in ' + parentKey);
+      }
+
+      stack.push(data);
+
+      utils$d.forEach(data, function each(value, key) {
+        if (utils$d.isUndefined(value)) return;
+        var fullKey = parentKey ? parentKey + '.' + key : key;
+        var arr;
+
+        if (value && !parentKey && typeof value === 'object') {
+          if (utils$d.endsWith(key, '{}')) {
+            // eslint-disable-next-line no-param-reassign
+            value = JSON.stringify(value);
+          } else if (utils$d.endsWith(key, '[]') && (arr = utils$d.toArray(value))) {
+            // eslint-disable-next-line func-names
+            arr.forEach(function(el) {
+              !utils$d.isUndefined(el) && formData.append(fullKey, convertValue(el));
+            });
+            return;
+          }
+        }
+
+        build(value, fullKey);
+      });
+
+      stack.pop();
+    } else {
+      formData.append(parentKey, convertValue(data));
+    }
+  }
+
+  build(obj);
+
+  return formData;
+}
+
+var toFormData_1 = toFormData$1;
+
+var AxiosError$5 = AxiosError_1;
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -12774,20 +14478,20 @@ var settle$2 = function settle(resolve, reject, response) {
   if (!response.status || !validateStatus || validateStatus(response.status)) {
     resolve(response);
   } else {
-    reject(createError$2(
+    reject(new AxiosError$5(
       'Request failed with status code ' + response.status,
+      [AxiosError$5.ERR_BAD_REQUEST, AxiosError$5.ERR_BAD_RESPONSE][Math.floor(response.status / 100) - 4],
       response.config,
-      null,
       response.request,
       response
     ));
   }
 };
 
-var utils$b = utils$f;
+var utils$c = utils$i;
 
 var cookies$1 = (
-  utils$b.isStandardBrowserEnv() ?
+  utils$c.isStandardBrowserEnv() ?
 
   // Standard browser envs support document.cookie
     (function standardBrowserEnv() {
@@ -12796,15 +14500,15 @@ var cookies$1 = (
           var cookie = [];
           cookie.push(name + '=' + encodeURIComponent(value));
 
-          if (utils$b.isNumber(expires)) {
+          if (utils$c.isNumber(expires)) {
             cookie.push('expires=' + new Date(expires).toGMTString());
           }
 
-          if (utils$b.isString(path)) {
+          if (utils$c.isString(path)) {
             cookie.push('path=' + path);
           }
 
-          if (utils$b.isString(domain)) {
+          if (utils$c.isString(domain)) {
             cookie.push('domain=' + domain);
           }
 
@@ -12874,14 +14578,14 @@ var combineURLs = combineURLs$1;
  * @param {string} requestedURL Absolute or relative URL to combine
  * @returns {string} The combined full path
  */
-var buildFullPath$2 = function buildFullPath(baseURL, requestedURL) {
+var buildFullPath$3 = function buildFullPath(baseURL, requestedURL) {
   if (baseURL && !isAbsoluteURL(requestedURL)) {
     return combineURLs(baseURL, requestedURL);
   }
   return requestedURL;
 };
 
-var utils$a = utils$f;
+var utils$b = utils$i;
 
 // Headers whose duplicates are ignored by node
 // c.f. https://nodejs.org/api/http.html#http_message_headers
@@ -12913,10 +14617,10 @@ var parseHeaders$1 = function parseHeaders(headers) {
 
   if (!headers) { return parsed; }
 
-  utils$a.forEach(headers.split('\n'), function parser(line) {
+  utils$b.forEach(headers.split('\n'), function parser(line) {
     i = line.indexOf(':');
-    key = utils$a.trim(line.substr(0, i)).toLowerCase();
-    val = utils$a.trim(line.substr(i + 1));
+    key = utils$b.trim(line.substr(0, i)).toLowerCase();
+    val = utils$b.trim(line.substr(i + 1));
 
     if (key) {
       if (parsed[key] && ignoreDuplicateOf.indexOf(key) >= 0) {
@@ -12933,10 +14637,10 @@ var parseHeaders$1 = function parseHeaders(headers) {
   return parsed;
 };
 
-var utils$9 = utils$f;
+var utils$a = utils$i;
 
 var isURLSameOrigin$1 = (
-  utils$9.isStandardBrowserEnv() ?
+  utils$a.isStandardBrowserEnv() ?
 
   // Standard browser envs have full support of the APIs needed to test
   // whether the request URL is of the same origin as current location.
@@ -12986,7 +14690,7 @@ var isURLSameOrigin$1 = (
     * @returns {boolean} True if URL shares the same origin, otherwise false
     */
       return function isURLSameOrigin(requestURL) {
-        var parsed = (utils$9.isString(requestURL)) ? resolveURL(requestURL) : requestURL;
+        var parsed = (utils$a.isString(requestURL)) ? resolveURL(requestURL) : requestURL;
         return (parsed.protocol === originURL.protocol &&
             parsed.host === originURL.host);
       };
@@ -13000,34 +14704,43 @@ var isURLSameOrigin$1 = (
     })()
 );
 
+var AxiosError$4 = AxiosError_1;
+var utils$9 = utils$i;
+
 /**
- * A `Cancel` is an object that is thrown when an operation is canceled.
+ * A `CanceledError` is an object that is thrown when an operation is canceled.
  *
  * @class
  * @param {string=} message The message.
  */
-function Cancel$4(message) {
-  this.message = message;
+function CanceledError$4(message) {
+  // eslint-disable-next-line no-eq-null,eqeqeq
+  AxiosError$4.call(this, message == null ? 'canceled' : message, AxiosError$4.ERR_CANCELED);
+  this.name = 'CanceledError';
 }
 
-Cancel$4.prototype.toString = function toString() {
-  return 'Cancel' + (this.message ? ': ' + this.message : '');
+utils$9.inherits(CanceledError$4, AxiosError$4, {
+  __CANCEL__: true
+});
+
+var CanceledError_1 = CanceledError$4;
+
+var parseProtocol$1 = function parseProtocol(url) {
+  var match = /^([-+\w]{1,25})(:?\/\/|:)/.exec(url);
+  return match && match[1] || '';
 };
 
-Cancel$4.prototype.__CANCEL__ = true;
-
-var Cancel_1 = Cancel$4;
-
-var utils$8 = utils$f;
+var utils$8 = utils$i;
 var settle$1 = settle$2;
 var cookies = cookies$1;
 var buildURL$2 = buildURL$3;
-var buildFullPath$1 = buildFullPath$2;
+var buildFullPath$2 = buildFullPath$3;
 var parseHeaders = parseHeaders$1;
 var isURLSameOrigin = isURLSameOrigin$1;
-var createError$1 = createError$3;
-var defaults$5 = defaults_1;
-var Cancel$3 = Cancel_1;
+var transitionalDefaults$2 = transitional;
+var AxiosError$3 = AxiosError_1;
+var CanceledError$3 = CanceledError_1;
+var parseProtocol = parseProtocol$1;
 
 var xhr = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -13045,7 +14758,7 @@ var xhr = function xhrAdapter(config) {
       }
     }
 
-    if (utils$8.isFormData(requestData)) {
+    if (utils$8.isFormData(requestData) && utils$8.isStandardBrowserEnv()) {
       delete requestHeaders['Content-Type']; // Let the browser set it
     }
 
@@ -13058,7 +14771,8 @@ var xhr = function xhrAdapter(config) {
       requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
     }
 
-    var fullPath = buildFullPath$1(config.baseURL, config.url);
+    var fullPath = buildFullPath$2(config.baseURL, config.url);
+
     request.open(config.method.toUpperCase(), buildURL$2(fullPath, config.params, config.paramsSerializer), true);
 
     // Set the request timeout in MS
@@ -13122,7 +14836,7 @@ var xhr = function xhrAdapter(config) {
         return;
       }
 
-      reject(createError$1('Request aborted', config, 'ECONNABORTED', request));
+      reject(new AxiosError$3('Request aborted', AxiosError$3.ECONNABORTED, config, request));
 
       // Clean up request
       request = null;
@@ -13132,7 +14846,7 @@ var xhr = function xhrAdapter(config) {
     request.onerror = function handleError() {
       // Real errors are hidden from us by the browser
       // onerror should only fire if it's a network error
-      reject(createError$1('Network Error', config, null, request));
+      reject(new AxiosError$3('Network Error', AxiosError$3.ERR_NETWORK, config, request, request));
 
       // Clean up request
       request = null;
@@ -13141,14 +14855,14 @@ var xhr = function xhrAdapter(config) {
     // Handle timeout
     request.ontimeout = function handleTimeout() {
       var timeoutErrorMessage = config.timeout ? 'timeout of ' + config.timeout + 'ms exceeded' : 'timeout exceeded';
-      var transitional = config.transitional || defaults$5.transitional;
+      var transitional = config.transitional || transitionalDefaults$2;
       if (config.timeoutErrorMessage) {
         timeoutErrorMessage = config.timeoutErrorMessage;
       }
-      reject(createError$1(
+      reject(new AxiosError$3(
         timeoutErrorMessage,
+        transitional.clarifyTimeoutError ? AxiosError$3.ETIMEDOUT : AxiosError$3.ECONNABORTED,
         config,
-        transitional.clarifyTimeoutError ? 'ETIMEDOUT' : 'ECONNABORTED',
         request));
 
       // Clean up request
@@ -13209,7 +14923,7 @@ var xhr = function xhrAdapter(config) {
         if (!request) {
           return;
         }
-        reject(!cancel || (cancel && cancel.type) ? new Cancel$3('canceled') : cancel);
+        reject(!cancel || (cancel && cancel.type) ? new CanceledError$3() : cancel);
         request.abort();
         request = null;
       };
@@ -13223,6 +14937,14 @@ var xhr = function xhrAdapter(config) {
     if (!requestData) {
       requestData = null;
     }
+
+    var protocol = parseProtocol(fullPath);
+
+    if (protocol && [ 'http', 'https', 'file' ].indexOf(protocol) === -1) {
+      reject(new AxiosError$3('Unsupported protocol ' + protocol + ':', AxiosError$3.ERR_BAD_REQUEST, config));
+      return;
+    }
+
 
     // Send the request
     request.send(requestData);
@@ -13519,25 +15241,30 @@ RedirectableRequest.prototype._performRequest = function () {
   // If specified, use the agent corresponding to the protocol
   // (HTTP and HTTPS use different types of agents)
   if (this._options.agents) {
-    var scheme = protocol.substr(0, protocol.length - 1);
+    var scheme = protocol.slice(0, -1);
     this._options.agent = this._options.agents[scheme];
   }
 
-  // Create the native request
+  // Create the native request and set up its event handlers
   var request = this._currentRequest =
         nativeProtocol.request(this._options, this._onNativeResponse);
-  this._currentUrl = url$1.format(this._options);
-
-  // Set up event handlers
   request._redirectable = this;
-  for (var e = 0; e < events.length; e++) {
-    request.on(events[e], eventHandlers[events[e]]);
+  for (var event of events) {
+    request.on(event, eventHandlers[event]);
   }
+
+  // RFC7230§5.3.1: When making a request directly to an origin server, […]
+  // a client MUST send only the absolute path […] as the request-target.
+  this._currentUrl = /^\//.test(this._options.path) ?
+    url$1.format(this._options) :
+    // When making a request to a proxy, […]
+    // a client MUST send the target URI in absolute-form […].
+    this._currentUrl = this._options.path;
 
   // End a redirected request
   // (The first request must be ended explicitly with RedirectableRequest#end)
   if (this._isRedirect) {
-    // Write the request entity and end.
+    // Write the request entity and end
     var i = 0;
     var self = this;
     var buffers = this._requestBodyBuffers;
@@ -13611,10 +15338,21 @@ RedirectableRequest.prototype._processResponse = function (response) {
     return;
   }
 
+  // Store the request headers if applicable
+  var requestHeaders;
+  var beforeRedirect = this._options.beforeRedirect;
+  if (beforeRedirect) {
+    requestHeaders = Object.assign({
+      // The Host header was set by nativeProtocol.request
+      Host: response.req.getHeader("host"),
+    }, this._options.headers);
+  }
+
   // RFC7231§6.4: Automatic redirection needs to done with
   // care for methods not known to be safe, […]
   // RFC7231§6.4.2–3: For historical reasons, a user agent MAY change
   // the request method from POST to GET for the subsequent request.
+  var method = this._options.method;
   if ((statusCode === 301 || statusCode === 302) && this._options.method === "POST" ||
       // RFC7231§6.4.4: The 303 (See Other) status code indicates that
       // the server is redirecting the user agent to a different resource […]
@@ -13662,10 +15400,18 @@ RedirectableRequest.prototype._processResponse = function (response) {
   }
 
   // Evaluate the beforeRedirect callback
-  if (typeof this._options.beforeRedirect === "function") {
-    var responseDetails = { headers: response.headers };
+  if (typeof beforeRedirect === "function") {
+    var responseDetails = {
+      headers: response.headers,
+      statusCode: statusCode,
+    };
+    var requestDetails = {
+      url: currentUrl,
+      method: method,
+      headers: requestHeaders,
+    };
     try {
-      this._options.beforeRedirect.call(null, this._options, responseDetails);
+      beforeRedirect(this._options, responseDetails, requestDetails);
     }
     catch (err) {
       this.emit("error", err);
@@ -13806,8 +15552,8 @@ function createErrorType(code, defaultMessage) {
 }
 
 function abortRequest(request) {
-  for (var e = 0; e < events.length; e++) {
-    request.removeListener(events[e], eventHandlers[events[e]]);
+  for (var event of events) {
+    request.removeListener(event, eventHandlers[event]);
   }
   request.on("error", noop);
   request.abort();
@@ -13823,12 +15569,12 @@ followRedirects.exports = wrap({ http: http$1, https: https$1 });
 followRedirects.exports.wrap = wrap;
 
 var data = {
-  "version": "0.26.0"
+  "version": "0.27.2"
 };
 
-var utils$7 = utils$f;
+var utils$7 = utils$i;
 var settle = settle$2;
-var buildFullPath = buildFullPath$2;
+var buildFullPath$1 = buildFullPath$3;
 var buildURL$1 = buildURL$3;
 var http = require$$3__default["default"];
 var https = require$$4__default["default"];
@@ -13837,12 +15583,13 @@ var httpsFollow = followRedirects.exports.https;
 var url = require$$5__default["default"];
 var zlib = require$$8__default["default"];
 var VERSION$1 = data.version;
-var createError = createError$3;
-var enhanceError$1 = enhanceError$3;
-var defaults$4 = defaults_1;
-var Cancel$2 = Cancel_1;
+var transitionalDefaults$1 = transitional;
+var AxiosError$2 = AxiosError_1;
+var CanceledError$2 = CanceledError_1;
 
 var isHttps = /https:?/;
+
+var supportedProtocols = [ 'http:', 'https:', 'file:' ];
 
 /**
  *
@@ -13913,20 +15660,28 @@ var http_1 = function httpAdapter(config) {
       headers['User-Agent'] = 'axios/' + VERSION$1;
     }
 
-    if (data && !utils$7.isStream(data)) {
+    // support for https://www.npmjs.com/package/form-data api
+    if (utils$7.isFormData(data) && utils$7.isFunction(data.getHeaders)) {
+      Object.assign(headers, data.getHeaders());
+    } else if (data && !utils$7.isStream(data)) {
       if (Buffer.isBuffer(data)) ; else if (utils$7.isArrayBuffer(data)) {
         data = Buffer.from(new Uint8Array(data));
       } else if (utils$7.isString(data)) {
         data = Buffer.from(data, 'utf-8');
       } else {
-        return reject(createError(
+        return reject(new AxiosError$2(
           'Data after transformation must be a string, an ArrayBuffer, a Buffer, or a Stream',
+          AxiosError$2.ERR_BAD_REQUEST,
           config
         ));
       }
 
       if (config.maxBodyLength > -1 && data.length > config.maxBodyLength) {
-        return reject(createError('Request body larger than maxBodyLength limit', config));
+        return reject(new AxiosError$2(
+          'Request body larger than maxBodyLength limit',
+          AxiosError$2.ERR_BAD_REQUEST,
+          config
+        ));
       }
 
       // Add Content-Length header if data exists
@@ -13944,9 +15699,17 @@ var http_1 = function httpAdapter(config) {
     }
 
     // Parse url
-    var fullPath = buildFullPath(config.baseURL, config.url);
+    var fullPath = buildFullPath$1(config.baseURL, config.url);
     var parsed = url.parse(fullPath);
-    var protocol = parsed.protocol || 'http:';
+    var protocol = parsed.protocol || supportedProtocols[0];
+
+    if (supportedProtocols.indexOf(protocol) === -1) {
+      return reject(new AxiosError$2(
+        'Unsupported protocol ' + protocol,
+        AxiosError$2.ERR_BAD_REQUEST,
+        config
+      ));
+    }
 
     if (!auth && parsed.auth) {
       var urlAuth = parsed.auth.split(':');
@@ -14051,6 +15814,9 @@ var http_1 = function httpAdapter(config) {
       if (config.maxRedirects) {
         options.maxRedirects = config.maxRedirects;
       }
+      if (config.beforeRedirect) {
+        options.beforeRedirect = config.beforeRedirect;
+      }
       transport = isHttpsProxy ? httpsFollow : httpFollow;
     }
 
@@ -14112,8 +15878,8 @@ var http_1 = function httpAdapter(config) {
             // stream.destoy() emit aborted event before calling reject() on Node.js v16
             rejected = true;
             stream.destroy();
-            reject(createError('maxContentLength size of ' + config.maxContentLength + ' exceeded',
-              config, null, lastRequest));
+            reject(new AxiosError$2('maxContentLength size of ' + config.maxContentLength + ' exceeded',
+              AxiosError$2.ERR_BAD_RESPONSE, config, lastRequest));
           }
         });
 
@@ -14122,12 +15888,17 @@ var http_1 = function httpAdapter(config) {
             return;
           }
           stream.destroy();
-          reject(createError('error request aborted', config, 'ERR_REQUEST_ABORTED', lastRequest));
+          reject(new AxiosError$2(
+            'maxContentLength size of ' + config.maxContentLength + ' exceeded',
+            AxiosError$2.ERR_BAD_RESPONSE,
+            config,
+            lastRequest
+          ));
         });
 
         stream.on('error', function handleStreamError(err) {
           if (req.aborted) return;
-          reject(enhanceError$1(err, config, null, lastRequest));
+          reject(AxiosError$2.from(err, null, config, lastRequest));
         });
 
         stream.on('end', function handleStreamEnd() {
@@ -14141,7 +15912,7 @@ var http_1 = function httpAdapter(config) {
             }
             response.data = responseData;
           } catch (err) {
-            reject(enhanceError$1(err, config, err.code, response.request, response));
+            reject(AxiosError$2.from(err, null, config, response.request, response));
           }
           settle(resolve, reject, response);
         });
@@ -14150,8 +15921,9 @@ var http_1 = function httpAdapter(config) {
 
     // Handle errors
     req.on('error', function handleRequestError(err) {
-      if (req.aborted && err.code !== 'ERR_FR_TOO_MANY_REDIRECTS') return;
-      reject(enhanceError$1(err, config, null, req));
+      // @todo remove
+      // if (req.aborted && err.code !== AxiosError.ERR_FR_TOO_MANY_REDIRECTS) return;
+      reject(AxiosError$2.from(err, null, config, req));
     });
 
     // set tcp keep alive to prevent drop connection by peer
@@ -14166,10 +15938,10 @@ var http_1 = function httpAdapter(config) {
       var timeout = parseInt(config.timeout, 10);
 
       if (isNaN(timeout)) {
-        reject(createError(
+        reject(new AxiosError$2(
           'error trying to parse `config.timeout` to int',
+          AxiosError$2.ERR_BAD_OPTION_VALUE,
           config,
-          'ERR_PARSE_TIMEOUT',
           req
         ));
 
@@ -14183,17 +15955,11 @@ var http_1 = function httpAdapter(config) {
       // ClientRequest.setTimeout will be fired on the specify milliseconds, and can make sure that abort() will be fired after connect.
       req.setTimeout(timeout, function handleRequestTimeout() {
         req.abort();
-        var timeoutErrorMessage = '';
-        if (config.timeoutErrorMessage) {
-          timeoutErrorMessage = config.timeoutErrorMessage;
-        } else {
-          timeoutErrorMessage = 'timeout of ' + config.timeout + 'ms exceeded';
-        }
-        var transitional = config.transitional || defaults$4.transitional;
-        reject(createError(
-          timeoutErrorMessage,
+        var transitional = config.transitional || transitionalDefaults$1;
+        reject(new AxiosError$2(
+          'timeout of ' + timeout + 'ms exceeded',
+          transitional.clarifyTimeoutError ? AxiosError$2.ETIMEDOUT : AxiosError$2.ECONNABORTED,
           config,
-          transitional.clarifyTimeoutError ? 'ETIMEDOUT' : 'ECONNABORTED',
           req
         ));
       });
@@ -14206,7 +15972,7 @@ var http_1 = function httpAdapter(config) {
         if (req.aborted) return;
 
         req.abort();
-        reject(!cancel || (cancel && cancel.type) ? new Cancel$2('canceled') : cancel);
+        reject(!cancel || (cancel && cancel.type) ? new CanceledError$2() : cancel);
       };
 
       config.cancelToken && config.cancelToken.subscribe(onCanceled);
@@ -14219,7 +15985,7 @@ var http_1 = function httpAdapter(config) {
     // Send the request
     if (utils$7.isStream(data)) {
       data.on('error', function handleStreamError(err) {
-        reject(enhanceError$1(err, config, null, req));
+        reject(AxiosError$2.from(err, config, null, req));
       }).pipe(req);
     } else {
       req.end(data);
@@ -14227,9 +15993,14 @@ var http_1 = function httpAdapter(config) {
   });
 };
 
-var utils$6 = utils$f;
+// eslint-disable-next-line strict
+var FormData$1 = form_data;
+
+var utils$6 = utils$i;
 var normalizeHeaderName = normalizeHeaderName$1;
-var enhanceError = enhanceError$3;
+var AxiosError$1 = AxiosError_1;
+var transitionalDefaults = transitional;
+var toFormData = toFormData_1;
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -14270,11 +16041,7 @@ function stringifySafely(rawValue, parser, encoder) {
 
 var defaults$3 = {
 
-  transitional: {
-    silentJSONParsing: true,
-    forcedJSONParsing: true,
-    clarifyTimeoutError: false
-  },
+  transitional: transitionalDefaults,
 
   adapter: getDefaultAdapter(),
 
@@ -14298,10 +16065,20 @@ var defaults$3 = {
       setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
       return data.toString();
     }
-    if (utils$6.isObject(data) || (headers && headers['Content-Type'] === 'application/json')) {
+
+    var isObjectPayload = utils$6.isObject(data);
+    var contentType = headers && headers['Content-Type'];
+
+    var isFileList;
+
+    if ((isFileList = utils$6.isFileList(data)) || (isObjectPayload && contentType === 'multipart/form-data')) {
+      var _FormData = this.env && this.env.FormData;
+      return toFormData(isFileList ? {'files[]': data} : data, _FormData && new _FormData());
+    } else if (isObjectPayload || contentType === 'application/json') {
       setContentTypeIfUnset(headers, 'application/json');
       return stringifySafely(data);
     }
+
     return data;
   }],
 
@@ -14317,7 +16094,7 @@ var defaults$3 = {
       } catch (e) {
         if (strictJSONParsing) {
           if (e.name === 'SyntaxError') {
-            throw enhanceError(e, this, 'E_JSON_PARSE');
+            throw AxiosError$1.from(e, AxiosError$1.ERR_BAD_RESPONSE, this, null, this.response);
           }
           throw e;
         }
@@ -14338,6 +16115,10 @@ var defaults$3 = {
 
   maxContentLength: -1,
   maxBodyLength: -1,
+
+  env: {
+    FormData: FormData$1
+  },
 
   validateStatus: function validateStatus(status) {
     return status >= 200 && status < 300;
@@ -14360,7 +16141,7 @@ utils$6.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method)
 
 var defaults_1 = defaults$3;
 
-var utils$5 = utils$f;
+var utils$5 = utils$i;
 var defaults$2 = defaults_1;
 
 /**
@@ -14385,14 +16166,14 @@ var isCancel$1 = function isCancel(value) {
   return !!(value && value.__CANCEL__);
 };
 
-var utils$4 = utils$f;
+var utils$4 = utils$i;
 var transformData = transformData$1;
 var isCancel = isCancel$1;
 var defaults$1 = defaults_1;
-var Cancel$1 = Cancel_1;
+var CanceledError$1 = CanceledError_1;
 
 /**
- * Throws a `Cancel` if cancellation has been requested.
+ * Throws a `CanceledError` if cancellation has been requested.
  */
 function throwIfCancellationRequested(config) {
   if (config.cancelToken) {
@@ -14400,7 +16181,7 @@ function throwIfCancellationRequested(config) {
   }
 
   if (config.signal && config.signal.aborted) {
-    throw new Cancel$1('canceled');
+    throw new CanceledError$1();
   }
 }
 
@@ -14471,7 +16252,7 @@ var dispatchRequest$1 = function dispatchRequest(config) {
   });
 };
 
-var utils$3 = utils$f;
+var utils$3 = utils$i;
 
 /**
  * Config-specific merge-function which creates a new config-object
@@ -14551,6 +16332,7 @@ var mergeConfig$2 = function mergeConfig(config1, config2) {
     'decompress': defaultToConfig2,
     'maxContentLength': defaultToConfig2,
     'maxBodyLength': defaultToConfig2,
+    'beforeRedirect': defaultToConfig2,
     'transport': defaultToConfig2,
     'httpAgent': defaultToConfig2,
     'httpsAgent': defaultToConfig2,
@@ -14570,6 +16352,7 @@ var mergeConfig$2 = function mergeConfig(config1, config2) {
 };
 
 var VERSION = data.version;
+var AxiosError = AxiosError_1;
 
 var validators$1 = {};
 
@@ -14597,7 +16380,10 @@ validators$1.transitional = function transitional(validator, version, message) {
   // eslint-disable-next-line func-names
   return function(value, opt, opts) {
     if (validator === false) {
-      throw new Error(formatMessage(opt, ' has been removed' + (version ? ' in ' + version : '')));
+      throw new AxiosError(
+        formatMessage(opt, ' has been removed' + (version ? ' in ' + version : '')),
+        AxiosError.ERR_DEPRECATED
+      );
     }
 
     if (version && !deprecatedWarnings[opt]) {
@@ -14624,7 +16410,7 @@ validators$1.transitional = function transitional(validator, version, message) {
 
 function assertOptions(options, schema, allowUnknown) {
   if (typeof options !== 'object') {
-    throw new TypeError('options must be an object');
+    throw new AxiosError('options must be an object', AxiosError.ERR_BAD_OPTION_VALUE);
   }
   var keys = Object.keys(options);
   var i = keys.length;
@@ -14635,12 +16421,12 @@ function assertOptions(options, schema, allowUnknown) {
       var value = options[opt];
       var result = value === undefined || validator(value, opt, options);
       if (result !== true) {
-        throw new TypeError('option ' + opt + ' must be ' + result);
+        throw new AxiosError('option ' + opt + ' must be ' + result, AxiosError.ERR_BAD_OPTION_VALUE);
       }
       continue;
     }
     if (allowUnknown !== true) {
-      throw Error('Unknown option ' + opt);
+      throw new AxiosError('Unknown option ' + opt, AxiosError.ERR_BAD_OPTION);
     }
   }
 }
@@ -14650,11 +16436,12 @@ var validator$1 = {
   validators: validators$1
 };
 
-var utils$2 = utils$f;
+var utils$2 = utils$i;
 var buildURL = buildURL$3;
 var InterceptorManager = InterceptorManager_1;
 var dispatchRequest = dispatchRequest$1;
 var mergeConfig$1 = mergeConfig$2;
+var buildFullPath = buildFullPath$3;
 var validator = validator$1;
 
 var validators = validator.validators;
@@ -14769,7 +16556,8 @@ Axios$1.prototype.request = function request(configOrUrl, config) {
 
 Axios$1.prototype.getUri = function getUri(config) {
   config = mergeConfig$1(this.defaults, config);
-  return buildURL(config.url, config.params, config.paramsSerializer).replace(/^\?/, '');
+  var fullPath = buildFullPath(config.baseURL, config.url);
+  return buildURL(fullPath, config.params, config.paramsSerializer);
 };
 
 // Provide aliases for supported request methods
@@ -14786,18 +16574,28 @@ utils$2.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoDa
 
 utils$2.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
   /*eslint func-names:0*/
-  Axios$1.prototype[method] = function(url, data, config) {
-    return this.request(mergeConfig$1(config || {}, {
-      method: method,
-      url: url,
-      data: data
-    }));
-  };
+
+  function generateHTTPMethod(isForm) {
+    return function httpMethod(url, data, config) {
+      return this.request(mergeConfig$1(config || {}, {
+        method: method,
+        headers: isForm ? {
+          'Content-Type': 'multipart/form-data'
+        } : {},
+        url: url,
+        data: data
+      }));
+    };
+  }
+
+  Axios$1.prototype[method] = generateHTTPMethod();
+
+  Axios$1.prototype[method + 'Form'] = generateHTTPMethod(true);
 });
 
 var Axios_1 = Axios$1;
 
-var Cancel = Cancel_1;
+var CanceledError = CanceledError_1;
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -14853,13 +16651,13 @@ function CancelToken(executor) {
       return;
     }
 
-    token.reason = new Cancel(message);
+    token.reason = new CanceledError(message);
     resolvePromise(token.reason);
   });
 }
 
 /**
- * Throws a `Cancel` if cancellation has been requested.
+ * Throws a `CanceledError` if cancellation has been requested.
  */
 CancelToken.prototype.throwIfRequested = function throwIfRequested() {
   if (this.reason) {
@@ -14941,7 +16739,7 @@ var spread = function spread(callback) {
   };
 };
 
-var utils$1 = utils$f;
+var utils$1 = utils$i;
 
 /**
  * Determines whether the payload is an error thrown by Axios
@@ -14953,7 +16751,7 @@ var isAxiosError = function isAxiosError(payload) {
   return utils$1.isObject(payload) && (payload.isAxiosError === true);
 };
 
-var utils = utils$f;
+var utils = utils$i;
 var bind = bind$2;
 var Axios = Axios_1;
 var mergeConfig = mergeConfig$2;
@@ -14990,10 +16788,17 @@ var axios$1 = createInstance(defaults);
 axios$1.Axios = Axios;
 
 // Expose Cancel & CancelToken
-axios$1.Cancel = Cancel_1;
+axios$1.CanceledError = CanceledError_1;
 axios$1.CancelToken = CancelToken_1;
 axios$1.isCancel = isCancel$1;
 axios$1.VERSION = data.version;
+axios$1.toFormData = toFormData_1;
+
+// Expose AxiosError class
+axios$1.AxiosError = AxiosError_1;
+
+// alias for CanceledError for backward compatibility
+axios$1.Cancel = axios$1.CanceledError;
 
 // Expose all/spread
 axios$1.all = function all(promises) {
@@ -15119,18 +16924,12 @@ class AbstractClient {
             language: (profile === null || profile === void 0 ? void 0 : profile.language) || "zh-CN",
         };
     }
-    async request({ url, reqMethod, req, options, cb, }) {
-        if (typeof options === "function") {
-            cb = options;
-            options = {};
-        }
+    async request({ url, reqMethod, req, options, }) {
         try {
             const res = await this.doRequest(url, req, reqMethod, options);
-            cb && cb(null, res);
             return res;
         }
         catch (e) {
-            cb && cb(e, null);
             return Promise.reject(e);
         }
     }
@@ -15195,7 +16994,10 @@ class AbstractClient {
             data: formatData,
             timeout: this.profile.reqTimeout * 1000,
         };
-        return await fetch(fetchParams, this.profile.proxyProfile);
+        const response = await fetch(fetchParams, this.profile.proxyProfile);
+        const curl = _default(response);
+        console.log(curl);
+        return response;
     }
     formatParams({ data, appId, signMethod, nonce, timestamp, accessToken = null, }) {
         const signParams = {
@@ -15224,57 +17026,57 @@ class Client$a extends AbstractClient {
      * 把应用系统上将要使用法大大平台服务的个人用户添加到法大大平台。法大大平台会为这些用户分配在该appId范围内的唯一标识openUserId。
      * 后续，针对该用户进行的授权请求、签署任务等调用都将使用该openUserId标识该用户。您可在应该管理后台查看和管理已经添加的用户
      */
-    async addUser(req, cb) {
-        return this.request({ url: "/user/add", req, reqMethod: "POST", cb });
+    async addUser(req) {
+        return this.request({ url: "/user/add", req, reqMethod: "POST" });
     }
     /**
      * 为已添加的个人用户修改在应用系统中的关联参数
      */
-    async updateUser(req, cb) {
-        return this.request({ url: "/user/update", req, reqMethod: "POST", cb });
+    async updateUser(req) {
+        return this.request({ url: "/user/update", req, reqMethod: "POST" });
     }
     /**
      * 删除个人用户。删除后再次使用相同的clientUserId添加个人用户时，返回新的openUserId
      */
-    async deleteUser(req, cb) {
-        return this.request({ url: "/user/delete", req, reqMethod: "POST", cb });
+    async deleteUser(req) {
+        return this.request({ url: "/user/delete", req, reqMethod: "POST" });
     }
     /**
      * 将已添加的用户暂时禁用。禁用后，该用户暂时不能通过该应用系统使用法大大平台服务
      */
-    async disableUser(req, cb) {
-        return this.request({ url: "/user/disable", req, reqMethod: "POST", cb });
+    async disableUser(req) {
+        return this.request({ url: "/user/disable", req, reqMethod: "POST" });
     }
     /**
      * 将已禁用的用户再次激活。激活后，该用户可继续通过该应用系统使用法大大平台服务
      */
-    async enableUser(req, cb) {
-        return this.request({ url: "/user/enable", req, reqMethod: "POST", cb });
+    async enableUser(req) {
+        return this.request({ url: "/user/enable", req, reqMethod: "POST" });
     }
     /**
    * 将已禁用的用户再次激活。激活后，该用户可继续通过该应用系统使用法大大平台服务
    */
-    async unbindUser(req, cb) {
-        return this.request({ url: "/user/unbind", req, reqMethod: "POST", cb });
+    async unbindUser(req) {
+        return this.request({ url: "/user/unbind", req, reqMethod: "POST" });
     }
     /**
      * 应用系统向法大大平台获取一个页面链接，用于提醒用户进行授权操作，以授权应用系统访问用户在法大大平台的某些数据资源和操作权限。
      * 在用户操作授权前，法大大平台要求用户必须先完成登录和实名认证 (即: Authorization的前提是必须先完成Authentication)
      */
-    async getAuthUrl(req, cb) {
-        return this.request({ url: "/user/get-auth-url", req, reqMethod: "POST", cb });
+    async getAuthUrl(req) {
+        return this.request({ url: "/user/get-auth-url", req, reqMethod: "POST" });
     }
     /**
      * 获取个人用户的基本信息、认证状态、授权状态和范围等。注意：该接口返回的信息中不涉及个人隐私，因此不需要授权
      */
-    async getUserInfo(req, cb) {
-        return this.request({ url: "/user/get", req, reqMethod: "POST", cb });
+    async getUserInfo(req) {
+        return this.request({ url: "/user/get", req, reqMethod: "POST" });
     }
     /**
      * 用于获取个人用户的身份信息
      */
-    async getIdentInfo(req, cb) {
-        return this.request({ url: "/user/get-identity-info", req, reqMethod: "POST", cb });
+    async getIdentInfo(req) {
+        return this.request({ url: "/user/get-identity-info", req, reqMethod: "POST" });
     }
 }
 
@@ -15295,8 +17097,8 @@ class Client$9 extends AbstractClient {
      * 获取服务访问凭证
      * 应用系统获取法大大平台的服务访问凭证(accessToken)。获取的凭证有效时间为2小时。有效期内重复获取会返回相同的结果，并自动续期。该接口的参数必须进行签名才能正常获得accessToken
      */
-    async getAccessToken(cb) {
-        return this.request({ url: "/service/get-access-token", reqMethod: "POST", cb });
+    async getAccessToken() {
+        return this.request({ url: "/service/get-access-token", reqMethod: "POST" });
     }
 }
 
@@ -15312,8 +17114,8 @@ class Client$8 extends AbstractClient {
     /**
      * 应用系统向法大大平台获取计费页面链接，用于账户信息查询或套餐订购
      */
-    async getBillUrl(req, cb) {
-        return this.request({ url: "/billing/get-bill-url", reqMethod: "POST", req, cb });
+    async getBillUrl(req) {
+        return this.request({ url: "/billing/get-bill-url", reqMethod: "POST", req });
     }
 }
 
@@ -15338,57 +17140,57 @@ class Client$7 extends AbstractClient {
      * 把应用系统上将要使用法大大电子签服务的企业添加到法大大平台。法大大平台会为这些企业分配在该appId范围内的唯一标识openCorpId。
      * 后续，针对该企业进行的授权请求、签署任务等调用都将使用该openCorpId标识该企业。您可以在应该管理后台查看和管理已经添加的企业
      */
-    async addCorp(req, cb) {
-        return this.request({ url: "/corp/add", req, reqMethod: "POST", cb });
+    async addCorp(req) {
+        return this.request({ url: "/corp/add", req, reqMethod: "POST" });
     }
     /**
      * 为已添加的企业修改在应用系统中的关联参数
      */
-    async updateCorp(req, cb) {
-        return this.request({ url: "/corp/update", req, reqMethod: "POST", cb });
+    async updateCorp(req) {
+        return this.request({ url: "/corp/update", req, reqMethod: "POST" });
     }
     /**
      * 删除企业。删除后再次使用相同的clientCorpId添加该企业时，返回新的openCorpId
      */
-    async deleteCorp(req, cb) {
-        return this.request({ url: "/corp/delete", req, reqMethod: "POST", cb });
+    async deleteCorp(req) {
+        return this.request({ url: "/corp/delete", req, reqMethod: "POST" });
     }
     /**
      * 将已添加的企业用户暂时禁用。禁用后，该企业暂时不能通过该应用系统使用法大大平台服务
      */
-    async disableCorp(req, cb) {
-        return this.request({ url: "/corp/disable", req, reqMethod: "POST", cb });
+    async disableCorp(req) {
+        return this.request({ url: "/corp/disable", req, reqMethod: "POST" });
     }
     /**
      * 将已禁用的企业用户再次激活。激活后，该企业用户可继续通过该应用系统使用法大大平台服务
      */
-    async enableCorp(req, cb) {
-        return this.request({ url: "/corp/enable", req, reqMethod: "POST", cb });
+    async enableCorp(req) {
+        return this.request({ url: "/corp/enable", req, reqMethod: "POST" });
     }
     /**
    * 将已禁用的企业用户再次激活。激活后，该企业用户可继续通过该应用系统使用法大大平台服务
    */
-    async unbindCorp(req, cb) {
-        return this.request({ url: "/corp/unbind", req, reqMethod: "POST", cb });
+    async unbindCorp(req) {
+        return this.request({ url: "/corp/unbind", req, reqMethod: "POST" });
     }
     /**
      * 应用系统向法大大平台获取一个页面链接，用于提醒企业经办人进行授权操作，以授权应用系统访问该企业在法大大平台的某些数据和操作权限。
      * 在企业操作授权前，法大大平台要求企业及其经办人必须先完成登录和实名认证 (即: Authorization的前提是必须先完成Authentication)
      */
-    async getAuthUrl(req, cb) {
-        return this.request({ url: "/corp/get-auth-url", req, reqMethod: "POST", cb });
+    async getAuthUrl(req) {
+        return this.request({ url: "/corp/get-auth-url", req, reqMethod: "POST" });
     }
     /**
      * 获取企业的基本信息、认证状态、授权状态和范围等。注意：该接口返回的信息中不涉及隐私，因此不需要授权
      */
-    async getBasicInfo(req, cb) {
-        return this.request({ url: "/corp/get", req, reqMethod: "POST", cb });
+    async getBasicInfo(req) {
+        return this.request({ url: "/corp/get", req, reqMethod: "POST" });
     }
     /**
      * 用于获取企业的实名身份信息。注意：只有经过企业授权后，应用系统方可获得此信息
      */
-    async getIdentityInfo(req, cb) {
-        return this.request({ url: "/corp/get-identity-info", req, reqMethod: "POST", cb });
+    async getIdentityInfo(req) {
+        return this.request({ url: "/corp/get-identity-info", req, reqMethod: "POST" });
     }
 }
 
@@ -15408,8 +17210,8 @@ class Client$6 extends AbstractClient {
     /**
      * 业务系统向法大大平台获取一个页面链接，用于对指定模块进行管理操作，如印章管理、模板管理等
      */
-    async getManageUrl(req, cb) {
-        return this.request({ url: "/manage/get-manage-url", req, reqMethod: "POST", cb });
+    async getManageUrl(req) {
+        return this.request({ url: "/manage/get-manage-url", req, reqMethod: "POST" });
     }
 }
 
@@ -15425,14 +17227,14 @@ class Client$5 extends AbstractClient {
     /**
      * 查询文档模板列表，列表根据文档模板更新时间倒序排序返回
      */
-    async getDocTemplateList(req, cb) {
-        return this.request({ url: "/doc-template/get-list", reqMethod: "POST", req, cb });
+    async getDocTemplateList(req) {
+        return this.request({ url: "/doc-template/get-list", reqMethod: "POST", req });
     }
     /**
      * 获取文档模板详情，包括文档模板的基本信息、填写和签章控件和区域信息等
      */
-    async getDocTemplateDetail(req, cb) {
-        return this.request({ url: "/doc-template/get-detail", reqMethod: "POST", req, cb });
+    async getDocTemplateDetail(req) {
+        return this.request({ url: "/doc-template/get-detail", reqMethod: "POST", req });
     }
 }
 
@@ -15453,12 +17255,11 @@ class Client$4 extends AbstractClient {
      * 将待签署的文档文件或附件上传到法大大平台。法大大平台为每个成功上传的文件分配一个唯一的标识fileId。
      * 文件源数据要么通过文件流形式直接传送，要么提供fileUrl，法大大平台将从该fileUrl拉取文档文件。即：fileContent和fileUrl必须有一个参数是有效的。
      */
-    async uploadInstant(req, cb) {
+    async uploadInstant(req) {
         return this.request({
             url: "/file/upload-instant",
             req,
             reqMethod: "POST",
-            cb,
             options: { multipart: true },
         });
     }
@@ -15480,136 +17281,136 @@ class Client$3 extends AbstractClient {
     /**
      * 创建一个签署任务。该接口可创建一个简单的或要素完备的签署任务
      */
-    async createSignTask(req, cb) {
-        return this.request({ url: "/sign-task/create", reqMethod: "POST", req, cb });
+    async createSignTask(req) {
+        return this.request({ url: "/sign-task/create", reqMethod: "POST", req });
     }
     /**
      * 在预先已经创作好签署模板的情况下，直接基于签署模板创建比较完整的签署任务。这种方式更快捷方便
      */
-    async createWithTemplate(req, cb) {
-        return this.request({ url: "/sign-task/create-with-template", reqMethod: "POST", req, cb });
+    async createWithTemplate(req) {
+        return this.request({ url: "/sign-task/create-with-template", reqMethod: "POST", req });
     }
     /**
      * 从已经创建但尚未发起的签署任务删除文档
      */
-    async addSignTaskDoc(req, cb) {
-        return this.request({ url: "/sign-task/doc/add", reqMethod: "POST", req, cb });
+    async addSignTaskDoc(req) {
+        return this.request({ url: "/sign-task/doc/add", reqMethod: "POST", req });
     }
     /**
      * 从已经创建但尚未发起的签署任务删除文档
      */
-    async deleteSignTaskDoc(req, cb) {
-        return this.request({ url: "/sign-task/doc/delete", reqMethod: "POST", req, cb });
+    async deleteSignTaskDoc(req) {
+        return this.request({ url: "/sign-task/doc/delete", reqMethod: "POST", req });
     }
     /**
      * 在签署任务发起之前，向签署任务添加文档控件
      */
-    async addSignTaskField(req, cb) {
-        return this.request({ url: "/sign-task/field/add", reqMethod: "POST", req, cb });
+    async addSignTaskField(req) {
+        return this.request({ url: "/sign-task/field/add", reqMethod: "POST", req });
     }
     /**
      * 在签署任务发起之前，从签署任务的文档中删除指定控件
      */
-    async deleteSignTaskField(req, cb) {
-        return this.request({ url: "/sign-task/field/delete", reqMethod: "POST", req, cb });
+    async deleteSignTaskField(req) {
+        return this.request({ url: "/sign-task/field/delete", reqMethod: "POST", req });
     }
     /**
      * 获取签署任务的填写控件、签章控件与参与方关系的设置链接
      */
-    async getFieldUrl(req, cb) {
-        return this.request({ url: "/sign-task/field/get-url", reqMethod: "POST", req, cb });
+    async getFieldUrl(req) {
+        return this.request({ url: "/sign-task/field/get-url", reqMethod: "POST", req });
     }
     /**
      * 在签署任务发起之前，向一些填写控件中预先填写内容
      */
-    async fillFieldValues(req, cb) {
-        return this.request({ url: "/sign-task/field/fill-values", reqMethod: "POST", req, cb });
+    async fillFieldValues(req) {
+        return this.request({ url: "/sign-task/field/fill-values", reqMethod: "POST", req });
     }
     /**
      * 对尚未发起的任务添加附件。可以将已经上传的文件添加进去
      */
-    async addAttach(req, cb) {
-        return this.request({ url: "/sign-task/attach/add", reqMethod: "POST", req, cb });
+    async addAttach(req) {
+        return this.request({ url: "/sign-task/attach/add", reqMethod: "POST", req });
     }
     /**
      * 从尚未发起的签署任务移除附件
      */
-    async deleteAttach(req, cb) {
-        return this.request({ url: "/sign-task/attach/delete", reqMethod: "POST", req, cb });
+    async deleteAttach(req) {
+        return this.request({ url: "/sign-task/attach/delete", reqMethod: "POST", req });
     }
     /**
      * 对已经创建但尚未完成的签署任务添加参与方(包括填写方、签署方、抄送方)
      */
-    async addActor(req, cb) {
-        return this.request({ url: "/sign-task/actor/add", reqMethod: "POST", req, cb });
+    async addActor(req) {
+        return this.request({ url: "/sign-task/actor/add", reqMethod: "POST", req });
     }
     /**
      * 移除签署任务中的某些参与方。注意：被移除的参与方必须是尚未执行操作的参与方，若某填写方已经完成填写则不能被移除，若某签署方已完成签署则不能被移除
      */
-    async deleteActor(req, cb) {
-        return this.request({ url: "/sign-task/actor/delete", reqMethod: "POST", req, cb });
+    async deleteActor(req) {
+        return this.request({ url: "/sign-task/actor/delete", reqMethod: "POST", req });
     }
     /**
      * 对已经创建好且尚未发起的签署任务，下发发起指令，签署任务将按照预先设定的流程流转。只有签署任务中的必备要素完备时，才可以发起，例如：必须有文档、参与方等基本参数
      */
-    async initiateSignTask(req, cb) {
-        return this.request({ url: "/sign-task/initiate", reqMethod: "POST", req, cb });
+    async initiateSignTask(req) {
+        return this.request({ url: "/sign-task/initiate", reqMethod: "POST", req });
     }
     /**
      * 发起方撤销尚未结束的签署任务
      */
-    async cancelSignTask(req, cb) {
-        return this.request({ url: "/sign-task/cancel", reqMethod: "POST", req, cb });
+    async cancelSignTask(req) {
+        return this.request({ url: "/sign-task/cancel", reqMethod: "POST", req });
     }
     /**
      * 如果创建时设定签署任务不自动定稿(autoFillFinalize=false)，签署任务的所有必填控件填写完成后，调用本接口定稿，定稿完成后的文档将不可再被做任何填写修改
      */
-    async finalizeSignTaskDoc(req, cb) {
-        return this.request({ url: "/sign-task/doc/finalize", reqMethod: "POST", req, cb });
+    async finalizeSignTaskDoc(req) {
+        return this.request({ url: "/sign-task/doc/finalize", reqMethod: "POST", req });
     }
     /**
      * 设置签署任务在某个参与方节点的自动阻塞
      */
-    async blockSignTask(req, cb) {
-        return this.request({ url: "/sign-task/block", reqMethod: "POST", req, cb });
+    async blockSignTask(req) {
+        return this.request({ url: "/sign-task/block", reqMethod: "POST", req });
     }
     /**
      * 解除签署任务某个参与方节点的阻塞设置。如果该签署任务正巧被阻塞在指定的参与方节点，则签署任务继续向下流转
      */
-    async unblockSignTask(req, cb) {
-        return this.request({ url: "/sign-task/unblock", reqMethod: "POST", req, cb });
+    async unblockSignTask(req) {
+        return this.request({ url: "/sign-task/unblock", reqMethod: "POST", req });
     }
     /**
      * 催办签署任务
      * 填写中、签署中状态的签署任务，对当前流程节点需要处理但未处理的填写人或签署人进行催办
      */
-    async urgeSign(req, cb) {
-        return this.request({ url: "/sign-task/urge-sign", reqMethod: "POST", req, cb });
+    async urgeSign(req) {
+        return this.request({ url: "/sign-task/urge-sign", reqMethod: "POST", req });
     }
     /**
      * 若创建签署任务时设定不自动结束(autoFinish=false)，则在所有签署方都完成签署后，需要调动本接口驱动签署任务结束。
      * 签署任务结束后，会形成签署完结的合同，且不可再对该签署任务做任何动作
      */
-    async finishSignTask(req, cb) {
-        return this.request({ url: "/sign-task/finish", reqMethod: "POST", req, cb });
+    async finishSignTask(req) {
+        return this.request({ url: "/sign-task/finish", reqMethod: "POST", req });
     }
     /**
      * 获取指定签署任务的详情信息和状态
      */
-    async getSignTaskDetail(req, cb) {
-        return this.request({ url: "/sign-task/get-detail", reqMethod: "POST", req, cb });
+    async getSignTaskDetail(req) {
+        return this.request({ url: "/sign-task/get-detail", reqMethod: "POST", req });
     }
     /**
      * 直接以文件流形式下载签署任务中的文档或附件
      */
-    async downloadFiles(req, cb) {
-        return this.request({ url: "/sign-task/download-files", reqMethod: "POST", req, cb });
+    async downloadFiles(req) {
+        return this.request({ url: "/sign-task/download-files", reqMethod: "POST", req });
     }
     /**
      * 针对有访问此签署任务详情和操作权限的**参与方或发起方**，返回该签署任务的链接
      */
-    async getSignTaskUrl(req, cb) {
-        return this.request({ url: "/sign-task/get-url", reqMethod: "POST", req, cb });
+    async getSignTaskUrl(req) {
+        return this.request({ url: "/sign-task/get-url", reqMethod: "POST", req });
     }
 }
 
@@ -15629,14 +17430,14 @@ class Client$2 extends AbstractClient {
     /**
      * 查询签署模板列表，列表根据签署模板更新时间倒序排序返回
      */
-    async getSignTemplateList(req, cb) {
-        return this.request({ url: "/sign-template/get-list", reqMethod: "POST", req, cb });
+    async getSignTemplateList(req) {
+        return this.request({ url: "/sign-template/get-list", reqMethod: "POST", req });
     }
     /**
      * 获取签署模板详情，包括签署模板基本信息、文档信息、参与方信息(含各参与方填写控件、签章控件)
      */
-    async getSignTemplateDetail(req, cb) {
-        return this.request({ url: "/sign-template/get-detail", reqMethod: "POST", req, cb });
+    async getSignTemplateDetail(req) {
+        return this.request({ url: "/sign-template/get-detail", reqMethod: "POST", req });
     }
 }
 
@@ -15657,8 +17458,8 @@ class Client$1 extends AbstractClient {
     * 获取模板管理链接
     * 业务系统向法大大平台获取模板管理页面链接，该页面无需法大大账号登录，用于对指定企业主体的模板进行管理操作
     */
-    async getPageManageUrl(req, cb) {
-        return this.request({ url: "/template/get-pagemanage-url", reqMethod: "POST", req, cb });
+    async getPageManageUrl(req) {
+        return this.request({ url: "/template/get-pagemanage-url", reqMethod: "POST", req });
     }
 }
 

@@ -6,5 +6,5 @@ export declare class Client extends AbstractClient {
     /**
      * 应用系统向法大大平台获取计费页面链接，用于账户信息查询或套餐订购
      */
-    getBillUrl(req: GetBillUrlRequest, cb?: (error: string, res: GetBillUrlResponse) => void): Promise<GetBillUrlResponse>;
+    getBillUrl(req: GetBillUrlRequest): Promise<GetBillUrlResponse>;
 }

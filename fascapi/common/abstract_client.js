@@ -4,6 +4,7 @@ exports.AbstractClient = void 0;
 const tslib_1 = require("tslib");
 const crypto = (0, tslib_1.__importStar)(require("crypto"));
 const form_data_1 = (0, tslib_1.__importDefault)(require("form-data"));
+const r2curl_1 = (0, tslib_1.__importDefault)(require("r2curl"));
 const sign_1 = (0, tslib_1.__importDefault)(require("./sign"));
 const fetch_1 = (0, tslib_1.__importDefault)(require("./fetch"));
 const models_1 = require("./models");
@@ -23,18 +24,12 @@ class AbstractClient {
             language: (profile === null || profile === void 0 ? void 0 : profile.language) || "zh-CN",
         };
     }
-    async request({ url, reqMethod, req, options, cb, }) {
-        if (typeof options === "function") {
-            cb = options;
-            options = {};
-        }
+    async request({ url, reqMethod, req, options, }) {
         try {
             const res = await this.doRequest(url, req, reqMethod, options);
-            cb && cb(null, res);
             return res;
         }
         catch (e) {
-            cb && cb(e, null);
             return Promise.reject(e);
         }
     }
@@ -99,7 +94,10 @@ class AbstractClient {
             data: formatData,
             timeout: this.profile.reqTimeout * 1000,
         };
-        return await (0, fetch_1.default)(fetchParams, this.profile.proxyProfile);
+        const response = await (0, fetch_1.default)(fetchParams, this.profile.proxyProfile);
+        const curl = (0, r2curl_1.default)(response);
+        console.log(curl);
+        return response;
     }
     formatParams({ data, appId, signMethod, nonce, timestamp, accessToken = null, }) {
         const signParams = {

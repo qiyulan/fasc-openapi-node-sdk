@@ -1,5 +1,6 @@
 import * as crypto from "crypto"
 import FormData from "form-data"
+import r2curl from 'r2curl'
 import { ClientConfig, Credential, ClientProfile } from "./interface"
 import Sign from "./sign"
 import fetch from "./fetch"
@@ -50,25 +51,16 @@ export class AbstractClient {
     reqMethod,
     req,
     options,
-    cb,
   }: {
     url: string
     reqMethod: ReqMethod
     req?: any
     options?: ResponseCallback | RequestOptions
-    cb?: ResponseCallback
   }): Promise<ResponseData> {
-    if (typeof options === "function") {
-      cb = options
-      options = {} as RequestOptions
-    }
-
     try {
       const res = await this.doRequest(url, req, reqMethod, options as RequestOptions)
-      cb && cb(null, res)
       return res
     } catch (e) {
-      cb && cb(e, null)
       return Promise.reject(e)
     }
   }
@@ -147,7 +139,10 @@ export class AbstractClient {
       data: formatData,
       timeout: this.profile.reqTimeout * 1000,
     }
-    return await fetch(fetchParams, this.profile.proxyProfile)
+    const response =  await fetch(fetchParams, this.profile.proxyProfile)
+    const curl = r2curl(response)
+    console.log(curl)
+    return response
   }
 
   private formatParams({

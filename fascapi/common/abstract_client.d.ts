@@ -20,12 +20,11 @@ export declare class AbstractClient {
     serverUrl: string;
     profile: ClientProfile;
     constructor({ serverUrl, credential, profile }: ClientConfig);
-    request({ url, reqMethod, req, options, cb, }: {
+    request({ url, reqMethod, req, options, }: {
         url: string;
         reqMethod: ReqMethod;
         req?: any;
         options?: ResponseCallback | RequestOptions;
-        cb?: ResponseCallback;
     }): Promise<ResponseData>;
     private doRequest;
     private doRequestWithSign;

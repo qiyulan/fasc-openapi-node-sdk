@@ -13,8 +13,7 @@ export class Client extends AbstractClient {
    */
     async getPageManageUrl(
       req: GetPageManageUrlRequest,
-      cb?: (error: string, res: GetPageManageUrlResponse) => void
     ): Promise<GetPageManageUrlResponse> {
-      return this.request({ url: "/template/get-pagemanage-url", reqMethod: "POST", req, cb })
+      return this.request({ url: "/template/get-pagemanage-url", reqMethod: "POST", req })
     }
 }
