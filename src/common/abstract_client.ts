@@ -91,7 +91,8 @@ export class AbstractClient {
       "Content-Type": "application/x-www-form-urlencoded",
     }
 
-    let formatData = null
+
+    let reqData: string | FormData = JSON.stringify(data) || ""
 
     let form
     if (reqMethod === "POST" && options?.multipart) {
@@ -99,10 +100,8 @@ export class AbstractClient {
       for (const key in data) {
         form.append(key, data[key])
       }
-      formatData = form
+      reqData = form
       headers["Content-Type"] = form.getHeaders()["content-type"]
-    } else {
-      url += "?bizContent=" + encodeURIComponent(JSON.stringify(data) || "")
     }
 
     const params = this.formatParams({
@@ -127,7 +126,7 @@ export class AbstractClient {
     if (this.credential.accessToken !== null) {
       headers["X-FASC-AccessToken"] = this.credential.accessToken
     } else {
-      formatData = null
+      reqData = null
       headers["X-FASC-Grant-Type"] = "client_credential"
     }
 
@@ -136,7 +135,7 @@ export class AbstractClient {
       baseURL: this.serverUrl,
       method: reqMethod,
       headers,
-      data: formatData,
+      data: reqData,
       timeout: this.profile.reqTimeout * 1000,
     }
     const response =  await fetch(fetchParams, this.profile.proxyProfile)

@@ -51,18 +51,15 @@ class AbstractClient {
             "X-FASC-Timestamp": timestamp,
             "Content-Type": "application/x-www-form-urlencoded",
         };
-        let formatData = null;
+        let reqData = JSON.stringify(data) || "";
         let form;
         if (reqMethod === "POST" && (options === null || options === void 0 ? void 0 : options.multipart)) {
             form = new form_data_1.default();
             for (const key in data) {
                 form.append(key, data[key]);
             }
-            formatData = form;
+            reqData = form;
             headers["Content-Type"] = form.getHeaders()["content-type"];
-        }
-        else {
-            url += "?bizContent=" + encodeURIComponent(JSON.stringify(data) || "");
         }
         const params = this.formatParams({
             data,
@@ -83,7 +80,7 @@ class AbstractClient {
             headers["X-FASC-AccessToken"] = this.credential.accessToken;
         }
         else {
-            formatData = null;
+            reqData = null;
             headers["X-FASC-Grant-Type"] = "client_credential";
         }
         const fetchParams = {
@@ -91,7 +88,7 @@ class AbstractClient {
             baseURL: this.serverUrl,
             method: reqMethod,
             headers,
-            data: formatData,
+            data: reqData,
             timeout: this.profile.reqTimeout * 1000,
         };
         const response = await (0, fetch_1.default)(fetchParams, this.profile.proxyProfile);
