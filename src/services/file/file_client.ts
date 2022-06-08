@@ -13,13 +13,11 @@ export class Client extends AbstractClient {
    */
   async uploadInstant(
     req: UploadInstantRequest,
-    cb?: (error: string, res: UploadInstantResponse) => void
   ): Promise<UploadInstantResponse> {
     return this.request({
       url: "/file/upload-instant",
       req,
       reqMethod: "POST",
-      cb,
       options: { multipart: true },
     })
   }

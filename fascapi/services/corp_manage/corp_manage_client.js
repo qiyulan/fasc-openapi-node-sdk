@@ -9,8 +9,8 @@ class Client extends abstract_client_1.AbstractClient {
     /**
      * 业务系统向法大大平台获取一个页面链接，用于对指定模块进行管理操作，如印章管理、模板管理等
      */
-    async getManageUrl(req, cb) {
-        return this.request({ url: "/manage/get-manage-url", req, reqMethod: "POST", cb });
+    async getManageUrl(req) {
+        return this.request({ url: "/manage/get-manage-url", req, reqMethod: "POST" });
     }
 }
 exports.Client = Client;

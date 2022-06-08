@@ -32,9 +32,8 @@ export class Client extends AbstractClient {
    */
   async addUser(
     req: AddUserRequest,
-    cb?: (error: string, res: AddUserResponse) => void
   ): Promise<AddUserResponse> {
-    return this.request({ url: "/user/add", req, reqMethod: "POST", cb })
+    return this.request({ url: "/user/add", req, reqMethod: "POST" })
   }
 
   /**
@@ -42,9 +41,8 @@ export class Client extends AbstractClient {
    */
   async updateUser(
     req: UpdateUserRequest,
-    cb?: (error: string, res: UpdateUserResponse) => void
   ): Promise<UpdateUserResponse> {
-    return this.request({ url: "/user/update", req, reqMethod: "POST", cb })
+    return this.request({ url: "/user/update", req, reqMethod: "POST" })
   }
 
   /**
@@ -52,9 +50,8 @@ export class Client extends AbstractClient {
    */
   async deleteUser(
     req: DeleteUserRequest,
-    cb?: (error: string, res: DeleteUserResponse) => void
   ): Promise<DeleteUserResponse> {
-    return this.request({ url: "/user/delete", req, reqMethod: "POST", cb })
+    return this.request({ url: "/user/delete", req, reqMethod: "POST" })
   }
 
   /**
@@ -62,9 +59,8 @@ export class Client extends AbstractClient {
    */
   async disableUser(
     req: DisableUserRequest,
-    cb?: (error: string, res: DisableUserResponse) => void
   ): Promise<DisableUserResponse> {
-    return this.request({ url: "/user/disable", req, reqMethod: "POST", cb })
+    return this.request({ url: "/user/disable", req, reqMethod: "POST" })
   }
 
   /**
@@ -72,9 +68,8 @@ export class Client extends AbstractClient {
    */
   async enableUser(
     req: EnableUserRequest,
-    cb?: (error: string, res: EnableUserResponse) => void
   ): Promise<EnableUserResponse> {
-    return this.request({ url: "/user/enable", req, reqMethod: "POST", cb })
+    return this.request({ url: "/user/enable", req, reqMethod: "POST" })
   }
 
     /**
@@ -82,9 +77,8 @@ export class Client extends AbstractClient {
    */
      async unbindUser(
       req: UnbindUserRequest,
-      cb?: (error: string, res: UnbindUserResponse) => void
     ): Promise<UnbindUserResponse> {
-      return this.request({ url: "/user/unbind", req, reqMethod: "POST", cb })
+      return this.request({ url: "/user/unbind", req, reqMethod: "POST" })
     }
 
   /**
@@ -93,9 +87,8 @@ export class Client extends AbstractClient {
    */
   async getAuthUrl(
     req: GetAuthUrlRequest,
-    cb?: (error: string, res: GetAuthUrlResponse) => void
   ): Promise<GetAuthUrlResponse> {
-    return this.request({ url: "/user/get-auth-url", req, reqMethod: "POST", cb })
+    return this.request({ url: "/user/get-auth-url", req, reqMethod: "POST" })
   }
 
   /**
@@ -103,9 +96,8 @@ export class Client extends AbstractClient {
    */
   async getUserInfo(
     req: GetUserInfoRequest,
-    cb?: (error: string, res: GetUserInfoResponse) => void
   ): Promise<GetUserInfoResponse> {
-    return this.request({ url: "/user/get", req, reqMethod: "POST", cb })
+    return this.request({ url: "/user/get", req, reqMethod: "POST" })
   }
 
   /**
@@ -113,8 +105,7 @@ export class Client extends AbstractClient {
    */
   async getIdentInfo(
     req: GetIdentityInfoRequest,
-    cb?: (error: string, res: GetIdentityInfoResponse) => void
   ): Promise<GetIdentityInfoResponse> {
-    return this.request({ url: "/user/get-identity-info", req, reqMethod: "POST", cb })
+    return this.request({ url: "/user/get-identity-info", req, reqMethod: "POST" })
   }
 }

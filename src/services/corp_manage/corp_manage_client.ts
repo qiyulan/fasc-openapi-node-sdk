@@ -12,8 +12,7 @@ export class Client extends AbstractClient {
    */
   async getManageUrl(
     req: GetManageUrlRequest,
-    cb?: (error: string, res: GetManageUrlResponse) => void
   ): Promise<GetManageUrlResponse> {
-    return this.request({ url: "/manage/get-manage-url", req, reqMethod: "POST", cb })
+    return this.request({ url: "/manage/get-manage-url", req, reqMethod: "POST" })
   }
 }

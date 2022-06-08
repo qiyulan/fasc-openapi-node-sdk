@@ -9,8 +9,8 @@ class Client extends abstract_client_1.AbstractClient {
     /**
      * 应用系统向法大大平台获取计费页面链接，用于账户信息查询或套餐订购
      */
-    async getBillUrl(req, cb) {
-        return this.request({ url: "/billing/get-bill-url", reqMethod: "POST", req, cb });
+    async getBillUrl(req) {
+        return this.request({ url: "/billing/get-bill-url", reqMethod: "POST", req });
     }
 }
 exports.Client = Client;

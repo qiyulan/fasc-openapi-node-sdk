@@ -31,20 +31,18 @@ export class Client extends AbstractClient {
    * 后续，针对该企业进行的授权请求、签署任务等调用都将使用该openCorpId标识该企业。您可以在应该管理后台查看和管理已经添加的企业
    */
   async addCorp(
-    req: AddCorpRequest,
-    cb?: (error: string, res: AddCorpResponse) => void
+    req: AddCorpRequest
   ): Promise<AddCorpResponse> {
-    return this.request({ url: "/corp/add", req, reqMethod: "POST", cb })
+    return this.request({ url: "/corp/add", req, reqMethod: "POST" })
   }
 
   /**
    * 为已添加的企业修改在应用系统中的关联参数
    */
   async updateCorp(
-    req: UpdateCorpRequest,
-    cb?: (error: string, res: UpdateCorpResponse) => void
+    req: UpdateCorpRequest
   ): Promise<UpdateCorpResponse> {
-    return this.request({ url: "/corp/update", req, reqMethod: "POST", cb })
+    return this.request({ url: "/corp/update", req, reqMethod: "POST" })
   }
 
   /**
@@ -52,9 +50,8 @@ export class Client extends AbstractClient {
    */
   async deleteCorp(
     req: DeleteCorpRequest,
-    cb?: (error: string, res: DeleteCorpResponse) => void
   ): Promise<DeleteCorpResponse> {
-    return this.request({ url: "/corp/delete", req, reqMethod: "POST", cb })
+    return this.request({ url: "/corp/delete", req, reqMethod: "POST" })
   }
 
   /**
@@ -62,9 +59,8 @@ export class Client extends AbstractClient {
    */
   async disableCorp(
     req: DisableCorpRequest,
-    cb?: (error: string, res: DisableCorpResponse) => void
   ): Promise<DisableCorpResponse> {
-    return this.request({ url: "/corp/disable", req, reqMethod: "POST", cb })
+    return this.request({ url: "/corp/disable", req, reqMethod: "POST" })
   }
 
   /**
@@ -72,9 +68,8 @@ export class Client extends AbstractClient {
    */
   async enableCorp(
     req: EnableCorpRequest,
-    cb?: (error: string, res: EnableCorpResponse) => void
   ): Promise<EnableCorpResponse> {
-    return this.request({ url: "/corp/enable", req, reqMethod: "POST", cb })
+    return this.request({ url: "/corp/enable", req, reqMethod: "POST" })
   }
 
     /**
@@ -82,9 +77,8 @@ export class Client extends AbstractClient {
    */
      async unbindCorp(
       req: UnbindCorpRequest,
-      cb?: (error: string, res: UnbindCorpRequest) => void
     ): Promise<UnbindCorpResponse> {
-      return this.request({ url: "/corp/unbind", req, reqMethod: "POST", cb })
+      return this.request({ url: "/corp/unbind", req, reqMethod: "POST" })
     }
 
   /**
@@ -93,9 +87,8 @@ export class Client extends AbstractClient {
    */
   async getAuthUrl(
     req: GetAuthUrlRequest,
-    cb?: (error: string, res: GetAuthUrlResponse) => void
   ): Promise<GetAuthUrlResponse> {
-    return this.request({ url: "/corp/get-auth-url", req, reqMethod: "POST", cb })
+    return this.request({ url: "/corp/get-auth-url", req, reqMethod: "POST" })
   }
 
   /**
@@ -103,9 +96,8 @@ export class Client extends AbstractClient {
    */
   async getBasicInfo(
     req: GetBasicInfoRequest,
-    cb?: (error: string, res: GetBasicInfoResponse) => void
   ): Promise<GetBasicInfoResponse> {
-    return this.request({ url: "/corp/get", req, reqMethod: "POST", cb })
+    return this.request({ url: "/corp/get", req, reqMethod: "POST" })
   }
 
   /**
@@ -113,9 +105,8 @@ export class Client extends AbstractClient {
    */
   async getIdentityInfo(
     req: GetIdentityInfoRequest,
-    cb?: (error: string, res: GetIdentityInfoResponse) => void
   ): Promise<GetIdentityInfoResponse> {
-    return this.request({ url: "/corp/get-identity-info", req, reqMethod: "POST", cb })
+    return this.request({ url: "/corp/get-identity-info", req, reqMethod: "POST" })
   }
 
 }

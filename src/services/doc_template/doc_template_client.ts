@@ -17,9 +17,8 @@ export class Client extends AbstractClient {
    */
   async getDocTemplateList(
     req?: GetDocTemplateListRequest,
-    cb?: (error: string, res: GetDocTemplateListResponse) => void
   ): Promise<GetDocTemplateListResponse> {
-    return this.request({ url: "/doc-template/get-list", reqMethod: "POST", req, cb })
+    return this.request({ url: "/doc-template/get-list", reqMethod: "POST", req })
   }
 
   /**
@@ -27,8 +26,7 @@ export class Client extends AbstractClient {
    */
   async getDocTemplateDetail(
     req: GetDocTemplateDetailRequest,
-    cb?: (error: string, res: GetDocTemplateDetailResponse) => void
   ): Promise<GetDocTemplateDetailResponse> {
-    return this.request({ url: "/doc-template/get-detail", reqMethod: "POST", req, cb })
+    return this.request({ url: "/doc-template/get-detail", reqMethod: "POST", req })
   }
 }

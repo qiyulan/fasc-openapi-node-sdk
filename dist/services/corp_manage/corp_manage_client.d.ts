@@ -6,5 +6,5 @@ export declare class Client extends AbstractClient {
     /**
      * 业务系统向法大大平台获取一个页面链接，用于对指定模块进行管理操作，如印章管理、模板管理等
      */
-    getManageUrl(req: GetManageUrlRequest, cb?: (error: string, res: GetManageUrlResponse) => void): Promise<GetManageUrlResponse>;
+    getManageUrl(req: GetManageUrlRequest): Promise<GetManageUrlResponse>;
 }

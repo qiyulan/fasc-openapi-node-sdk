@@ -17,9 +17,8 @@ export class Client extends AbstractClient {
    */
   async getSignTemplateList(
     req: GetSignTemplateListRequest,
-    cb?: (error: string, res: GetSignTemplateListResponse) => void
   ): Promise<GetSignTemplateListResponse> {
-    return this.request({ url: "/sign-template/get-list", reqMethod: "POST", req, cb })
+    return this.request({ url: "/sign-template/get-list", reqMethod: "POST", req })
   }
 
   /**
@@ -27,8 +26,7 @@ export class Client extends AbstractClient {
    */
   async getSignTemplateDetail(
     req: GetSignTemplateDetailRequest,
-    cb?: (error: string, res: GetSignTemplateDetailResponse) => void
   ): Promise<GetSignTemplateDetailResponse> {
-    return this.request({ url: "/sign-template/get-detail", reqMethod: "POST", req, cb })
+    return this.request({ url: "/sign-template/get-detail", reqMethod: "POST", req })
   }
 }

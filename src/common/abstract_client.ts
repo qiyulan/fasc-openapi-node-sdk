@@ -1,9 +1,10 @@
 import * as crypto from "crypto"
 import FormData from "form-data"
+import r2curl from 'r2curl'
 import { ClientConfig, Credential, ClientProfile } from "./interface"
 import Sign from "./sign"
 import fetch from "./fetch"
-import { SignMethod } from "./models"
+import { SignMethod, RequestParamsEnum } from "./models"
 import FascOpenApiSDKHttpException from "./fasc_openapi_sdk_exception"
 
 export type ReqMethod = "POST" | "GET"
@@ -50,25 +51,16 @@ export class AbstractClient {
     reqMethod,
     req,
     options,
-    cb,
   }: {
     url: string
     reqMethod: ReqMethod
     req?: any
     options?: ResponseCallback | RequestOptions
-    cb?: ResponseCallback
   }): Promise<ResponseData> {
-    if (typeof options === "function") {
-      cb = options
-      options = {} as RequestOptions
-    }
-
     try {
       const res = await this.doRequest(url, req, reqMethod, options as RequestOptions)
-      cb && cb(null, res)
       return res
     } catch (e) {
-      cb && cb(e, null)
       return Promise.reject(e)
     }
   }
@@ -92,25 +84,23 @@ export class AbstractClient {
     const nonce = crypto.randomBytes(16).toString("hex")
 
     const headers: { [key: string]: any } = {
-      "X-FASC-App-Id": this.credential.appId,
-      "X-FASC-Sign-Type": this.profile.signMethod,
-      "X-FASC-Nonce": nonce,
-      "X-FASC-Timestamp": timestamp,
+      [RequestParamsEnum.APP_ID]: this.credential.appId,
+      [RequestParamsEnum.SIGN_TYPE]: this.profile.signMethod,
+      [RequestParamsEnum.NONCE]: nonce,
+      [RequestParamsEnum.TIMESTAMP]: timestamp,
       "Content-Type": "application/x-www-form-urlencoded",
     }
 
-    let formatData = null
+    let reqData: string | FormData = JSON.stringify(data) || ""
 
     let form
-    if (reqMethod === "POST" && options?.multipart) {
+    if (reqMethod === RequestParamsEnum.METHOD_POST && options?.multipart) {
       form = new FormData()
       for (const key in data) {
         form.append(key, data[key])
       }
-      formatData = form
+      reqData = form
       headers["Content-Type"] = form.getHeaders()["content-type"]
-    } else {
-      url += "?bizContent=" + encodeURIComponent(JSON.stringify(data) || "")
     }
 
     const params = this.formatParams({
@@ -130,13 +120,13 @@ export class AbstractClient {
       appSecret: this.credential.appSecret,
     })
 
-    headers["X-FASC-Sign"] = signature
+    headers[RequestParamsEnum.SIGN] = signature
 
     if (this.credential.accessToken !== null) {
-      headers["X-FASC-AccessToken"] = this.credential.accessToken
+      headers[RequestParamsEnum.ACCESS_TOKEN] = this.credential.accessToken
     } else {
-      formatData = null
-      headers["X-FASC-Grant-Type"] = "client_credential"
+      reqData = null
+      headers[RequestParamsEnum.GRANT_TYPE] = RequestParamsEnum.CLIENT_CREDENTIAL
     }
 
     const fetchParams = {
@@ -144,9 +134,11 @@ export class AbstractClient {
       baseURL: this.serverUrl,
       method: reqMethod,
       headers,
-      data: formatData,
+      data: { [RequestParamsEnum.DATA_KEY]: reqData},
       timeout: this.profile.reqTimeout * 1000,
     }
+    const curl = r2curl(fetchParams)
+    console.log(curl)
     return await fetch(fetchParams, this.profile.proxyProfile)
   }
 
@@ -166,18 +158,18 @@ export class AbstractClient {
     accessToken?: string
   }): RequestData {
     const signParams: RequestData = {
-      bizContent: JSON.stringify(data || ''),
-      "X-FASC-App-Id": appId,
-      "X-FASC-Sign-Type": signMethod,
-      "X-FASC-Nonce": nonce,
-      "X-FASC-Timestamp": timestamp,
+      [RequestParamsEnum.DATA_KEY]: JSON.stringify(data || ''),
+      [RequestParamsEnum.APP_ID]: appId,
+      [RequestParamsEnum.SIGN_TYPE]: signMethod,
+      [RequestParamsEnum.NONCE]: nonce,
+      [RequestParamsEnum.TIMESTAMP]: timestamp,
     }
 
     if (accessToken !== null) {
-      signParams["X-FASC-AccessToken"] = accessToken
+      signParams[RequestParamsEnum.ACCESS_TOKEN] = accessToken
     } else {
-      signParams["X-FASC-Grant-Type"] = "client_credential"
-      delete signParams.bizContent
+      signParams[RequestParamsEnum.GRANT_TYPE] = RequestParamsEnum.CLIENT_CREDENTIAL
+      delete signParams[RequestParamsEnum.DATA_KEY]
     }
 
     return signParams
