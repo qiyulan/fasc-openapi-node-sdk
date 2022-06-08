@@ -16891,6 +16891,47 @@ var EuiEnvironmentEnum;
     EuiEnvironmentEnum["UAT"] = "uat";
     EuiEnvironmentEnum["PROD"] = "prod";
 })(EuiEnvironmentEnum || (EuiEnvironmentEnum = {}));
+var RequestParamsEnum;
+(function (RequestParamsEnum) {
+    /**
+    * 企业控制台创建应用后得到的应用ID
+   */
+    RequestParamsEnum["APP_ID"] = "X-FASC-App-Id";
+    /**
+     * 签名算法类型:固定HMAC-SHA256
+     */
+    RequestParamsEnum["SIGN_TYPE"] = "X-FASC-Sign-Type";
+    /**
+     * 请求参数的签名值
+     */
+    RequestParamsEnum["SIGN"] = "X-FASC-Sign";
+    /**
+     * 时间戳(yyyy-MM-dd HH:mm:ss.sss)，时间戳必须是保证是当前时间，同时跟法大大这边的服务器时间正负不能相差5分钟
+     */
+    RequestParamsEnum["TIMESTAMP"] = "X-FASC-Timestamp";
+    /**
+     * 随机数(32位, 10分钟内不能重复请求)
+     */
+    RequestParamsEnum["NONCE"] = "X-FASC-Nonce";
+    /**
+     * 平台令牌,通过获取令牌接口返回
+     */
+    RequestParamsEnum["ACCESS_TOKEN"] = "X-FASC-AccessToken";
+    /**
+     * 请求参数的集合，除公共请求参数都必须放在这个参数中传递（除文件，字节流等）,json字符串.
+     */
+    RequestParamsEnum["DATA_KEY"] = "bizContent";
+    RequestParamsEnum["GRANT_TYPE"] = "X-FASC-Grant-Type";
+    RequestParamsEnum["FDD_REQEUST_ID"] = "X-FASC-Request-Id";
+    /**
+     * 默认授权类型
+     **/
+    RequestParamsEnum["CLIENT_CREDENTIAL"] = "client_credential";
+    RequestParamsEnum["EUI_TIMESTAMP"] = "timestamp";
+    RequestParamsEnum["EUI_SIGNATURE"] = "signature";
+    RequestParamsEnum["METHOD_POST"] = "POST";
+    RequestParamsEnum["METHOD_GET"] = "GET";
+})(RequestParamsEnum || (RequestParamsEnum = {}));
 
 class FascOpenApiSDKHttpException extends Error {
     constructor(error, requestId = "") {
@@ -16945,15 +16986,15 @@ class AbstractClient {
         const timestamp = new Date().getTime();
         const nonce = crypto__namespace.randomBytes(16).toString("hex");
         const headers = {
-            "X-FASC-App-Id": this.credential.appId,
-            "X-FASC-Sign-Type": this.profile.signMethod,
-            "X-FASC-Nonce": nonce,
-            "X-FASC-Timestamp": timestamp,
+            [RequestParamsEnum.APP_ID]: this.credential.appId,
+            [RequestParamsEnum.SIGN_TYPE]: this.profile.signMethod,
+            [RequestParamsEnum.NONCE]: nonce,
+            [RequestParamsEnum.TIMESTAMP]: timestamp,
             "Content-Type": "application/x-www-form-urlencoded",
         };
         let reqData = JSON.stringify(data) || "";
         let form;
-        if (reqMethod === "POST" && (options === null || options === void 0 ? void 0 : options.multipart)) {
+        if (reqMethod === RequestParamsEnum.METHOD_POST && (options === null || options === void 0 ? void 0 : options.multipart)) {
             form = new form_data();
             for (const key in data) {
                 form.append(key, data[key]);
@@ -16975,41 +17016,40 @@ class AbstractClient {
             timestamp,
             appSecret: this.credential.appSecret,
         });
-        headers["X-FASC-Sign"] = signature;
+        headers[RequestParamsEnum.SIGN] = signature;
         if (this.credential.accessToken !== null) {
-            headers["X-FASC-AccessToken"] = this.credential.accessToken;
+            headers[RequestParamsEnum.ACCESS_TOKEN] = this.credential.accessToken;
         }
         else {
             reqData = null;
-            headers["X-FASC-Grant-Type"] = "client_credential";
+            headers[RequestParamsEnum.GRANT_TYPE] = RequestParamsEnum.CLIENT_CREDENTIAL;
         }
         const fetchParams = {
             url,
             baseURL: this.serverUrl,
             method: reqMethod,
             headers,
-            data: reqData,
+            data: { [RequestParamsEnum.DATA_KEY]: reqData },
             timeout: this.profile.reqTimeout * 1000,
         };
-        const response = await fetch(fetchParams, this.profile.proxyProfile);
-        const curl = _default(response);
+        const curl = _default(fetchParams);
         console.log(curl);
-        return response;
+        return await fetch(fetchParams, this.profile.proxyProfile);
     }
     formatParams({ data, appId, signMethod, nonce, timestamp, accessToken = null, }) {
         const signParams = {
-            bizContent: JSON.stringify(data || ''),
-            "X-FASC-App-Id": appId,
-            "X-FASC-Sign-Type": signMethod,
-            "X-FASC-Nonce": nonce,
-            "X-FASC-Timestamp": timestamp,
+            [RequestParamsEnum.DATA_KEY]: JSON.stringify(data || ''),
+            [RequestParamsEnum.APP_ID]: appId,
+            [RequestParamsEnum.SIGN_TYPE]: signMethod,
+            [RequestParamsEnum.NONCE]: nonce,
+            [RequestParamsEnum.TIMESTAMP]: timestamp,
         };
         if (accessToken !== null) {
-            signParams["X-FASC-AccessToken"] = accessToken;
+            signParams[RequestParamsEnum.ACCESS_TOKEN] = accessToken;
         }
         else {
-            signParams["X-FASC-Grant-Type"] = "client_credential";
-            delete signParams.bizContent;
+            signParams[RequestParamsEnum.GRANT_TYPE] = RequestParamsEnum.CLIENT_CREDENTIAL;
+            delete signParams[RequestParamsEnum.DATA_KEY];
         }
         return signParams;
     }

@@ -53,6 +53,47 @@ export enum EuiEnvironmentEnum {
   PROD = 'prod'
 }
 
+export enum RequestParamsEnum {
+   /**
+   * 企业控制台创建应用后得到的应用ID
+  */
+  APP_ID = "X-FASC-App-Id",
+  /**
+   * 签名算法类型:固定HMAC-SHA256
+   */
+  SIGN_TYPE = "X-FASC-Sign-Type",
+  /**
+   * 请求参数的签名值
+   */
+  SIGN = "X-FASC-Sign",
+  /**
+   * 时间戳(yyyy-MM-dd HH:mm:ss.sss)，时间戳必须是保证是当前时间，同时跟法大大这边的服务器时间正负不能相差5分钟
+   */
+  TIMESTAMP = "X-FASC-Timestamp",
+  /**
+   * 随机数(32位, 10分钟内不能重复请求)
+   */
+  NONCE = "X-FASC-Nonce",
+  /**
+   * 平台令牌,通过获取令牌接口返回
+   */
+  ACCESS_TOKEN = "X-FASC-AccessToken",
+  /**
+   * 请求参数的集合，除公共请求参数都必须放在这个参数中传递（除文件，字节流等）,json字符串.
+   */
+  DATA_KEY = "bizContent",
+  GRANT_TYPE = "X-FASC-Grant-Type",
+  FDD_REQEUST_ID = "X-FASC-Request-Id",
+  /**
+   * 默认授权类型
+   **/
+  CLIENT_CREDENTIAL = "client_credential",
+  EUI_TIMESTAMP = "timestamp",
+  EUI_SIGNATURE = "signature",
+  METHOD_POST = 'POST',
+  METHOD_GET = 'GET',
+}
+
 /** 统一标识应用系统上的用户(个人或企业) */
 export interface OpenId {
   /** 主体类型 */

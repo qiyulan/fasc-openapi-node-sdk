@@ -4,7 +4,7 @@ import r2curl from 'r2curl'
 import { ClientConfig, Credential, ClientProfile } from "./interface"
 import Sign from "./sign"
 import fetch from "./fetch"
-import { SignMethod } from "./models"
+import { SignMethod, RequestParamsEnum } from "./models"
 import FascOpenApiSDKHttpException from "./fasc_openapi_sdk_exception"
 
 export type ReqMethod = "POST" | "GET"
@@ -84,18 +84,17 @@ export class AbstractClient {
     const nonce = crypto.randomBytes(16).toString("hex")
 
     const headers: { [key: string]: any } = {
-      "X-FASC-App-Id": this.credential.appId,
-      "X-FASC-Sign-Type": this.profile.signMethod,
-      "X-FASC-Nonce": nonce,
-      "X-FASC-Timestamp": timestamp,
+      [RequestParamsEnum.APP_ID]: this.credential.appId,
+      [RequestParamsEnum.SIGN_TYPE]: this.profile.signMethod,
+      [RequestParamsEnum.NONCE]: nonce,
+      [RequestParamsEnum.TIMESTAMP]: timestamp,
       "Content-Type": "application/x-www-form-urlencoded",
     }
-
 
     let reqData: string | FormData = JSON.stringify(data) || ""
 
     let form
-    if (reqMethod === "POST" && options?.multipart) {
+    if (reqMethod === RequestParamsEnum.METHOD_POST && options?.multipart) {
       form = new FormData()
       for (const key in data) {
         form.append(key, data[key])
@@ -121,13 +120,13 @@ export class AbstractClient {
       appSecret: this.credential.appSecret,
     })
 
-    headers["X-FASC-Sign"] = signature
+    headers[RequestParamsEnum.SIGN] = signature
 
     if (this.credential.accessToken !== null) {
-      headers["X-FASC-AccessToken"] = this.credential.accessToken
+      headers[RequestParamsEnum.ACCESS_TOKEN] = this.credential.accessToken
     } else {
       reqData = null
-      headers["X-FASC-Grant-Type"] = "client_credential"
+      headers[RequestParamsEnum.GRANT_TYPE] = RequestParamsEnum.CLIENT_CREDENTIAL
     }
 
     const fetchParams = {
@@ -135,13 +134,12 @@ export class AbstractClient {
       baseURL: this.serverUrl,
       method: reqMethod,
       headers,
-      data: reqData,
+      data: { [RequestParamsEnum.DATA_KEY]: reqData},
       timeout: this.profile.reqTimeout * 1000,
     }
-    const response =  await fetch(fetchParams, this.profile.proxyProfile)
-    const curl = r2curl(response)
+    const curl = r2curl(fetchParams)
     console.log(curl)
-    return response
+    return await fetch(fetchParams, this.profile.proxyProfile)
   }
 
   private formatParams({
@@ -160,18 +158,18 @@ export class AbstractClient {
     accessToken?: string
   }): RequestData {
     const signParams: RequestData = {
-      bizContent: JSON.stringify(data || ''),
-      "X-FASC-App-Id": appId,
-      "X-FASC-Sign-Type": signMethod,
-      "X-FASC-Nonce": nonce,
-      "X-FASC-Timestamp": timestamp,
+      [RequestParamsEnum.DATA_KEY]: JSON.stringify(data || ''),
+      [RequestParamsEnum.APP_ID]: appId,
+      [RequestParamsEnum.SIGN_TYPE]: signMethod,
+      [RequestParamsEnum.NONCE]: nonce,
+      [RequestParamsEnum.TIMESTAMP]: timestamp,
     }
 
     if (accessToken !== null) {
-      signParams["X-FASC-AccessToken"] = accessToken
+      signParams[RequestParamsEnum.ACCESS_TOKEN] = accessToken
     } else {
-      signParams["X-FASC-Grant-Type"] = "client_credential"
-      delete signParams.bizContent
+      signParams[RequestParamsEnum.GRANT_TYPE] = RequestParamsEnum.CLIENT_CREDENTIAL
+      delete signParams[RequestParamsEnum.DATA_KEY]
     }
 
     return signParams
