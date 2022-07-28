@@ -1,8 +1,20 @@
-# FASC OpenApi Node SDK 说明
+# FASC OpenApi Node SDK v5.1说明
 
 # 简介
 
 欢迎使用法大大开发者工具套件（SDK），NODEJS SDK 是法大大电子合同和电子签云服务开放平台（FASC OPEN API）的配套工具。
+
+
+
+# 版本说明
+
+FASC.openAPI 产品目前存在两个子版本号：v5.0、v5.1， 均在持续迭代维护。 
+
+当前页面SDK基于FASC.openAPI v5.1子版本开发，如需使用FASC.openAPI v5.0版本SDK，请访问： 
+
+https://gitee.com/fadada-cloud/fasc-openapi-node-sdk/tree/v5.0
+
+
 
 # 目录结构
 - SDK项目层级     
@@ -96,20 +108,14 @@ client.getUserInfo({openUserId: 'openUserId'}).then(
 
 
 
-# 版本说明
+# 版本更新日志
 
-5.0.8 - 2022-05-13   基于FASC OpenAPI 5.0.8版本
+5.1.0 - 2022-07-28   基于FASC OpenAPI 5.1.0版本开发，初始版本。
 
-- userClient新增方法【解绑个人用户账号】
 
-- corpClient新增方法【解绑企业用户账号】
-
-- 新增euiClient， 提供方法【构造企业用户授权链接】
-
-  
 
 # 参考
 
-FASC OpenAPI (服务端) 接口文档
+FASC OpenAPI (服务端) 接口文档 v5.1
 
-https://dev.fadada.com/api-doc/W6MIOHNFNT/90M5Y9AS1ZWEWHLE
+https://dev.fadada.com/api-doc/MTE9YIK1SP/QMMRYYN5RMPREAZH/5-1 
