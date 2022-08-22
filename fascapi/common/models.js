@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RequestParamsEnum = exports.EuiEnvironmentEnum = exports.ActorTypeEnum = exports.CorpIdentTypeEnum = exports.IdTypeEnum = exports.IdentTypeEnum = exports.SignMethod = void 0;
+exports.Permissions = exports.SUBVERSION = exports.RequestParamsEnum = exports.EuiEnvironmentEnum = exports.ActorTypeEnum = exports.CorpIdentTypeEnum = exports.IdTypeEnum = exports.IdentTypeEnum = exports.SignMethod = void 0;
 var SignMethod;
 (function (SignMethod) {
     SignMethod["hamcsha256"] = "HMAC-SHA256";
@@ -37,17 +37,13 @@ var CorpIdentTypeEnum;
     /** 其他类型 */
     CorpIdentTypeEnum["OTHER"] = "other";
 })(CorpIdentTypeEnum = exports.CorpIdentTypeEnum || (exports.CorpIdentTypeEnum = {}));
-/** 参与方类型 */
+/** 参与方主体类型 */
 var ActorTypeEnum;
 (function (ActorTypeEnum) {
-    /** 发起方 */
-    ActorTypeEnum["INITIATOR"] = "initiator";
-    /** 填写方 */
-    ActorTypeEnum["FILLER"] = "filler";
-    /** 签署方 */
-    ActorTypeEnum["SIGNER"] = "signer";
-    /** 抄送方 */
-    ActorTypeEnum["CC"] = "cc";
+    /** 企业 */
+    ActorTypeEnum["CORP"] = "corp";
+    /** 个人 */
+    ActorTypeEnum["PERSON"] = "person";
 })(ActorTypeEnum = exports.ActorTypeEnum || (exports.ActorTypeEnum = {}));
 /** eui环境枚举 */
 var EuiEnvironmentEnum;
@@ -59,8 +55,8 @@ var EuiEnvironmentEnum;
 var RequestParamsEnum;
 (function (RequestParamsEnum) {
     /**
-    * 企业控制台创建应用后得到的应用ID
-   */
+     * 企业控制台创建应用后得到的应用ID
+    */
     RequestParamsEnum["APP_ID"] = "X-FASC-App-Id";
     /**
      * 签名算法类型:固定HMAC-SHA256
@@ -74,6 +70,10 @@ var RequestParamsEnum;
      * 时间戳(yyyy-MM-dd HH:mm:ss.sss)，时间戳必须是保证是当前时间，同时跟法大大这边的服务器时间正负不能相差5分钟
      */
     RequestParamsEnum["TIMESTAMP"] = "X-FASC-Timestamp";
+    /**
+     * FASC.openApi子版本号。如当前规划新版本为：5.1。注意：若指定子版本号下不存在接口，系统将会报错返回。
+     */
+    RequestParamsEnum["SUBVERSION"] = "X-FASC-Api-SubVersion";
     /**
      * 随机数(32位, 10分钟内不能重复请求)
      */
@@ -97,3 +97,12 @@ var RequestParamsEnum;
     RequestParamsEnum["METHOD_POST"] = "POST";
     RequestParamsEnum["METHOD_GET"] = "GET";
 })(RequestParamsEnum = exports.RequestParamsEnum || (exports.RequestParamsEnum = {}));
+exports.SUBVERSION = '5.1';
+/** 参与方权限 */
+var Permissions;
+(function (Permissions) {
+    /** 填写和确认内容 */
+    Permissions["FILL"] = "fill";
+    /** 确定签署 */
+    Permissions["SIGN"] = "sign";
+})(Permissions = exports.Permissions || (exports.Permissions = {}));

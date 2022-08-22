@@ -12,6 +12,7 @@ export interface RequestData {
     "X-FASC-AccessToken"?: string;
     "X-FASC-Sign"?: string;
     "X-FASC-Grant-Type"?: string;
+    "X-FASC-Api-SubVersion": string;
     bizContent: string;
 }
 declare type ResponseData = any;

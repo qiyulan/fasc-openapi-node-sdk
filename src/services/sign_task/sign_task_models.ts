@@ -1,4 +1,4 @@
-import { Actor, Field, OpenId, UserIdentInfo, UserInfoExtend } from "../../common/models"
+import { Actor, Field, OpenId } from "../../common/models"
 
 /** 您的业务应用系统中的业务场景信息，用于更好地定义业务场景和签署任务的关系 */
 export interface BusinessScene {
@@ -10,7 +10,7 @@ export interface BusinessScene {
 
 export interface Doc {
   /** 在该签署任务内指定文档序号 */
-  docId: number
+  docId: string
   /** 指定在本签署任务中的文档名称 */
   docName: string
   /** 文档fileId */
@@ -106,22 +106,58 @@ export interface CcActors {
   ccActor: Actor
 }
 
-/** createSignTask 创建签署任务-请求参数结构体 */
-export interface CreateSignTaskRequest {
+interface FillFields {
+  /** 控件所在的文档序号。文档序号必须在文档列表中存在 */
+  fieldDocId: string
+  /** 控件编码 */
+  fieldId?: string
+  /** 控件名称(不推荐) */
+  fieldName?: string
+  /** 控件缺省填充值 */
+  fieldValue?: string
+}
+
+interface SignFields {
+  /** 控件所在的文档序号。文档序号必须在文档列表中存在 */
+  fieldDocId: string
+  /** 控件编码 */
+  fieldId: string
+}
+
+interface SignConfigInfo {
+  /** 参与方签署序号 */
+  orderNo?: number
+  /** 当签署任务流转到此参与方时，是否暂时阻塞。false: 不阻塞，true: 阻塞。默认为false */
+  blockHere?: boolean
+  /** 是否请求该参与方免验证签：false: 否,true: 是,默认为false */
+  requestVerifyFree?: boolean
+  /** 个人参与方的签署方式: unlimited: 不限制，standard: 使用标准签名，hand_write: 使用手绘签名 */
+  signerSignMethod?: string
+}
+
+interface SignTaskActor {
+  /** 参与方基本信息 */
+  actor: Actor
+  /** 该参与方关联的填写控件列表，建立参与方和控件关系 */
+  fillFields?: Array<FillFields>
+  /** 该参与方关联的签署控件列表，建立参与方和控件关系 */
+  signFields?: Array<SignFields>
+  /** 签署配置信息 */
+  signConfigInfo?: SignConfigInfo
+}
+
+/** create 创建签署任务-请求参数结构体 */
+export interface CreateRequest {
   /** 签署任务主题 */
   signTaskSubject: string
   /** 该签署任务的发起方 */
   initiator: OpenId
   /** 任务过期时间 */
   expiresTime?: string
-  /** 是否自动发起，false: 不自动发起，true: 自动发起。默认为false */
-  autoInitiate?: boolean
+  /** 是否自动提交协作，false: 不自动发起，true: 自动发起。默认为false */
+  autoStart?: boolean
   /** 如果签署任务中定义了填写参与方，在填写流程中，全部必填控件填写完成后是否自动定稿，false: 不自动定稿，true: 自动定稿，默认为true */
   autoFillFinalize?: boolean
-  /** 所有签署方签署完成后，签署任务是否自动结束，false: 不自动结束，true: 自动结束，默认为true。 */
-  autoFinish?: boolean
-  /** 填写流程是否有序，false: 无序，true: 有序，默认为false */
-  fillInOrder?: boolean
   /** 签署流程是否有序，false: 无序，true: 有序，默认为false */
   signInOrder?: boolean
   /** 您的业务应用系统中的业务场景信息，用于更好地定义业务场景和签署任务的关系 */
@@ -130,18 +166,19 @@ export interface CreateSignTaskRequest {
   docs?: Array<Doc>
   /** 附件列表，附件数上限为20个 */
   attachs?: Array<Attach>
-  /** 填写方列表 */
-  fillActors?: Array<FillActor>
-  /** 签署方列表 */
-  signActors?: Array<SignActor>
-  /** 抄送方列表 */
-  ccActors?: Array<CcActors>
+  actors?: Array<SignTaskActor>
 }
 
-/** createSignTask 创建签署任务-响应参数结构体 */
-export interface CreateSignTaskResponse {
+/** create 创建签署任务-响应参数结构体 */
+export interface CreateResponse {
   /** 签署任务ID */
   signTaskId: string
+}
+
+interface SignTaskActorForTemplate {
+  actor: Actor
+  fillFields?: Array<FillFields>
+  signConfigInfo?: Pick<SignConfigInfo, 'blockHere' | 'requestVerifyFree'>
 }
 
 /** createWithTemplate 创建签署任务 (基于签署模板)-请求参数结构体 */
@@ -153,21 +190,14 @@ export interface CreateWithTemplateRequest {
   /** 任务过期时间 */
   expiresTime?: string
   /** 是否自动发起。false: 不自动发起，true: 自动发起，默认为false。 */
-  autoInitiate?: boolean
+  autoStart?: boolean
   /** 如果签署任务中定义了填写参与方，在填写流程中，全部必填控件填写完成后是否自动定稿：false: 不自动定稿，true: 自动定稿，默认为true */
   autoFillFinalize?: boolean
   /** 所有签署方签署完成后，签署任务是否自动结束：false: 不自动结束，true: 自动结束，默认为true */
   autoFinish?: boolean
   /** 您的业务应用系统中的业务场景信息，用于更好地定义业务场景和签署任务的关系 */
   businessScene?: BusinessScene
-  /** 指定签署模板ID */
-  signTemplateId: string
-  /** 填写方列表 */
-  fillActors?: Array<FillActorWithTemplate>
-  /** 签署方列表 */
-  signActors?: Array<SignActorWithTemplate>
-  /** 抄送方列表 */
-  ccActors?: Array<CcActors>
+  actors?: Array<SignTaskActorForTemplate>
 }
 
 /** createWithTemplate 创建签署任务 (基于签署模板)-响应参数结构体 */
@@ -176,87 +206,65 @@ export interface CreateWithTemplateResponse {
   signTaskId: string
 }
 
-/** addSignTaskDoc 添加签署任务文档-请求参数结构体 */
-export interface AddSignTaskDocRequest {
+/** addDoc 添加签署任务文档-请求参数结构体 */
+export interface AddDocRequest {
   /** 签署任务ID */
   signTaskId: string
   /** 待签署的文档列表，可一次添加多份文档，一个签署任务中文档数上限为20个 */
   docs: Array<Doc>
 }
 
-/** addSignTaskDoc 添加签署任务文档-响应参数结构体 */
-export type AddSignTaskDocResponse = null
+/** addDoc 添加签署任务文档-响应参数结构体 */
+export type AddDocResponse = null
 
-/** deleteSignTaskDoc 移除签署任务文档-请求参数结构体 */
-export interface DeleteSignTaskDocRequest {
+/** deleteDoc 移除签署任务文档-请求参数结构体 */
+export interface DeleteDocRequest {
   /** 签署任务ID */
   signTaskId: string
   /** 文档序号docId列表 */
-  docIds?: Array<number>
+  docIds?: Array<string>
 }
 
-/** deleteSignTaskDoc 移除签署任务文档-响应参数结构体 */
-export type DeleteSignTaskDocResponse = null
+/** deleteDoc 移除签署任务文档-响应参数结构体 */
+export type DeleteDocResponse = null
 
 interface SignTaskField {
   /** 指定文档序号 */
-  docId: number
+  docId: string
   /** 文档序号docId列表，注意同一个docId中的各个控件的fieldId不能重复 */
   docFields: Array<Field>
 }
 
-/** addSignTaskField 添加签署任务控件-请求参数结构体 */
-export interface AddSignTaskFieldRequest {
+/** addField 添加签署任务控件-请求参数结构体 */
+export interface AddFieldRequest {
   /** 签署任务ID */
   signTaskId: string
   /** 控件列表，可一次添加多个 */
   fields: Array<SignTaskField>
 }
 
-/** addSignTaskField 添加签署任务控件-响应参数结构体 */
-export type AddSignTaskFieldResponse = null
+/** addField 添加签署任务控件-响应参数结构体 */
+export type AddFieldResponse = null
 
-/** deleteSignTaskField 移除签署任务控件-请求参数结构体 */
-export interface DeleteSignTaskFieldRequest {
+/** deleteField 移除签署任务控件-请求参数结构体 */
+export interface DeleteFieldRequest {
   /** 签署任务ID */
   signTaskId: string
   /** 控件列表 */
   fields: Array<{
     /** 指定文档序号 */
-    docId: number
+    docId: string
     /** 上述docId中的控件编码列表 */
     fieldIds: Array<string>
   }>
 }
 
-/** deleteSignTaskField 添加签署任务控件-响应参数结构体 */
-export type DeleteSignTaskFieldResponse = null
-
-/** getFieldUrl 获取签署任务控件设置链接-请求参数结构体 */
-export interface GetFieldUrlRequest {
-  /** 签署任务ID  */
-  signTaskId: string
-  /** 该页面的实际操作人的openUserId */
-  openUserId: string
-  /** 实际操作人个人身份信息 */
-  userIdentInfo?: UserIdentInfo
-  /** 实际操作人补充信息 */
-  userInfoExtend?: UserInfoExtend
-  /** 重定向地址，控件设置操作完成后重定向跳转到该地址，并且附带上参数 */
-  redirectUrl?: string
-}
-
-/** getFieldUrl 获取签署任务控件设置链接-响应参数结构体 */
-export interface GetFieldUrlResponse {
-  /** 签署任务控件设置链接的Embedded URL形式 */
-  eUrl?: string
-  /** 签署任务控件设置链接的Cloud URL形式 */
-  cloudUrl: string
-}
+/** deleteField 添加签署任务控件-响应参数结构体 */
+export type DeleteFieldResponse = null
 
 export interface DocFieldValue {
   /** 文档序号 */
-  docId: number
+  docId: string
   /** 控件ID。仅支持填写类控件 */
   fieldId: string
   /** 填写的值 */
@@ -275,7 +283,7 @@ export type FillFieldValuesResponse = null
 /** addAttach 添加签署任务附件-请求参数结构体 */
 export interface AddAttachRequest {
   signTaskId: string
-  attachs: Attach
+  attachs: Array<Attach>
 }
 
 /** addAttach 添加签署任务附件-响应参数结构体 */
@@ -284,7 +292,7 @@ export type AddAttachResponse = null
 /** deleteAttach 移除签署任务附件-请求参数结构体 */
 export interface DeleteAttachRequest {
   signTaskId: string
-  attachs: Array<number>
+  attachIds: Array<string>
 }
 
 /** addAttach 移除签署任务附件-响应参数结构体 */
@@ -313,9 +321,7 @@ export interface AddFillActor {
 /** addActor 添加签署任务参与方-请求参数结构体 */
 export interface AddActorRequest {
   signTaskId: string
-  fillActors?: Array<AddFillActor>
-  signActors?: Array<SignActor>
-  ccActors?: Array<CcActors>
+  actors: Array<SignTaskActor>  
 }
 
 /** addActor 添加签署任务参与方-响应参数结构体 */
@@ -324,80 +330,128 @@ export type AddActorResponse = null
 /** deleteActor 移除签署任务参与方-请求参数结构体 */
 export interface DeleteActorRequest {
   signTaskId: string
-  /** 指定的参与方类型，filler: 填写方、signer: 签署方 */
-  actorType: string
   actorIds: Array<string>
 }
 
 /** deleteActor 移除签署任务参与方-响应参数结构体 */
 export type DeleteActorResponse = null
 
-/** initiateSignTask 发起签署任务-请求参数结构体 */
-export interface InitiateSignTaskRequest {
+/** start 提交签署任务-请求参数结构体 */
+export interface StartRequest {
   signTaskId: string
 }
 
-/** initiateSignTask 发起签署任务-响应参数结构体 */
-export type InitiateSignTaskResponse = null
+/**  提交签署任务-响应参数结构体 */
+export type StartResponse = null
 
-/** cancelSignTask 撤销签署任务-请求参数结构体 */
-export interface CancelSignTaskRequest {
+/** cancel 撤销签署任务-请求参数结构体 */
+export interface CancelRequest {
   signTaskId: string
 }
 
-/** cancelSignTask 撤销签署任务-响应参数结构体 */
-export type CancelSignTaskResponse = null
+/** cancel 撤销签署任务-响应参数结构体 */
+export type CancelResponse = null
 
-/** finalizeSignTaskDoc 定稿签署任务文档-请求参数结构体 */
-export interface FinalizeSignTaskDocRequest {
+/** finalizeDoc 定稿签署任务文档-请求参数结构体 */
+export interface FinalizeDocRequest {
   signTaskId: string
 }
 
-/** finalizeSignTaskDoc 定稿签署任务文档-响应参数结构体 */
-export type FinalizeSignTaskDocResponse = null
+/** finalizeDoc 定稿签署任务文档-响应参数结构体 */
+export type FinalizeDocResponse = null
 
-/** blockSignTask 阻塞签署任务-请求参数结构体 */
-export interface BlockSignTaskRequest {
+/** block 阻塞签署任务-请求参数结构体 */
+export interface BlockRequest {
   signTaskId: string
-}
-
-/** blockSignTask 阻塞签署任务-响应参数结构体 */
-export type BlockSignTaskResponse = null
-
-/** unblockSignTask 解阻签署任务-请求参数结构体 */
-export interface UnblockSignTaskRequest {
-  signTaskId: string
-  /** 指定的参与方类型，filler: 填写方、signer: 签署方 */
-  actorType: string
   /** 指定的参与方在本签署任务中的标识 */
   actorId: string
 }
 
-/** unblockSignTask 解阻签署任务-响应参数结构体 */
-export type UnblockSignTaskResponse = null
+/** block 阻塞签署任务-响应参数结构体 */
+export type BlockResponse = null
 
-/** urgeSign 催办签署任务-请求参数结构体 */
-export interface UrgeSignRequest {
+/** unblock 解阻签署任务-请求参数结构体 */
+export interface UnblockRequest {
   signTaskId: string
+  /** 指定的参与方在本签署任务中的标识 */
+  actorId: string
 }
 
-/** getUrgeSign 催办签署任务-响应参数结构体 */
-export type UrgeSignResponse = null
+/** unblock 解阻签署任务-响应参数结构体 */
+export type UnblockResponse = null
 
-/** finishSignTask 结束签署任务-请求参数结构体 */
-export interface FinishSignTaskRequest {
-  signTaskId: string
+/** getOwnerList 获取指定归属方的签署任务列表-请求参数结构体 */
+export interface GetOwnerListRequest {
+  /** 签署任务发起方或参与方主体，**需检查授权** */
+  ownerId: OpenId
+  /** 主体参与签署协作类型，如不传，则查询主体所有的签署任务: initiator:  发起方, actor:  参与方(填写、签署) */
+  ownerRole?: string
+  /**  */
+  listFilter?: {
+    /** 签署任务名称 */
+    signTaskSubject?: string
+    /** 签署任务状态，支持传入多个状态 */
+    signTaskStatus?: Array<string>
+    /** 业务参考号，由应用基于自身业务上下文提供 */
+    transReferenceId?: string
+  }
+  /** 查询结果分页返回，此处指定第几页，如果不传默从第一页返回 */
+  listPageNo?: number
+  /** 指定每页多少条数据，如果不传默认为100，单页最大100 */
+  listPageSize?: number
 }
 
-/** finishSignTask 结束签署任务-响应参数结构体 */
-export type FinishSignTaskResponse = null
+interface OwnerSignTask {
+  /** 签署任务ID */
+  signTaskId: string
+  /** 业务参考号，由应用基于自身业务上下文提供 */
+  transReferenceId?: string
+  /** 文档模板名称，长度最大100个字符 */
+  signTaskSubject: string
+  /** 签署任务状态 */
+  signTaskStatus: string
+  /** 该签署任务的发起方名称，如果是个人即姓名，如果是企业即企业全称 */
+  initiatorName: string
+  /** 参与方名称串 */
+  actorName: string
+  /** 签署任务创建时间 */
+  createTime: string
+  /** 签署任务完成时间(含异常停止) */
+  finishTime: string
+}
 
-/** getSignTaskDetail 获取签署任务详情-请求参数结构体 */
-export interface GetSignTaskDetailRequest {
+/** getOwnerList 获取指定归属方的签署任务列表-响应参数结构体 */
+export interface GetOwnerListResponse {
+  /** 签署任务列表，数组类型 */
+  signTasks: Array<OwnerSignTask>
+  /** 列表当前分页，当前第几页。页码从1开始，即首页为1 */
+  listPageNo: number
+  /** 当前返回页中的文档模板数量，即数组大小 */
+  countInPage: number
+  /** 列表总分页数 */
+  listPageCount: number
+  /** 查询到的文档模板总数 */
+  totalCount: number
+}
+
+interface ActorInfo {
+  /** 参与方标识 */
+  actorId: string
+  /** 参与方主体类型：corp: 企业，person: 个人 */
+  actorType: string
+  /** 参与方名称 */
+  actorName: string
+  /** 参与方权限列表：fill: 填写和确认内容；sign: 确定签署 */
+  permissions: string
+}
+
+/** getDetail 获取签署任务详情-请求参数结构体 */
+export interface GetDetailRequest {
   signTaskId: string
 }
-/** getSignTaskDetail 获取签署任务详情-响应参数结构体 */
-export interface GetSignTaskDetailResponse {
+/** getDetail 获取签署任务详情-响应参数结构体 */
+export interface GetDetailResponse {
+  initiator: OpenId
   signTaskId: string
   /** 签署任务主题 */
   signTaskSubject: string
@@ -406,45 +460,40 @@ export interface GetSignTaskDetailResponse {
    * 类型: enum
    */
   signTaskStatus: string
+  createTime: string
   docs?: Array<{
-    docId: number
+    docId: string
     docName: string
   }>
   attachs?: Array<{
     attachId: number
     attachName: string
   }>
-  fillActors?: Array<{
-    /** 填写方信息 */
-    fillActor: Actor
-    /** 参与序号 */
-    orderNo?: number
-    /**
-     * 填写方状态
-     * 类型：enum
-     */
-    fillActorStatus: string
-    /** 最后的填写操作时间。格式为：Unix标准时间戳，精确到毫秒 */
-    actionTime?: string
-  }>
-  signActors?: Array<{
-    /** 签署方信息 */
-    signActor: Actor
-    /** 参与序号 */
-    orderNo?: number
-    /**
-     * 签署方状态
-     * 类型：enum
-     */
-    signActorStatus: string
-    /** 最后的签署填签署时间。格式为：Unix标准时间戳，精确到毫秒 */
-    actionTime?: string
-  }>
-  ccActors?: Array<CcActors>
+  actors: { 
+    actorInfo: Array<ActorInfo>
+    /** 参与方加入状态：no_join: 未加入, joined: 已加入 */
+    joinStatus: string
+    /** 加入时间 */
+    joinTime?: string
+    /** 参与方填写状态：wait_fill: 待填写 (等待填写), filled: 已填写 (已完成了需自己必填控件的填写) , fill_rejected: 已拒填 (拒绝了填写) */
+    fillStatus?: string
+    /** 最后的填写操作时间 */
+    fillTime?: string
+    /** 参与方签署状态: wait_sign: 待签署 (等待签署), signed: 已签署 (已完成签署), sign_rejected: 已拒签 (拒绝了签署)。 */
+    signStatus?: string
+    /** 最后的签署操作时间 */
+    signTime?: string
+    /** 参与方签署序号 */
+    signOrderNo?: number
+    /** 是否设置了阻塞该参与方: 是否设置了阻塞该参与方：, blocked：阻塞中(参与方被阻塞), unblocked：未阻塞(参与方未阻塞) */
+    blockStatus?: string
+    /** 参与方签署任务专属链接。该链接由应用主动分发给有权限的参与方 */
+    actorSignTaskUrl?: string
+  }
 }
 
-/** downloadFiles 下载签署任务文档-请求参数结构体 */
-export interface DownloadFilesRequest {
+/** getOwnerDownLoadUrl 获取指定归属方的签署任务文档下载地址-请求参数结构体 */
+export interface GetOwnerDownLoadUrlRequest {
   signTaskId: string
   /** 文档类型，doc：签署任务中的文档，attach：签署任务中的附件 */
   fileType?: string
@@ -452,24 +501,8 @@ export interface DownloadFilesRequest {
   id?: number
 }
 
-/** downloadFiles 下载签署任务文档-响应参数结构体 */
-export type DownloadFilesResponse = null
-
-/** getSignTaskUrl 获取签署任务链接-请求参数结构体 */
-export interface GetSignTaskUrlRequest {
-  signTaskId: string
-  /** 参与方或发起方类型，initiator: 发起方、filler: 填写方、signer: 签署方、cc: 抄送方 */
-  actorType: string
-  /** 参与方在签署任务中被设定的唯一标识。只有actorType=initiator时该参数才是可忽略的，否则该参数是必填参数 */
-  actorId?: string
-  /** 重定向地址，用户在页面上操作完成之后重定向跳转到该地址 */
-  redirectUrl?: string
-}
-
-/** getSignTaskUrl 获取签署任务链接-响应参数结构体 */
-export interface GetSignTaskUrlResponse {
-  /** 签署任务链接的Embedded URL形式 */
-  eUrl?: string
-  /** 签署任务链接的Cloud URL形式 */
-  cloudUrl: string
+/** getOwnerDownLoadUrl 获取指定归属方的签署任务文档下载地址-响应参数结构体 */
+export interface GetOwnerDownLoadUrlResponse {
+  /** 文档的下载地址，文件压缩格式zip，长度最长500字符 */
+  downloadUrl?: string
 }

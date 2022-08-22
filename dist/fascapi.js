@@ -46,7 +46,7 @@ var require$$0__default$1 = /*#__PURE__*/_interopDefaultLegacy(require$$0$2);
 var require$$4__default$1 = /*#__PURE__*/_interopDefaultLegacy(require$$4$1);
 var require$$8__default = /*#__PURE__*/_interopDefaultLegacy(require$$8);
 
-var Models$a = /*#__PURE__*/Object.freeze({
+var Models$8 = /*#__PURE__*/Object.freeze({
   __proto__: null
 });
 
@@ -12112,7 +12112,7 @@ FormData$2.prototype.toString = function () {
 
 var dist = {};
 
-var src = {exports: {}};
+var src$1 = {exports: {}};
 
 var browser = {exports: {}};
 
@@ -12145,7 +12145,7 @@ var ms = function(val, options) {
   options = options || {};
   var type = typeof val;
   if (type === 'string' && val.length > 0) {
-    return parse(val);
+    return parse$2(val);
   } else if (type === 'number' && isFinite(val)) {
     return options.long ? fmtLong(val) : fmtShort(val);
   }
@@ -12163,7 +12163,7 @@ var ms = function(val, options) {
  * @api private
  */
 
-function parse(str) {
+function parse$2(str) {
   str = String(str);
   if (str.length > 100) {
     return;
@@ -13099,9 +13099,9 @@ formatters.O = function (v) {
  */
 
 if (typeof process === 'undefined' || process.type === 'renderer' || process.browser === true || process.__nwjs) {
-	src.exports = browser.exports;
+	src$1.exports = browser.exports;
 } else {
-	src.exports = node.exports;
+	src$1.exports = node.exports;
 }
 
 var AxiosRequestConfigAdapter$1 = {};
@@ -13362,7 +13362,7 @@ var __importDefault$3 = (commonjsGlobal && commonjsGlobal.__importDefault) || fu
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(HeaderHelper$1, "__esModule", { value: true });
-var debug_1$4 = __importDefault$3(src.exports);
+var debug_1$4 = __importDefault$3(src$1.exports);
 var CURL_OPTIONS_1 = CURL_OPTIONS;
 var HTTP_HEADER_1 = HTTP_HEADER;
 var HTTP_METHOD_1$1 = HTTP_METHOD;
@@ -13438,7 +13438,7 @@ var __importDefault$2 = (commonjsGlobal && commonjsGlobal.__importDefault) || fu
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(OptionContainer$1, "__esModule", { value: true });
-var debug_1$3 = __importDefault$2(src.exports);
+var debug_1$3 = __importDefault$2(src$1.exports);
 var CommonUtils_1$2 = __importDefault$2(CommonUtils$1);
 var isEmpty_1$1 = isEmpty$1;
 var log$2 = debug_1$3.default('r2curl:OptionContainer');
@@ -13476,7 +13476,7 @@ var __importDefault$1 = (commonjsGlobal && commonjsGlobal.__importDefault) || fu
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(CurlBuilder$1, "__esModule", { value: true });
-var debug_1$2 = __importDefault$1(src.exports);
+var debug_1$2 = __importDefault$1(src$1.exports);
 var HTTP_METHOD_1 = HTTP_METHOD;
 var BodyHelper_1 = BodyHelper$1;
 var CommonUtils_1$1 = __importDefault$1(CommonUtils$1);
@@ -13561,7 +13561,7 @@ var __importDefault = (commonjsGlobal && commonjsGlobal.__importDefault) || func
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(dist, "__esModule", { value: true });
-var debug_1$1 = __importDefault(src.exports);
+var debug_1$1 = __importDefault(src$1.exports);
 var AxiosRequestConfigAdapter_1 = AxiosRequestConfigAdapter$1;
 var IR2CurlOptions_1 = IR2CurlOptions;
 var CommonUtils_1 = __importDefault(CommonUtils$1);
@@ -13653,7 +13653,7 @@ function removeStream(data) {
     }
 }
 function deepRemoveNull(obj) {
-    if (isArray$1(obj)) {
+    if (isArray$5(obj)) {
         return obj.map(deepRemoveNull);
     }
     else if (isObject$1(obj)) {
@@ -13670,14 +13670,14 @@ function deepRemoveNull(obj) {
         return obj;
     }
 }
-function isBuffer$1(x) {
+function isBuffer$2(x) {
     return Buffer.isBuffer(x);
 }
-function isArray$1(x) {
+function isArray$5(x) {
     return Array.isArray(x);
 }
 function isObject$1(x) {
-    return typeof x === "object" && !isArray$1(x) && !isStream_1(x) && !isBuffer$1(x);
+    return typeof x === "object" && !isArray$5(x) && !isStream_1(x) && !isBuffer$2(x);
 }
 function isBlank(x) {
     if (typeof x === 'string') {
@@ -13690,7 +13690,7 @@ function isBlank(x) {
 
 var axios$2 = {exports: {}};
 
-var bind$2 = function bind(fn, thisArg) {
+var bind$4 = function bind(fn, thisArg) {
   return function wrap() {
     var args = new Array(arguments.length);
     for (var i = 0; i < args.length; i++) {
@@ -13700,7 +13700,7 @@ var bind$2 = function bind(fn, thisArg) {
   };
 };
 
-var bind$1 = bind$2;
+var bind$3 = bind$4;
 
 // utils is a library of generic helper functions non-specific to axios
 
@@ -13728,7 +13728,7 @@ function kindOfTest(type) {
  * @param {Object} val The value to test
  * @returns {boolean} True if value is an Array, otherwise false
  */
-function isArray(val) {
+function isArray$4(val) {
   return Array.isArray(val);
 }
 
@@ -13748,7 +13748,7 @@ function isUndefined(val) {
  * @param {Object} val The value to test
  * @returns {boolean} True if value is a Buffer, otherwise false
  */
-function isBuffer(val) {
+function isBuffer$1(val) {
   return val !== null && !isUndefined(val) && val.constructor !== null && !isUndefined(val.constructor)
     && typeof val.constructor.isBuffer === 'function' && val.constructor.isBuffer(val);
 }
@@ -13785,7 +13785,7 @@ function isArrayBufferView(val) {
  * @param {Object} val The value to test
  * @returns {boolean} True if value is a String, otherwise false
  */
-function isString(val) {
+function isString$1(val) {
   return typeof val === 'string';
 }
 
@@ -13795,7 +13795,7 @@ function isString(val) {
  * @param {Object} val The value to test
  * @returns {boolean} True if value is a Number, otherwise false
  */
-function isNumber(val) {
+function isNumber$1(val) {
   return typeof val === 'number';
 }
 
@@ -13831,7 +13831,7 @@ function isPlainObject(val) {
  * @param {Object} val The value to test
  * @returns {boolean} True if value is a Date, otherwise false
  */
-var isDate = kindOfTest('Date');
+var isDate$1 = kindOfTest('Date');
 
 /**
  * Determine if a value is a File
@@ -13964,7 +13964,7 @@ function forEach(obj, fn) {
     obj = [obj];
   }
 
-  if (isArray(obj)) {
+  if (isArray$4(obj)) {
     // Iterate over array values
     for (var i = 0, l = obj.length; i < l; i++) {
       fn.call(null, obj[i], i, obj);
@@ -13996,14 +13996,14 @@ function forEach(obj, fn) {
  * @param {Object} obj1 Object to merge
  * @returns {Object} Result of all merge properties
  */
-function merge(/* obj1, obj2, obj3, ... */) {
+function merge$1(/* obj1, obj2, obj3, ... */) {
   var result = {};
   function assignValue(val, key) {
     if (isPlainObject(result[key]) && isPlainObject(val)) {
-      result[key] = merge(result[key], val);
+      result[key] = merge$1(result[key], val);
     } else if (isPlainObject(val)) {
-      result[key] = merge({}, val);
-    } else if (isArray(val)) {
+      result[key] = merge$1({}, val);
+    } else if (isArray$4(val)) {
       result[key] = val.slice();
     } else {
       result[key] = val;
@@ -14027,7 +14027,7 @@ function merge(/* obj1, obj2, obj3, ... */) {
 function extend(a, b, thisArg) {
   forEach(b, function assignValue(val, key) {
     if (thisArg && typeof val === 'function') {
-      a[key] = bind$1(val, thisArg);
+      a[key] = bind$3(val, thisArg);
     } else {
       a[key] = val;
     }
@@ -14136,18 +14136,18 @@ var isTypedArray = (function(TypedArray) {
   };
 })(typeof Uint8Array !== 'undefined' && Object.getPrototypeOf(Uint8Array));
 
-var utils$i = {
-  isArray: isArray,
+var utils$l = {
+  isArray: isArray$4,
   isArrayBuffer: isArrayBuffer,
-  isBuffer: isBuffer,
+  isBuffer: isBuffer$1,
   isFormData: isFormData,
   isArrayBufferView: isArrayBufferView,
-  isString: isString,
-  isNumber: isNumber,
+  isString: isString$1,
+  isNumber: isNumber$1,
   isObject: isObject,
   isPlainObject: isPlainObject,
   isUndefined: isUndefined,
-  isDate: isDate,
+  isDate: isDate$1,
   isFile: isFile,
   isBlob: isBlob,
   isFunction: isFunction,
@@ -14155,7 +14155,7 @@ var utils$i = {
   isURLSearchParams: isURLSearchParams,
   isStandardBrowserEnv: isStandardBrowserEnv,
   forEach: forEach,
-  merge: merge,
+  merge: merge$1,
   extend: extend,
   trim: trim,
   stripBOM: stripBOM,
@@ -14169,9 +14169,9 @@ var utils$i = {
   isFileList: isFileList
 };
 
-var utils$h = utils$i;
+var utils$k = utils$l;
 
-function encode(val) {
+function encode$1(val) {
   return encodeURIComponent(val).
     replace(/%3A/gi, ':').
     replace(/%24/g, '$').
@@ -14197,29 +14197,29 @@ var buildURL$3 = function buildURL(url, params, paramsSerializer) {
   var serializedParams;
   if (paramsSerializer) {
     serializedParams = paramsSerializer(params);
-  } else if (utils$h.isURLSearchParams(params)) {
+  } else if (utils$k.isURLSearchParams(params)) {
     serializedParams = params.toString();
   } else {
     var parts = [];
 
-    utils$h.forEach(params, function serialize(val, key) {
+    utils$k.forEach(params, function serialize(val, key) {
       if (val === null || typeof val === 'undefined') {
         return;
       }
 
-      if (utils$h.isArray(val)) {
+      if (utils$k.isArray(val)) {
         key = key + '[]';
       } else {
         val = [val];
       }
 
-      utils$h.forEach(val, function parseValue(v) {
-        if (utils$h.isDate(v)) {
+      utils$k.forEach(val, function parseValue(v) {
+        if (utils$k.isDate(v)) {
           v = v.toISOString();
-        } else if (utils$h.isObject(v)) {
+        } else if (utils$k.isObject(v)) {
           v = JSON.stringify(v);
         }
-        parts.push(encode(key) + '=' + encode(v));
+        parts.push(encode$1(key) + '=' + encode$1(v));
       });
     });
 
@@ -14238,7 +14238,7 @@ var buildURL$3 = function buildURL(url, params, paramsSerializer) {
   return url;
 };
 
-var utils$g = utils$i;
+var utils$j = utils$l;
 
 function InterceptorManager$1() {
   this.handlers = [];
@@ -14282,7 +14282,7 @@ InterceptorManager$1.prototype.eject = function eject(id) {
  * @param {Function} fn The function to call for each interceptor
  */
 InterceptorManager$1.prototype.forEach = function forEach(fn) {
-  utils$g.forEach(this.handlers, function forEachHandler(h) {
+  utils$j.forEach(this.handlers, function forEachHandler(h) {
     if (h !== null) {
       fn(h);
     }
@@ -14291,10 +14291,10 @@ InterceptorManager$1.prototype.forEach = function forEach(fn) {
 
 var InterceptorManager_1 = InterceptorManager$1;
 
-var utils$f = utils$i;
+var utils$i = utils$l;
 
 var normalizeHeaderName$1 = function normalizeHeaderName(headers, normalizedName) {
-  utils$f.forEach(headers, function processHeader(value, name) {
+  utils$i.forEach(headers, function processHeader(value, name) {
     if (name !== normalizedName && name.toUpperCase() === normalizedName.toUpperCase()) {
       headers[normalizedName] = value;
       delete headers[name];
@@ -14302,7 +14302,7 @@ var normalizeHeaderName$1 = function normalizeHeaderName(headers, normalizedName
   });
 };
 
-var utils$e = utils$i;
+var utils$h = utils$l;
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -14324,7 +14324,7 @@ function AxiosError$6(message, code, config, request, response) {
   response && (this.response = response);
 }
 
-utils$e.inherits(AxiosError$6, Error, {
+utils$h.inherits(AxiosError$6, Error, {
   toJSON: function toJSON() {
     return {
       // Standard
@@ -14372,7 +14372,7 @@ Object.defineProperty(prototype, 'isAxiosError', {value: true});
 AxiosError$6.from = function(error, code, config, request, response, customProps) {
   var axiosError = Object.create(prototype);
 
-  utils$e.toFlatObject(error, axiosError, function filter(obj) {
+  utils$h.toFlatObject(error, axiosError, function filter(obj) {
     return obj !== Error.prototype;
   });
 
@@ -14393,7 +14393,7 @@ var transitional = {
   clarifyTimeoutError: false
 };
 
-var utils$d = utils$i;
+var utils$g = utils$l;
 
 /**
  * Convert a data object to FormData
@@ -14411,11 +14411,11 @@ function toFormData$1(obj, formData) {
   function convertValue(value) {
     if (value === null) return '';
 
-    if (utils$d.isDate(value)) {
+    if (utils$g.isDate(value)) {
       return value.toISOString();
     }
 
-    if (utils$d.isArrayBuffer(value) || utils$d.isTypedArray(value)) {
+    if (utils$g.isArrayBuffer(value) || utils$g.isTypedArray(value)) {
       return typeof Blob === 'function' ? new Blob([value]) : Buffer.from(value);
     }
 
@@ -14423,26 +14423,26 @@ function toFormData$1(obj, formData) {
   }
 
   function build(data, parentKey) {
-    if (utils$d.isPlainObject(data) || utils$d.isArray(data)) {
+    if (utils$g.isPlainObject(data) || utils$g.isArray(data)) {
       if (stack.indexOf(data) !== -1) {
         throw Error('Circular reference detected in ' + parentKey);
       }
 
       stack.push(data);
 
-      utils$d.forEach(data, function each(value, key) {
-        if (utils$d.isUndefined(value)) return;
+      utils$g.forEach(data, function each(value, key) {
+        if (utils$g.isUndefined(value)) return;
         var fullKey = parentKey ? parentKey + '.' + key : key;
         var arr;
 
         if (value && !parentKey && typeof value === 'object') {
-          if (utils$d.endsWith(key, '{}')) {
+          if (utils$g.endsWith(key, '{}')) {
             // eslint-disable-next-line no-param-reassign
             value = JSON.stringify(value);
-          } else if (utils$d.endsWith(key, '[]') && (arr = utils$d.toArray(value))) {
+          } else if (utils$g.endsWith(key, '[]') && (arr = utils$g.toArray(value))) {
             // eslint-disable-next-line func-names
             arr.forEach(function(el) {
-              !utils$d.isUndefined(el) && formData.append(fullKey, convertValue(el));
+              !utils$g.isUndefined(el) && formData.append(fullKey, convertValue(el));
             });
             return;
           }
@@ -14488,10 +14488,10 @@ var settle$2 = function settle(resolve, reject, response) {
   }
 };
 
-var utils$c = utils$i;
+var utils$f = utils$l;
 
 var cookies$1 = (
-  utils$c.isStandardBrowserEnv() ?
+  utils$f.isStandardBrowserEnv() ?
 
   // Standard browser envs support document.cookie
     (function standardBrowserEnv() {
@@ -14500,15 +14500,15 @@ var cookies$1 = (
           var cookie = [];
           cookie.push(name + '=' + encodeURIComponent(value));
 
-          if (utils$c.isNumber(expires)) {
+          if (utils$f.isNumber(expires)) {
             cookie.push('expires=' + new Date(expires).toGMTString());
           }
 
-          if (utils$c.isString(path)) {
+          if (utils$f.isString(path)) {
             cookie.push('path=' + path);
           }
 
-          if (utils$c.isString(domain)) {
+          if (utils$f.isString(domain)) {
             cookie.push('domain=' + domain);
           }
 
@@ -14585,7 +14585,7 @@ var buildFullPath$3 = function buildFullPath(baseURL, requestedURL) {
   return requestedURL;
 };
 
-var utils$b = utils$i;
+var utils$e = utils$l;
 
 // Headers whose duplicates are ignored by node
 // c.f. https://nodejs.org/api/http.html#http_message_headers
@@ -14617,10 +14617,10 @@ var parseHeaders$1 = function parseHeaders(headers) {
 
   if (!headers) { return parsed; }
 
-  utils$b.forEach(headers.split('\n'), function parser(line) {
+  utils$e.forEach(headers.split('\n'), function parser(line) {
     i = line.indexOf(':');
-    key = utils$b.trim(line.substr(0, i)).toLowerCase();
-    val = utils$b.trim(line.substr(i + 1));
+    key = utils$e.trim(line.substr(0, i)).toLowerCase();
+    val = utils$e.trim(line.substr(i + 1));
 
     if (key) {
       if (parsed[key] && ignoreDuplicateOf.indexOf(key) >= 0) {
@@ -14637,10 +14637,10 @@ var parseHeaders$1 = function parseHeaders(headers) {
   return parsed;
 };
 
-var utils$a = utils$i;
+var utils$d = utils$l;
 
 var isURLSameOrigin$1 = (
-  utils$a.isStandardBrowserEnv() ?
+  utils$d.isStandardBrowserEnv() ?
 
   // Standard browser envs have full support of the APIs needed to test
   // whether the request URL is of the same origin as current location.
@@ -14690,7 +14690,7 @@ var isURLSameOrigin$1 = (
     * @returns {boolean} True if URL shares the same origin, otherwise false
     */
       return function isURLSameOrigin(requestURL) {
-        var parsed = (utils$a.isString(requestURL)) ? resolveURL(requestURL) : requestURL;
+        var parsed = (utils$d.isString(requestURL)) ? resolveURL(requestURL) : requestURL;
         return (parsed.protocol === originURL.protocol &&
             parsed.host === originURL.host);
       };
@@ -14705,7 +14705,7 @@ var isURLSameOrigin$1 = (
 );
 
 var AxiosError$4 = AxiosError_1;
-var utils$9 = utils$i;
+var utils$c = utils$l;
 
 /**
  * A `CanceledError` is an object that is thrown when an operation is canceled.
@@ -14719,7 +14719,7 @@ function CanceledError$4(message) {
   this.name = 'CanceledError';
 }
 
-utils$9.inherits(CanceledError$4, AxiosError$4, {
+utils$c.inherits(CanceledError$4, AxiosError$4, {
   __CANCEL__: true
 });
 
@@ -14730,7 +14730,7 @@ var parseProtocol$1 = function parseProtocol(url) {
   return match && match[1] || '';
 };
 
-var utils$8 = utils$i;
+var utils$b = utils$l;
 var settle$1 = settle$2;
 var cookies = cookies$1;
 var buildURL$2 = buildURL$3;
@@ -14758,7 +14758,7 @@ var xhr = function xhrAdapter(config) {
       }
     }
 
-    if (utils$8.isFormData(requestData) && utils$8.isStandardBrowserEnv()) {
+    if (utils$b.isFormData(requestData) && utils$b.isStandardBrowserEnv()) {
       delete requestHeaders['Content-Type']; // Let the browser set it
     }
 
@@ -14872,7 +14872,7 @@ var xhr = function xhrAdapter(config) {
     // Add xsrf header
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
-    if (utils$8.isStandardBrowserEnv()) {
+    if (utils$b.isStandardBrowserEnv()) {
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(fullPath)) && config.xsrfCookieName ?
         cookies.read(config.xsrfCookieName) :
@@ -14885,7 +14885,7 @@ var xhr = function xhrAdapter(config) {
 
     // Add headers to the request
     if ('setRequestHeader' in request) {
-      utils$8.forEach(requestHeaders, function setRequestHeader(val, key) {
+      utils$b.forEach(requestHeaders, function setRequestHeader(val, key) {
         if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
           // Remove Content-Type if data is undefined
           delete requestHeaders[key];
@@ -14897,7 +14897,7 @@ var xhr = function xhrAdapter(config) {
     }
 
     // Add withCredentials to request if needed
-    if (!utils$8.isUndefined(config.withCredentials)) {
+    if (!utils$b.isUndefined(config.withCredentials)) {
       request.withCredentials = !!config.withCredentials;
     }
 
@@ -15572,7 +15572,7 @@ var data = {
   "version": "0.27.2"
 };
 
-var utils$7 = utils$i;
+var utils$a = utils$l;
 var settle = settle$2;
 var buildFullPath$1 = buildFullPath$3;
 var buildURL$1 = buildURL$3;
@@ -15661,12 +15661,12 @@ var http_1 = function httpAdapter(config) {
     }
 
     // support for https://www.npmjs.com/package/form-data api
-    if (utils$7.isFormData(data) && utils$7.isFunction(data.getHeaders)) {
+    if (utils$a.isFormData(data) && utils$a.isFunction(data.getHeaders)) {
       Object.assign(headers, data.getHeaders());
-    } else if (data && !utils$7.isStream(data)) {
-      if (Buffer.isBuffer(data)) ; else if (utils$7.isArrayBuffer(data)) {
+    } else if (data && !utils$a.isStream(data)) {
+      if (Buffer.isBuffer(data)) ; else if (utils$a.isArrayBuffer(data)) {
         data = Buffer.from(new Uint8Array(data));
-      } else if (utils$7.isString(data)) {
+      } else if (utils$a.isString(data)) {
         data = Buffer.from(data, 'utf-8');
       } else {
         return reject(new AxiosError$2(
@@ -15907,7 +15907,7 @@ var http_1 = function httpAdapter(config) {
             if (config.responseType !== 'arraybuffer') {
               responseData = responseData.toString(config.responseEncoding);
               if (!config.responseEncoding || config.responseEncoding === 'utf8') {
-                responseData = utils$7.stripBOM(responseData);
+                responseData = utils$a.stripBOM(responseData);
               }
             }
             response.data = responseData;
@@ -15983,7 +15983,7 @@ var http_1 = function httpAdapter(config) {
 
 
     // Send the request
-    if (utils$7.isStream(data)) {
+    if (utils$a.isStream(data)) {
       data.on('error', function handleStreamError(err) {
         reject(AxiosError$2.from(err, config, null, req));
       }).pipe(req);
@@ -15996,7 +15996,7 @@ var http_1 = function httpAdapter(config) {
 // eslint-disable-next-line strict
 var FormData$1 = form_data;
 
-var utils$6 = utils$i;
+var utils$9 = utils$l;
 var normalizeHeaderName = normalizeHeaderName$1;
 var AxiosError$1 = AxiosError_1;
 var transitionalDefaults = transitional;
@@ -16007,7 +16007,7 @@ var DEFAULT_CONTENT_TYPE = {
 };
 
 function setContentTypeIfUnset(headers, value) {
-  if (!utils$6.isUndefined(headers) && utils$6.isUndefined(headers['Content-Type'])) {
+  if (!utils$9.isUndefined(headers) && utils$9.isUndefined(headers['Content-Type'])) {
     headers['Content-Type'] = value;
   }
 }
@@ -16025,10 +16025,10 @@ function getDefaultAdapter() {
 }
 
 function stringifySafely(rawValue, parser, encoder) {
-  if (utils$6.isString(rawValue)) {
+  if (utils$9.isString(rawValue)) {
     try {
       (parser || JSON.parse)(rawValue);
-      return utils$6.trim(rawValue);
+      return utils$9.trim(rawValue);
     } catch (e) {
       if (e.name !== 'SyntaxError') {
         throw e;
@@ -16039,7 +16039,7 @@ function stringifySafely(rawValue, parser, encoder) {
   return (encoder || JSON.stringify)(rawValue);
 }
 
-var defaults$3 = {
+var defaults$5 = {
 
   transitional: transitionalDefaults,
 
@@ -16049,29 +16049,29 @@ var defaults$3 = {
     normalizeHeaderName(headers, 'Accept');
     normalizeHeaderName(headers, 'Content-Type');
 
-    if (utils$6.isFormData(data) ||
-      utils$6.isArrayBuffer(data) ||
-      utils$6.isBuffer(data) ||
-      utils$6.isStream(data) ||
-      utils$6.isFile(data) ||
-      utils$6.isBlob(data)
+    if (utils$9.isFormData(data) ||
+      utils$9.isArrayBuffer(data) ||
+      utils$9.isBuffer(data) ||
+      utils$9.isStream(data) ||
+      utils$9.isFile(data) ||
+      utils$9.isBlob(data)
     ) {
       return data;
     }
-    if (utils$6.isArrayBufferView(data)) {
+    if (utils$9.isArrayBufferView(data)) {
       return data.buffer;
     }
-    if (utils$6.isURLSearchParams(data)) {
+    if (utils$9.isURLSearchParams(data)) {
       setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
       return data.toString();
     }
 
-    var isObjectPayload = utils$6.isObject(data);
+    var isObjectPayload = utils$9.isObject(data);
     var contentType = headers && headers['Content-Type'];
 
     var isFileList;
 
-    if ((isFileList = utils$6.isFileList(data)) || (isObjectPayload && contentType === 'multipart/form-data')) {
+    if ((isFileList = utils$9.isFileList(data)) || (isObjectPayload && contentType === 'multipart/form-data')) {
       var _FormData = this.env && this.env.FormData;
       return toFormData(isFileList ? {'files[]': data} : data, _FormData && new _FormData());
     } else if (isObjectPayload || contentType === 'application/json') {
@@ -16083,12 +16083,12 @@ var defaults$3 = {
   }],
 
   transformResponse: [function transformResponse(data) {
-    var transitional = this.transitional || defaults$3.transitional;
+    var transitional = this.transitional || defaults$5.transitional;
     var silentJSONParsing = transitional && transitional.silentJSONParsing;
     var forcedJSONParsing = transitional && transitional.forcedJSONParsing;
     var strictJSONParsing = !silentJSONParsing && this.responseType === 'json';
 
-    if (strictJSONParsing || (forcedJSONParsing && utils$6.isString(data) && data.length)) {
+    if (strictJSONParsing || (forcedJSONParsing && utils$9.isString(data) && data.length)) {
       try {
         return JSON.parse(data);
       } catch (e) {
@@ -16131,18 +16131,18 @@ var defaults$3 = {
   }
 };
 
-utils$6.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-  defaults$3.headers[method] = {};
+utils$9.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults$5.headers[method] = {};
 });
 
-utils$6.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults$3.headers[method] = utils$6.merge(DEFAULT_CONTENT_TYPE);
+utils$9.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults$5.headers[method] = utils$9.merge(DEFAULT_CONTENT_TYPE);
 });
 
-var defaults_1 = defaults$3;
+var defaults_1 = defaults$5;
 
-var utils$5 = utils$i;
-var defaults$2 = defaults_1;
+var utils$8 = utils$l;
+var defaults$4 = defaults_1;
 
 /**
  * Transform the data for a request or a response
@@ -16153,9 +16153,9 @@ var defaults$2 = defaults_1;
  * @returns {*} The resulting transformed data
  */
 var transformData$1 = function transformData(data, headers, fns) {
-  var context = this || defaults$2;
+  var context = this || defaults$4;
   /*eslint no-param-reassign:0*/
-  utils$5.forEach(fns, function transform(fn) {
+  utils$8.forEach(fns, function transform(fn) {
     data = fn.call(context, data, headers);
   });
 
@@ -16166,10 +16166,10 @@ var isCancel$1 = function isCancel(value) {
   return !!(value && value.__CANCEL__);
 };
 
-var utils$4 = utils$i;
+var utils$7 = utils$l;
 var transformData = transformData$1;
 var isCancel = isCancel$1;
-var defaults$1 = defaults_1;
+var defaults$3 = defaults_1;
 var CanceledError$1 = CanceledError_1;
 
 /**
@@ -16206,20 +16206,20 @@ var dispatchRequest$1 = function dispatchRequest(config) {
   );
 
   // Flatten headers
-  config.headers = utils$4.merge(
+  config.headers = utils$7.merge(
     config.headers.common || {},
     config.headers[config.method] || {},
     config.headers
   );
 
-  utils$4.forEach(
+  utils$7.forEach(
     ['delete', 'get', 'head', 'post', 'put', 'patch', 'common'],
     function cleanHeaderConfig(method) {
       delete config.headers[method];
     }
   );
 
-  var adapter = config.adapter || defaults$1.adapter;
+  var adapter = config.adapter || defaults$3.adapter;
 
   return adapter(config).then(function onAdapterResolution(response) {
     throwIfCancellationRequested(config);
@@ -16252,7 +16252,7 @@ var dispatchRequest$1 = function dispatchRequest(config) {
   });
 };
 
-var utils$3 = utils$i;
+var utils$6 = utils$l;
 
 /**
  * Config-specific merge-function which creates a new config-object
@@ -16268,11 +16268,11 @@ var mergeConfig$2 = function mergeConfig(config1, config2) {
   var config = {};
 
   function getMergedValue(target, source) {
-    if (utils$3.isPlainObject(target) && utils$3.isPlainObject(source)) {
-      return utils$3.merge(target, source);
-    } else if (utils$3.isPlainObject(source)) {
-      return utils$3.merge({}, source);
-    } else if (utils$3.isArray(source)) {
+    if (utils$6.isPlainObject(target) && utils$6.isPlainObject(source)) {
+      return utils$6.merge(target, source);
+    } else if (utils$6.isPlainObject(source)) {
+      return utils$6.merge({}, source);
+    } else if (utils$6.isArray(source)) {
       return source.slice();
     }
     return source;
@@ -16280,25 +16280,25 @@ var mergeConfig$2 = function mergeConfig(config1, config2) {
 
   // eslint-disable-next-line consistent-return
   function mergeDeepProperties(prop) {
-    if (!utils$3.isUndefined(config2[prop])) {
+    if (!utils$6.isUndefined(config2[prop])) {
       return getMergedValue(config1[prop], config2[prop]);
-    } else if (!utils$3.isUndefined(config1[prop])) {
+    } else if (!utils$6.isUndefined(config1[prop])) {
       return getMergedValue(undefined, config1[prop]);
     }
   }
 
   // eslint-disable-next-line consistent-return
   function valueFromConfig2(prop) {
-    if (!utils$3.isUndefined(config2[prop])) {
+    if (!utils$6.isUndefined(config2[prop])) {
       return getMergedValue(undefined, config2[prop]);
     }
   }
 
   // eslint-disable-next-line consistent-return
   function defaultToConfig2(prop) {
-    if (!utils$3.isUndefined(config2[prop])) {
+    if (!utils$6.isUndefined(config2[prop])) {
       return getMergedValue(undefined, config2[prop]);
-    } else if (!utils$3.isUndefined(config1[prop])) {
+    } else if (!utils$6.isUndefined(config1[prop])) {
       return getMergedValue(undefined, config1[prop]);
     }
   }
@@ -16342,10 +16342,10 @@ var mergeConfig$2 = function mergeConfig(config1, config2) {
     'validateStatus': mergeDirectKeys
   };
 
-  utils$3.forEach(Object.keys(config1).concat(Object.keys(config2)), function computeConfigValue(prop) {
+  utils$6.forEach(Object.keys(config1).concat(Object.keys(config2)), function computeConfigValue(prop) {
     var merge = mergeMap[prop] || mergeDeepProperties;
     var configValue = merge(prop);
-    (utils$3.isUndefined(configValue) && merge !== mergeDirectKeys) || (config[prop] = configValue);
+    (utils$6.isUndefined(configValue) && merge !== mergeDirectKeys) || (config[prop] = configValue);
   });
 
   return config;
@@ -16436,7 +16436,7 @@ var validator$1 = {
   validators: validators$1
 };
 
-var utils$2 = utils$i;
+var utils$5 = utils$l;
 var buildURL = buildURL$3;
 var InterceptorManager = InterceptorManager_1;
 var dispatchRequest = dispatchRequest$1;
@@ -16561,7 +16561,7 @@ Axios$1.prototype.getUri = function getUri(config) {
 };
 
 // Provide aliases for supported request methods
-utils$2.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
+utils$5.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
   /*eslint func-names:0*/
   Axios$1.prototype[method] = function(url, config) {
     return this.request(mergeConfig$1(config || {}, {
@@ -16572,7 +16572,7 @@ utils$2.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoDa
   };
 });
 
-utils$2.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+utils$5.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
   /*eslint func-names:0*/
 
   function generateHTTPMethod(isForm) {
@@ -16739,7 +16739,7 @@ var spread = function spread(callback) {
   };
 };
 
-var utils$1 = utils$i;
+var utils$4 = utils$l;
 
 /**
  * Determines whether the payload is an error thrown by Axios
@@ -16748,14 +16748,14 @@ var utils$1 = utils$i;
  * @returns {boolean} True if the payload is an error thrown by Axios, otherwise false
  */
 var isAxiosError = function isAxiosError(payload) {
-  return utils$1.isObject(payload) && (payload.isAxiosError === true);
+  return utils$4.isObject(payload) && (payload.isAxiosError === true);
 };
 
-var utils = utils$i;
-var bind = bind$2;
+var utils$3 = utils$l;
+var bind$2 = bind$4;
 var Axios = Axios_1;
 var mergeConfig = mergeConfig$2;
-var defaults = defaults_1;
+var defaults$2 = defaults_1;
 
 /**
  * Create an instance of Axios
@@ -16765,13 +16765,13 @@ var defaults = defaults_1;
  */
 function createInstance(defaultConfig) {
   var context = new Axios(defaultConfig);
-  var instance = bind(Axios.prototype.request, context);
+  var instance = bind$2(Axios.prototype.request, context);
 
   // Copy axios.prototype to instance
-  utils.extend(instance, Axios.prototype, context);
+  utils$3.extend(instance, Axios.prototype, context);
 
   // Copy context to instance
-  utils.extend(instance, context);
+  utils$3.extend(instance, context);
 
   // Factory for creating new instances
   instance.create = function create(instanceConfig) {
@@ -16782,7 +16782,7 @@ function createInstance(defaultConfig) {
 }
 
 // Create the default instance to be exported
-var axios$1 = createInstance(defaults);
+var axios$1 = createInstance(defaults$2);
 
 // Expose Axios class to allow class inheritance
 axios$1.Axios = Axios;
@@ -16816,7 +16816,2026 @@ axios$2.exports.default = axios$1;
 
 var axios = axios$2.exports;
 
+/* eslint complexity: [2, 18], max-statements: [2, 33] */
+var shams = function hasSymbols() {
+	if (typeof Symbol !== 'function' || typeof Object.getOwnPropertySymbols !== 'function') { return false; }
+	if (typeof Symbol.iterator === 'symbol') { return true; }
+
+	var obj = {};
+	var sym = Symbol('test');
+	var symObj = Object(sym);
+	if (typeof sym === 'string') { return false; }
+
+	if (Object.prototype.toString.call(sym) !== '[object Symbol]') { return false; }
+	if (Object.prototype.toString.call(symObj) !== '[object Symbol]') { return false; }
+
+	// temp disabled per https://github.com/ljharb/object.assign/issues/17
+	// if (sym instanceof Symbol) { return false; }
+	// temp disabled per https://github.com/WebReflection/get-own-property-symbols/issues/4
+	// if (!(symObj instanceof Symbol)) { return false; }
+
+	// if (typeof Symbol.prototype.toString !== 'function') { return false; }
+	// if (String(sym) !== Symbol.prototype.toString.call(sym)) { return false; }
+
+	var symVal = 42;
+	obj[sym] = symVal;
+	for (sym in obj) { return false; } // eslint-disable-line no-restricted-syntax, no-unreachable-loop
+	if (typeof Object.keys === 'function' && Object.keys(obj).length !== 0) { return false; }
+
+	if (typeof Object.getOwnPropertyNames === 'function' && Object.getOwnPropertyNames(obj).length !== 0) { return false; }
+
+	var syms = Object.getOwnPropertySymbols(obj);
+	if (syms.length !== 1 || syms[0] !== sym) { return false; }
+
+	if (!Object.prototype.propertyIsEnumerable.call(obj, sym)) { return false; }
+
+	if (typeof Object.getOwnPropertyDescriptor === 'function') {
+		var descriptor = Object.getOwnPropertyDescriptor(obj, sym);
+		if (descriptor.value !== symVal || descriptor.enumerable !== true) { return false; }
+	}
+
+	return true;
+};
+
+var origSymbol = typeof Symbol !== 'undefined' && Symbol;
+var hasSymbolSham = shams;
+
+var hasSymbols$1 = function hasNativeSymbols() {
+	if (typeof origSymbol !== 'function') { return false; }
+	if (typeof Symbol !== 'function') { return false; }
+	if (typeof origSymbol('foo') !== 'symbol') { return false; }
+	if (typeof Symbol('bar') !== 'symbol') { return false; }
+
+	return hasSymbolSham();
+};
+
+/* eslint no-invalid-this: 1 */
+
+var ERROR_MESSAGE = 'Function.prototype.bind called on incompatible ';
+var slice = Array.prototype.slice;
+var toStr$1 = Object.prototype.toString;
+var funcType = '[object Function]';
+
+var implementation$1 = function bind(that) {
+    var target = this;
+    if (typeof target !== 'function' || toStr$1.call(target) !== funcType) {
+        throw new TypeError(ERROR_MESSAGE + target);
+    }
+    var args = slice.call(arguments, 1);
+
+    var bound;
+    var binder = function () {
+        if (this instanceof bound) {
+            var result = target.apply(
+                this,
+                args.concat(slice.call(arguments))
+            );
+            if (Object(result) === result) {
+                return result;
+            }
+            return this;
+        } else {
+            return target.apply(
+                that,
+                args.concat(slice.call(arguments))
+            );
+        }
+    };
+
+    var boundLength = Math.max(0, target.length - args.length);
+    var boundArgs = [];
+    for (var i = 0; i < boundLength; i++) {
+        boundArgs.push('$' + i);
+    }
+
+    bound = Function('binder', 'return function (' + boundArgs.join(',') + '){ return binder.apply(this,arguments); }')(binder);
+
+    if (target.prototype) {
+        var Empty = function Empty() {};
+        Empty.prototype = target.prototype;
+        bound.prototype = new Empty();
+        Empty.prototype = null;
+    }
+
+    return bound;
+};
+
+var implementation = implementation$1;
+
+var functionBind = Function.prototype.bind || implementation;
+
+var bind$1 = functionBind;
+
+var src = bind$1.call(Function.call, Object.prototype.hasOwnProperty);
+
+var undefined$1;
+
+var $SyntaxError = SyntaxError;
+var $Function = Function;
+var $TypeError$1 = TypeError;
+
+// eslint-disable-next-line consistent-return
+var getEvalledConstructor = function (expressionSyntax) {
+	try {
+		return $Function('"use strict"; return (' + expressionSyntax + ').constructor;')();
+	} catch (e) {}
+};
+
+var $gOPD = Object.getOwnPropertyDescriptor;
+if ($gOPD) {
+	try {
+		$gOPD({}, '');
+	} catch (e) {
+		$gOPD = null; // this is IE 8, which has a broken gOPD
+	}
+}
+
+var throwTypeError = function () {
+	throw new $TypeError$1();
+};
+var ThrowTypeError = $gOPD
+	? (function () {
+		try {
+			// eslint-disable-next-line no-unused-expressions, no-caller, no-restricted-properties
+			arguments.callee; // IE 8 does not throw here
+			return throwTypeError;
+		} catch (calleeThrows) {
+			try {
+				// IE 8 throws on Object.getOwnPropertyDescriptor(arguments, '')
+				return $gOPD(arguments, 'callee').get;
+			} catch (gOPDthrows) {
+				return throwTypeError;
+			}
+		}
+	}())
+	: throwTypeError;
+
+var hasSymbols = hasSymbols$1();
+
+var getProto = Object.getPrototypeOf || function (x) { return x.__proto__; }; // eslint-disable-line no-proto
+
+var needsEval = {};
+
+var TypedArray = typeof Uint8Array === 'undefined' ? undefined$1 : getProto(Uint8Array);
+
+var INTRINSICS = {
+	'%AggregateError%': typeof AggregateError === 'undefined' ? undefined$1 : AggregateError,
+	'%Array%': Array,
+	'%ArrayBuffer%': typeof ArrayBuffer === 'undefined' ? undefined$1 : ArrayBuffer,
+	'%ArrayIteratorPrototype%': hasSymbols ? getProto([][Symbol.iterator]()) : undefined$1,
+	'%AsyncFromSyncIteratorPrototype%': undefined$1,
+	'%AsyncFunction%': needsEval,
+	'%AsyncGenerator%': needsEval,
+	'%AsyncGeneratorFunction%': needsEval,
+	'%AsyncIteratorPrototype%': needsEval,
+	'%Atomics%': typeof Atomics === 'undefined' ? undefined$1 : Atomics,
+	'%BigInt%': typeof BigInt === 'undefined' ? undefined$1 : BigInt,
+	'%Boolean%': Boolean,
+	'%DataView%': typeof DataView === 'undefined' ? undefined$1 : DataView,
+	'%Date%': Date,
+	'%decodeURI%': decodeURI,
+	'%decodeURIComponent%': decodeURIComponent,
+	'%encodeURI%': encodeURI,
+	'%encodeURIComponent%': encodeURIComponent,
+	'%Error%': Error,
+	'%eval%': eval, // eslint-disable-line no-eval
+	'%EvalError%': EvalError,
+	'%Float32Array%': typeof Float32Array === 'undefined' ? undefined$1 : Float32Array,
+	'%Float64Array%': typeof Float64Array === 'undefined' ? undefined$1 : Float64Array,
+	'%FinalizationRegistry%': typeof FinalizationRegistry === 'undefined' ? undefined$1 : FinalizationRegistry,
+	'%Function%': $Function,
+	'%GeneratorFunction%': needsEval,
+	'%Int8Array%': typeof Int8Array === 'undefined' ? undefined$1 : Int8Array,
+	'%Int16Array%': typeof Int16Array === 'undefined' ? undefined$1 : Int16Array,
+	'%Int32Array%': typeof Int32Array === 'undefined' ? undefined$1 : Int32Array,
+	'%isFinite%': isFinite,
+	'%isNaN%': isNaN,
+	'%IteratorPrototype%': hasSymbols ? getProto(getProto([][Symbol.iterator]())) : undefined$1,
+	'%JSON%': typeof JSON === 'object' ? JSON : undefined$1,
+	'%Map%': typeof Map === 'undefined' ? undefined$1 : Map,
+	'%MapIteratorPrototype%': typeof Map === 'undefined' || !hasSymbols ? undefined$1 : getProto(new Map()[Symbol.iterator]()),
+	'%Math%': Math,
+	'%Number%': Number,
+	'%Object%': Object,
+	'%parseFloat%': parseFloat,
+	'%parseInt%': parseInt,
+	'%Promise%': typeof Promise === 'undefined' ? undefined$1 : Promise,
+	'%Proxy%': typeof Proxy === 'undefined' ? undefined$1 : Proxy,
+	'%RangeError%': RangeError,
+	'%ReferenceError%': ReferenceError,
+	'%Reflect%': typeof Reflect === 'undefined' ? undefined$1 : Reflect,
+	'%RegExp%': RegExp,
+	'%Set%': typeof Set === 'undefined' ? undefined$1 : Set,
+	'%SetIteratorPrototype%': typeof Set === 'undefined' || !hasSymbols ? undefined$1 : getProto(new Set()[Symbol.iterator]()),
+	'%SharedArrayBuffer%': typeof SharedArrayBuffer === 'undefined' ? undefined$1 : SharedArrayBuffer,
+	'%String%': String,
+	'%StringIteratorPrototype%': hasSymbols ? getProto(''[Symbol.iterator]()) : undefined$1,
+	'%Symbol%': hasSymbols ? Symbol : undefined$1,
+	'%SyntaxError%': $SyntaxError,
+	'%ThrowTypeError%': ThrowTypeError,
+	'%TypedArray%': TypedArray,
+	'%TypeError%': $TypeError$1,
+	'%Uint8Array%': typeof Uint8Array === 'undefined' ? undefined$1 : Uint8Array,
+	'%Uint8ClampedArray%': typeof Uint8ClampedArray === 'undefined' ? undefined$1 : Uint8ClampedArray,
+	'%Uint16Array%': typeof Uint16Array === 'undefined' ? undefined$1 : Uint16Array,
+	'%Uint32Array%': typeof Uint32Array === 'undefined' ? undefined$1 : Uint32Array,
+	'%URIError%': URIError,
+	'%WeakMap%': typeof WeakMap === 'undefined' ? undefined$1 : WeakMap,
+	'%WeakRef%': typeof WeakRef === 'undefined' ? undefined$1 : WeakRef,
+	'%WeakSet%': typeof WeakSet === 'undefined' ? undefined$1 : WeakSet
+};
+
+var doEval = function doEval(name) {
+	var value;
+	if (name === '%AsyncFunction%') {
+		value = getEvalledConstructor('async function () {}');
+	} else if (name === '%GeneratorFunction%') {
+		value = getEvalledConstructor('function* () {}');
+	} else if (name === '%AsyncGeneratorFunction%') {
+		value = getEvalledConstructor('async function* () {}');
+	} else if (name === '%AsyncGenerator%') {
+		var fn = doEval('%AsyncGeneratorFunction%');
+		if (fn) {
+			value = fn.prototype;
+		}
+	} else if (name === '%AsyncIteratorPrototype%') {
+		var gen = doEval('%AsyncGenerator%');
+		if (gen) {
+			value = getProto(gen.prototype);
+		}
+	}
+
+	INTRINSICS[name] = value;
+
+	return value;
+};
+
+var LEGACY_ALIASES = {
+	'%ArrayBufferPrototype%': ['ArrayBuffer', 'prototype'],
+	'%ArrayPrototype%': ['Array', 'prototype'],
+	'%ArrayProto_entries%': ['Array', 'prototype', 'entries'],
+	'%ArrayProto_forEach%': ['Array', 'prototype', 'forEach'],
+	'%ArrayProto_keys%': ['Array', 'prototype', 'keys'],
+	'%ArrayProto_values%': ['Array', 'prototype', 'values'],
+	'%AsyncFunctionPrototype%': ['AsyncFunction', 'prototype'],
+	'%AsyncGenerator%': ['AsyncGeneratorFunction', 'prototype'],
+	'%AsyncGeneratorPrototype%': ['AsyncGeneratorFunction', 'prototype', 'prototype'],
+	'%BooleanPrototype%': ['Boolean', 'prototype'],
+	'%DataViewPrototype%': ['DataView', 'prototype'],
+	'%DatePrototype%': ['Date', 'prototype'],
+	'%ErrorPrototype%': ['Error', 'prototype'],
+	'%EvalErrorPrototype%': ['EvalError', 'prototype'],
+	'%Float32ArrayPrototype%': ['Float32Array', 'prototype'],
+	'%Float64ArrayPrototype%': ['Float64Array', 'prototype'],
+	'%FunctionPrototype%': ['Function', 'prototype'],
+	'%Generator%': ['GeneratorFunction', 'prototype'],
+	'%GeneratorPrototype%': ['GeneratorFunction', 'prototype', 'prototype'],
+	'%Int8ArrayPrototype%': ['Int8Array', 'prototype'],
+	'%Int16ArrayPrototype%': ['Int16Array', 'prototype'],
+	'%Int32ArrayPrototype%': ['Int32Array', 'prototype'],
+	'%JSONParse%': ['JSON', 'parse'],
+	'%JSONStringify%': ['JSON', 'stringify'],
+	'%MapPrototype%': ['Map', 'prototype'],
+	'%NumberPrototype%': ['Number', 'prototype'],
+	'%ObjectPrototype%': ['Object', 'prototype'],
+	'%ObjProto_toString%': ['Object', 'prototype', 'toString'],
+	'%ObjProto_valueOf%': ['Object', 'prototype', 'valueOf'],
+	'%PromisePrototype%': ['Promise', 'prototype'],
+	'%PromiseProto_then%': ['Promise', 'prototype', 'then'],
+	'%Promise_all%': ['Promise', 'all'],
+	'%Promise_reject%': ['Promise', 'reject'],
+	'%Promise_resolve%': ['Promise', 'resolve'],
+	'%RangeErrorPrototype%': ['RangeError', 'prototype'],
+	'%ReferenceErrorPrototype%': ['ReferenceError', 'prototype'],
+	'%RegExpPrototype%': ['RegExp', 'prototype'],
+	'%SetPrototype%': ['Set', 'prototype'],
+	'%SharedArrayBufferPrototype%': ['SharedArrayBuffer', 'prototype'],
+	'%StringPrototype%': ['String', 'prototype'],
+	'%SymbolPrototype%': ['Symbol', 'prototype'],
+	'%SyntaxErrorPrototype%': ['SyntaxError', 'prototype'],
+	'%TypedArrayPrototype%': ['TypedArray', 'prototype'],
+	'%TypeErrorPrototype%': ['TypeError', 'prototype'],
+	'%Uint8ArrayPrototype%': ['Uint8Array', 'prototype'],
+	'%Uint8ClampedArrayPrototype%': ['Uint8ClampedArray', 'prototype'],
+	'%Uint16ArrayPrototype%': ['Uint16Array', 'prototype'],
+	'%Uint32ArrayPrototype%': ['Uint32Array', 'prototype'],
+	'%URIErrorPrototype%': ['URIError', 'prototype'],
+	'%WeakMapPrototype%': ['WeakMap', 'prototype'],
+	'%WeakSetPrototype%': ['WeakSet', 'prototype']
+};
+
+var bind = functionBind;
+var hasOwn$1 = src;
+var $concat$1 = bind.call(Function.call, Array.prototype.concat);
+var $spliceApply = bind.call(Function.apply, Array.prototype.splice);
+var $replace$1 = bind.call(Function.call, String.prototype.replace);
+var $strSlice = bind.call(Function.call, String.prototype.slice);
+var $exec = bind.call(Function.call, RegExp.prototype.exec);
+
+/* adapted from https://github.com/lodash/lodash/blob/4.17.15/dist/lodash.js#L6735-L6744 */
+var rePropName = /[^%.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|%$))/g;
+var reEscapeChar = /\\(\\)?/g; /** Used to match backslashes in property paths. */
+var stringToPath = function stringToPath(string) {
+	var first = $strSlice(string, 0, 1);
+	var last = $strSlice(string, -1);
+	if (first === '%' && last !== '%') {
+		throw new $SyntaxError('invalid intrinsic syntax, expected closing `%`');
+	} else if (last === '%' && first !== '%') {
+		throw new $SyntaxError('invalid intrinsic syntax, expected opening `%`');
+	}
+	var result = [];
+	$replace$1(string, rePropName, function (match, number, quote, subString) {
+		result[result.length] = quote ? $replace$1(subString, reEscapeChar, '$1') : number || match;
+	});
+	return result;
+};
+/* end adaptation */
+
+var getBaseIntrinsic = function getBaseIntrinsic(name, allowMissing) {
+	var intrinsicName = name;
+	var alias;
+	if (hasOwn$1(LEGACY_ALIASES, intrinsicName)) {
+		alias = LEGACY_ALIASES[intrinsicName];
+		intrinsicName = '%' + alias[0] + '%';
+	}
+
+	if (hasOwn$1(INTRINSICS, intrinsicName)) {
+		var value = INTRINSICS[intrinsicName];
+		if (value === needsEval) {
+			value = doEval(intrinsicName);
+		}
+		if (typeof value === 'undefined' && !allowMissing) {
+			throw new $TypeError$1('intrinsic ' + name + ' exists, but is not available. Please file an issue!');
+		}
+
+		return {
+			alias: alias,
+			name: intrinsicName,
+			value: value
+		};
+	}
+
+	throw new $SyntaxError('intrinsic ' + name + ' does not exist!');
+};
+
+var getIntrinsic = function GetIntrinsic(name, allowMissing) {
+	if (typeof name !== 'string' || name.length === 0) {
+		throw new $TypeError$1('intrinsic name must be a non-empty string');
+	}
+	if (arguments.length > 1 && typeof allowMissing !== 'boolean') {
+		throw new $TypeError$1('"allowMissing" argument must be a boolean');
+	}
+
+	if ($exec(/^%?[^%]*%?$/g, name) === null) {
+		throw new $SyntaxError('`%` may not be present anywhere but at the beginning and end of the intrinsic name');
+	}
+	var parts = stringToPath(name);
+	var intrinsicBaseName = parts.length > 0 ? parts[0] : '';
+
+	var intrinsic = getBaseIntrinsic('%' + intrinsicBaseName + '%', allowMissing);
+	var intrinsicRealName = intrinsic.name;
+	var value = intrinsic.value;
+	var skipFurtherCaching = false;
+
+	var alias = intrinsic.alias;
+	if (alias) {
+		intrinsicBaseName = alias[0];
+		$spliceApply(parts, $concat$1([0, 1], alias));
+	}
+
+	for (var i = 1, isOwn = true; i < parts.length; i += 1) {
+		var part = parts[i];
+		var first = $strSlice(part, 0, 1);
+		var last = $strSlice(part, -1);
+		if (
+			(
+				(first === '"' || first === "'" || first === '`')
+				|| (last === '"' || last === "'" || last === '`')
+			)
+			&& first !== last
+		) {
+			throw new $SyntaxError('property names with quotes must have matching quotes');
+		}
+		if (part === 'constructor' || !isOwn) {
+			skipFurtherCaching = true;
+		}
+
+		intrinsicBaseName += '.' + part;
+		intrinsicRealName = '%' + intrinsicBaseName + '%';
+
+		if (hasOwn$1(INTRINSICS, intrinsicRealName)) {
+			value = INTRINSICS[intrinsicRealName];
+		} else if (value != null) {
+			if (!(part in value)) {
+				if (!allowMissing) {
+					throw new $TypeError$1('base intrinsic for ' + name + ' exists, but the property is not available.');
+				}
+				return void undefined$1;
+			}
+			if ($gOPD && (i + 1) >= parts.length) {
+				var desc = $gOPD(value, part);
+				isOwn = !!desc;
+
+				// By convention, when a data property is converted to an accessor
+				// property to emulate a data property that does not suffer from
+				// the override mistake, that accessor's getter is marked with
+				// an `originalValue` property. Here, when we detect this, we
+				// uphold the illusion by pretending to see that original data
+				// property, i.e., returning the value rather than the getter
+				// itself.
+				if (isOwn && 'get' in desc && !('originalValue' in desc.get)) {
+					value = desc.get;
+				} else {
+					value = value[part];
+				}
+			} else {
+				isOwn = hasOwn$1(value, part);
+				value = value[part];
+			}
+
+			if (isOwn && !skipFurtherCaching) {
+				INTRINSICS[intrinsicRealName] = value;
+			}
+		}
+	}
+	return value;
+};
+
+var callBind$1 = {exports: {}};
+
+(function (module) {
+
+var bind = functionBind;
+var GetIntrinsic = getIntrinsic;
+
+var $apply = GetIntrinsic('%Function.prototype.apply%');
+var $call = GetIntrinsic('%Function.prototype.call%');
+var $reflectApply = GetIntrinsic('%Reflect.apply%', true) || bind.call($call, $apply);
+
+var $gOPD = GetIntrinsic('%Object.getOwnPropertyDescriptor%', true);
+var $defineProperty = GetIntrinsic('%Object.defineProperty%', true);
+var $max = GetIntrinsic('%Math.max%');
+
+if ($defineProperty) {
+	try {
+		$defineProperty({}, 'a', { value: 1 });
+	} catch (e) {
+		// IE 8 has a broken defineProperty
+		$defineProperty = null;
+	}
+}
+
+module.exports = function callBind(originalFunction) {
+	var func = $reflectApply(bind, $call, arguments);
+	if ($gOPD && $defineProperty) {
+		var desc = $gOPD(func, 'length');
+		if (desc.configurable) {
+			// original length, plus the receiver, minus any additional arguments (after the receiver)
+			$defineProperty(
+				func,
+				'length',
+				{ value: 1 + $max(0, originalFunction.length - (arguments.length - 1)) }
+			);
+		}
+	}
+	return func;
+};
+
+var applyBind = function applyBind() {
+	return $reflectApply(bind, $apply, arguments);
+};
+
+if ($defineProperty) {
+	$defineProperty(module.exports, 'apply', { value: applyBind });
+} else {
+	module.exports.apply = applyBind;
+}
+}(callBind$1));
+
+var GetIntrinsic$1 = getIntrinsic;
+
+var callBind = callBind$1.exports;
+
+var $indexOf = callBind(GetIntrinsic$1('String.prototype.indexOf'));
+
+var callBound$1 = function callBoundIntrinsic(name, allowMissing) {
+	var intrinsic = GetIntrinsic$1(name, !!allowMissing);
+	if (typeof intrinsic === 'function' && $indexOf(name, '.prototype.') > -1) {
+		return callBind(intrinsic);
+	}
+	return intrinsic;
+};
+
+var util_inspect = require$$1__default["default"].inspect;
+
+var hasMap = typeof Map === 'function' && Map.prototype;
+var mapSizeDescriptor = Object.getOwnPropertyDescriptor && hasMap ? Object.getOwnPropertyDescriptor(Map.prototype, 'size') : null;
+var mapSize = hasMap && mapSizeDescriptor && typeof mapSizeDescriptor.get === 'function' ? mapSizeDescriptor.get : null;
+var mapForEach = hasMap && Map.prototype.forEach;
+var hasSet = typeof Set === 'function' && Set.prototype;
+var setSizeDescriptor = Object.getOwnPropertyDescriptor && hasSet ? Object.getOwnPropertyDescriptor(Set.prototype, 'size') : null;
+var setSize = hasSet && setSizeDescriptor && typeof setSizeDescriptor.get === 'function' ? setSizeDescriptor.get : null;
+var setForEach = hasSet && Set.prototype.forEach;
+var hasWeakMap = typeof WeakMap === 'function' && WeakMap.prototype;
+var weakMapHas = hasWeakMap ? WeakMap.prototype.has : null;
+var hasWeakSet = typeof WeakSet === 'function' && WeakSet.prototype;
+var weakSetHas = hasWeakSet ? WeakSet.prototype.has : null;
+var hasWeakRef = typeof WeakRef === 'function' && WeakRef.prototype;
+var weakRefDeref = hasWeakRef ? WeakRef.prototype.deref : null;
+var booleanValueOf = Boolean.prototype.valueOf;
+var objectToString = Object.prototype.toString;
+var functionToString = Function.prototype.toString;
+var $match = String.prototype.match;
+var $slice = String.prototype.slice;
+var $replace = String.prototype.replace;
+var $toUpperCase = String.prototype.toUpperCase;
+var $toLowerCase = String.prototype.toLowerCase;
+var $test = RegExp.prototype.test;
+var $concat = Array.prototype.concat;
+var $join = Array.prototype.join;
+var $arrSlice = Array.prototype.slice;
+var $floor = Math.floor;
+var bigIntValueOf = typeof BigInt === 'function' ? BigInt.prototype.valueOf : null;
+var gOPS = Object.getOwnPropertySymbols;
+var symToString = typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol' ? Symbol.prototype.toString : null;
+var hasShammedSymbols = typeof Symbol === 'function' && typeof Symbol.iterator === 'object';
+// ie, `has-tostringtag/shams
+var toStringTag = typeof Symbol === 'function' && Symbol.toStringTag && (typeof Symbol.toStringTag === hasShammedSymbols ? 'object' : 'symbol')
+    ? Symbol.toStringTag
+    : null;
+var isEnumerable = Object.prototype.propertyIsEnumerable;
+
+var gPO = (typeof Reflect === 'function' ? Reflect.getPrototypeOf : Object.getPrototypeOf) || (
+    [].__proto__ === Array.prototype // eslint-disable-line no-proto
+        ? function (O) {
+            return O.__proto__; // eslint-disable-line no-proto
+        }
+        : null
+);
+
+function addNumericSeparator(num, str) {
+    if (
+        num === Infinity
+        || num === -Infinity
+        || num !== num
+        || (num && num > -1000 && num < 1000)
+        || $test.call(/e/, str)
+    ) {
+        return str;
+    }
+    var sepRegex = /[0-9](?=(?:[0-9]{3})+(?![0-9]))/g;
+    if (typeof num === 'number') {
+        var int = num < 0 ? -$floor(-num) : $floor(num); // trunc(num)
+        if (int !== num) {
+            var intStr = String(int);
+            var dec = $slice.call(str, intStr.length + 1);
+            return $replace.call(intStr, sepRegex, '$&_') + '.' + $replace.call($replace.call(dec, /([0-9]{3})/g, '$&_'), /_$/, '');
+        }
+    }
+    return $replace.call(str, sepRegex, '$&_');
+}
+
+var utilInspect = util_inspect;
+var inspectCustom = utilInspect.custom;
+var inspectSymbol = isSymbol(inspectCustom) ? inspectCustom : null;
+
+var objectInspect = function inspect_(obj, options, depth, seen) {
+    var opts = options || {};
+
+    if (has$3(opts, 'quoteStyle') && (opts.quoteStyle !== 'single' && opts.quoteStyle !== 'double')) {
+        throw new TypeError('option "quoteStyle" must be "single" or "double"');
+    }
+    if (
+        has$3(opts, 'maxStringLength') && (typeof opts.maxStringLength === 'number'
+            ? opts.maxStringLength < 0 && opts.maxStringLength !== Infinity
+            : opts.maxStringLength !== null
+        )
+    ) {
+        throw new TypeError('option "maxStringLength", if provided, must be a positive integer, Infinity, or `null`');
+    }
+    var customInspect = has$3(opts, 'customInspect') ? opts.customInspect : true;
+    if (typeof customInspect !== 'boolean' && customInspect !== 'symbol') {
+        throw new TypeError('option "customInspect", if provided, must be `true`, `false`, or `\'symbol\'`');
+    }
+
+    if (
+        has$3(opts, 'indent')
+        && opts.indent !== null
+        && opts.indent !== '\t'
+        && !(parseInt(opts.indent, 10) === opts.indent && opts.indent > 0)
+    ) {
+        throw new TypeError('option "indent" must be "\\t", an integer > 0, or `null`');
+    }
+    if (has$3(opts, 'numericSeparator') && typeof opts.numericSeparator !== 'boolean') {
+        throw new TypeError('option "numericSeparator", if provided, must be `true` or `false`');
+    }
+    var numericSeparator = opts.numericSeparator;
+
+    if (typeof obj === 'undefined') {
+        return 'undefined';
+    }
+    if (obj === null) {
+        return 'null';
+    }
+    if (typeof obj === 'boolean') {
+        return obj ? 'true' : 'false';
+    }
+
+    if (typeof obj === 'string') {
+        return inspectString(obj, opts);
+    }
+    if (typeof obj === 'number') {
+        if (obj === 0) {
+            return Infinity / obj > 0 ? '0' : '-0';
+        }
+        var str = String(obj);
+        return numericSeparator ? addNumericSeparator(obj, str) : str;
+    }
+    if (typeof obj === 'bigint') {
+        var bigIntStr = String(obj) + 'n';
+        return numericSeparator ? addNumericSeparator(obj, bigIntStr) : bigIntStr;
+    }
+
+    var maxDepth = typeof opts.depth === 'undefined' ? 5 : opts.depth;
+    if (typeof depth === 'undefined') { depth = 0; }
+    if (depth >= maxDepth && maxDepth > 0 && typeof obj === 'object') {
+        return isArray$3(obj) ? '[Array]' : '[Object]';
+    }
+
+    var indent = getIndent(opts, depth);
+
+    if (typeof seen === 'undefined') {
+        seen = [];
+    } else if (indexOf(seen, obj) >= 0) {
+        return '[Circular]';
+    }
+
+    function inspect(value, from, noIndent) {
+        if (from) {
+            seen = $arrSlice.call(seen);
+            seen.push(from);
+        }
+        if (noIndent) {
+            var newOpts = {
+                depth: opts.depth
+            };
+            if (has$3(opts, 'quoteStyle')) {
+                newOpts.quoteStyle = opts.quoteStyle;
+            }
+            return inspect_(value, newOpts, depth + 1, seen);
+        }
+        return inspect_(value, opts, depth + 1, seen);
+    }
+
+    if (typeof obj === 'function' && !isRegExp$1(obj)) { // in older engines, regexes are callable
+        var name = nameOf(obj);
+        var keys = arrObjKeys(obj, inspect);
+        return '[Function' + (name ? ': ' + name : ' (anonymous)') + ']' + (keys.length > 0 ? ' { ' + $join.call(keys, ', ') + ' }' : '');
+    }
+    if (isSymbol(obj)) {
+        var symString = hasShammedSymbols ? $replace.call(String(obj), /^(Symbol\(.*\))_[^)]*$/, '$1') : symToString.call(obj);
+        return typeof obj === 'object' && !hasShammedSymbols ? markBoxed(symString) : symString;
+    }
+    if (isElement(obj)) {
+        var s = '<' + $toLowerCase.call(String(obj.nodeName));
+        var attrs = obj.attributes || [];
+        for (var i = 0; i < attrs.length; i++) {
+            s += ' ' + attrs[i].name + '=' + wrapQuotes(quote(attrs[i].value), 'double', opts);
+        }
+        s += '>';
+        if (obj.childNodes && obj.childNodes.length) { s += '...'; }
+        s += '</' + $toLowerCase.call(String(obj.nodeName)) + '>';
+        return s;
+    }
+    if (isArray$3(obj)) {
+        if (obj.length === 0) { return '[]'; }
+        var xs = arrObjKeys(obj, inspect);
+        if (indent && !singleLineValues(xs)) {
+            return '[' + indentedJoin(xs, indent) + ']';
+        }
+        return '[ ' + $join.call(xs, ', ') + ' ]';
+    }
+    if (isError(obj)) {
+        var parts = arrObjKeys(obj, inspect);
+        if (!('cause' in Error.prototype) && 'cause' in obj && !isEnumerable.call(obj, 'cause')) {
+            return '{ [' + String(obj) + '] ' + $join.call($concat.call('[cause]: ' + inspect(obj.cause), parts), ', ') + ' }';
+        }
+        if (parts.length === 0) { return '[' + String(obj) + ']'; }
+        return '{ [' + String(obj) + '] ' + $join.call(parts, ', ') + ' }';
+    }
+    if (typeof obj === 'object' && customInspect) {
+        if (inspectSymbol && typeof obj[inspectSymbol] === 'function' && utilInspect) {
+            return utilInspect(obj, { depth: maxDepth - depth });
+        } else if (customInspect !== 'symbol' && typeof obj.inspect === 'function') {
+            return obj.inspect();
+        }
+    }
+    if (isMap(obj)) {
+        var mapParts = [];
+        mapForEach.call(obj, function (value, key) {
+            mapParts.push(inspect(key, obj, true) + ' => ' + inspect(value, obj));
+        });
+        return collectionOf('Map', mapSize.call(obj), mapParts, indent);
+    }
+    if (isSet(obj)) {
+        var setParts = [];
+        setForEach.call(obj, function (value) {
+            setParts.push(inspect(value, obj));
+        });
+        return collectionOf('Set', setSize.call(obj), setParts, indent);
+    }
+    if (isWeakMap(obj)) {
+        return weakCollectionOf('WeakMap');
+    }
+    if (isWeakSet(obj)) {
+        return weakCollectionOf('WeakSet');
+    }
+    if (isWeakRef(obj)) {
+        return weakCollectionOf('WeakRef');
+    }
+    if (isNumber(obj)) {
+        return markBoxed(inspect(Number(obj)));
+    }
+    if (isBigInt(obj)) {
+        return markBoxed(inspect(bigIntValueOf.call(obj)));
+    }
+    if (isBoolean(obj)) {
+        return markBoxed(booleanValueOf.call(obj));
+    }
+    if (isString(obj)) {
+        return markBoxed(inspect(String(obj)));
+    }
+    if (!isDate(obj) && !isRegExp$1(obj)) {
+        var ys = arrObjKeys(obj, inspect);
+        var isPlainObject = gPO ? gPO(obj) === Object.prototype : obj instanceof Object || obj.constructor === Object;
+        var protoTag = obj instanceof Object ? '' : 'null prototype';
+        var stringTag = !isPlainObject && toStringTag && Object(obj) === obj && toStringTag in obj ? $slice.call(toStr(obj), 8, -1) : protoTag ? 'Object' : '';
+        var constructorTag = isPlainObject || typeof obj.constructor !== 'function' ? '' : obj.constructor.name ? obj.constructor.name + ' ' : '';
+        var tag = constructorTag + (stringTag || protoTag ? '[' + $join.call($concat.call([], stringTag || [], protoTag || []), ': ') + '] ' : '');
+        if (ys.length === 0) { return tag + '{}'; }
+        if (indent) {
+            return tag + '{' + indentedJoin(ys, indent) + '}';
+        }
+        return tag + '{ ' + $join.call(ys, ', ') + ' }';
+    }
+    return String(obj);
+};
+
+function wrapQuotes(s, defaultStyle, opts) {
+    var quoteChar = (opts.quoteStyle || defaultStyle) === 'double' ? '"' : "'";
+    return quoteChar + s + quoteChar;
+}
+
+function quote(s) {
+    return $replace.call(String(s), /"/g, '&quot;');
+}
+
+function isArray$3(obj) { return toStr(obj) === '[object Array]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
+function isDate(obj) { return toStr(obj) === '[object Date]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
+function isRegExp$1(obj) { return toStr(obj) === '[object RegExp]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
+function isError(obj) { return toStr(obj) === '[object Error]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
+function isString(obj) { return toStr(obj) === '[object String]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
+function isNumber(obj) { return toStr(obj) === '[object Number]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
+function isBoolean(obj) { return toStr(obj) === '[object Boolean]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
+
+// Symbol and BigInt do have Symbol.toStringTag by spec, so that can't be used to eliminate false positives
+function isSymbol(obj) {
+    if (hasShammedSymbols) {
+        return obj && typeof obj === 'object' && obj instanceof Symbol;
+    }
+    if (typeof obj === 'symbol') {
+        return true;
+    }
+    if (!obj || typeof obj !== 'object' || !symToString) {
+        return false;
+    }
+    try {
+        symToString.call(obj);
+        return true;
+    } catch (e) {}
+    return false;
+}
+
+function isBigInt(obj) {
+    if (!obj || typeof obj !== 'object' || !bigIntValueOf) {
+        return false;
+    }
+    try {
+        bigIntValueOf.call(obj);
+        return true;
+    } catch (e) {}
+    return false;
+}
+
+var hasOwn = Object.prototype.hasOwnProperty || function (key) { return key in this; };
+function has$3(obj, key) {
+    return hasOwn.call(obj, key);
+}
+
+function toStr(obj) {
+    return objectToString.call(obj);
+}
+
+function nameOf(f) {
+    if (f.name) { return f.name; }
+    var m = $match.call(functionToString.call(f), /^function\s*([\w$]+)/);
+    if (m) { return m[1]; }
+    return null;
+}
+
+function indexOf(xs, x) {
+    if (xs.indexOf) { return xs.indexOf(x); }
+    for (var i = 0, l = xs.length; i < l; i++) {
+        if (xs[i] === x) { return i; }
+    }
+    return -1;
+}
+
+function isMap(x) {
+    if (!mapSize || !x || typeof x !== 'object') {
+        return false;
+    }
+    try {
+        mapSize.call(x);
+        try {
+            setSize.call(x);
+        } catch (s) {
+            return true;
+        }
+        return x instanceof Map; // core-js workaround, pre-v2.5.0
+    } catch (e) {}
+    return false;
+}
+
+function isWeakMap(x) {
+    if (!weakMapHas || !x || typeof x !== 'object') {
+        return false;
+    }
+    try {
+        weakMapHas.call(x, weakMapHas);
+        try {
+            weakSetHas.call(x, weakSetHas);
+        } catch (s) {
+            return true;
+        }
+        return x instanceof WeakMap; // core-js workaround, pre-v2.5.0
+    } catch (e) {}
+    return false;
+}
+
+function isWeakRef(x) {
+    if (!weakRefDeref || !x || typeof x !== 'object') {
+        return false;
+    }
+    try {
+        weakRefDeref.call(x);
+        return true;
+    } catch (e) {}
+    return false;
+}
+
+function isSet(x) {
+    if (!setSize || !x || typeof x !== 'object') {
+        return false;
+    }
+    try {
+        setSize.call(x);
+        try {
+            mapSize.call(x);
+        } catch (m) {
+            return true;
+        }
+        return x instanceof Set; // core-js workaround, pre-v2.5.0
+    } catch (e) {}
+    return false;
+}
+
+function isWeakSet(x) {
+    if (!weakSetHas || !x || typeof x !== 'object') {
+        return false;
+    }
+    try {
+        weakSetHas.call(x, weakSetHas);
+        try {
+            weakMapHas.call(x, weakMapHas);
+        } catch (s) {
+            return true;
+        }
+        return x instanceof WeakSet; // core-js workaround, pre-v2.5.0
+    } catch (e) {}
+    return false;
+}
+
+function isElement(x) {
+    if (!x || typeof x !== 'object') { return false; }
+    if (typeof HTMLElement !== 'undefined' && x instanceof HTMLElement) {
+        return true;
+    }
+    return typeof x.nodeName === 'string' && typeof x.getAttribute === 'function';
+}
+
+function inspectString(str, opts) {
+    if (str.length > opts.maxStringLength) {
+        var remaining = str.length - opts.maxStringLength;
+        var trailer = '... ' + remaining + ' more character' + (remaining > 1 ? 's' : '');
+        return inspectString($slice.call(str, 0, opts.maxStringLength), opts) + trailer;
+    }
+    // eslint-disable-next-line no-control-regex
+    var s = $replace.call($replace.call(str, /(['\\])/g, '\\$1'), /[\x00-\x1f]/g, lowbyte);
+    return wrapQuotes(s, 'single', opts);
+}
+
+function lowbyte(c) {
+    var n = c.charCodeAt(0);
+    var x = {
+        8: 'b',
+        9: 't',
+        10: 'n',
+        12: 'f',
+        13: 'r'
+    }[n];
+    if (x) { return '\\' + x; }
+    return '\\x' + (n < 0x10 ? '0' : '') + $toUpperCase.call(n.toString(16));
+}
+
+function markBoxed(str) {
+    return 'Object(' + str + ')';
+}
+
+function weakCollectionOf(type) {
+    return type + ' { ? }';
+}
+
+function collectionOf(type, size, entries, indent) {
+    var joinedEntries = indent ? indentedJoin(entries, indent) : $join.call(entries, ', ');
+    return type + ' (' + size + ') {' + joinedEntries + '}';
+}
+
+function singleLineValues(xs) {
+    for (var i = 0; i < xs.length; i++) {
+        if (indexOf(xs[i], '\n') >= 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function getIndent(opts, depth) {
+    var baseIndent;
+    if (opts.indent === '\t') {
+        baseIndent = '\t';
+    } else if (typeof opts.indent === 'number' && opts.indent > 0) {
+        baseIndent = $join.call(Array(opts.indent + 1), ' ');
+    } else {
+        return null;
+    }
+    return {
+        base: baseIndent,
+        prev: $join.call(Array(depth + 1), baseIndent)
+    };
+}
+
+function indentedJoin(xs, indent) {
+    if (xs.length === 0) { return ''; }
+    var lineJoiner = '\n' + indent.prev + indent.base;
+    return lineJoiner + $join.call(xs, ',' + lineJoiner) + '\n' + indent.prev;
+}
+
+function arrObjKeys(obj, inspect) {
+    var isArr = isArray$3(obj);
+    var xs = [];
+    if (isArr) {
+        xs.length = obj.length;
+        for (var i = 0; i < obj.length; i++) {
+            xs[i] = has$3(obj, i) ? inspect(obj[i], obj) : '';
+        }
+    }
+    var syms = typeof gOPS === 'function' ? gOPS(obj) : [];
+    var symMap;
+    if (hasShammedSymbols) {
+        symMap = {};
+        for (var k = 0; k < syms.length; k++) {
+            symMap['$' + syms[k]] = syms[k];
+        }
+    }
+
+    for (var key in obj) { // eslint-disable-line no-restricted-syntax
+        if (!has$3(obj, key)) { continue; } // eslint-disable-line no-restricted-syntax, no-continue
+        if (isArr && String(Number(key)) === key && key < obj.length) { continue; } // eslint-disable-line no-restricted-syntax, no-continue
+        if (hasShammedSymbols && symMap['$' + key] instanceof Symbol) {
+            // this is to prevent shammed Symbols, which are stored as strings, from being included in the string key section
+            continue; // eslint-disable-line no-restricted-syntax, no-continue
+        } else if ($test.call(/[^\w$]/, key)) {
+            xs.push(inspect(key, obj) + ': ' + inspect(obj[key], obj));
+        } else {
+            xs.push(key + ': ' + inspect(obj[key], obj));
+        }
+    }
+    if (typeof gOPS === 'function') {
+        for (var j = 0; j < syms.length; j++) {
+            if (isEnumerable.call(obj, syms[j])) {
+                xs.push('[' + inspect(syms[j]) + ']: ' + inspect(obj[syms[j]], obj));
+            }
+        }
+    }
+    return xs;
+}
+
+var GetIntrinsic = getIntrinsic;
+var callBound = callBound$1;
+var inspect = objectInspect;
+
+var $TypeError = GetIntrinsic('%TypeError%');
+var $WeakMap = GetIntrinsic('%WeakMap%', true);
+var $Map = GetIntrinsic('%Map%', true);
+
+var $weakMapGet = callBound('WeakMap.prototype.get', true);
+var $weakMapSet = callBound('WeakMap.prototype.set', true);
+var $weakMapHas = callBound('WeakMap.prototype.has', true);
+var $mapGet = callBound('Map.prototype.get', true);
+var $mapSet = callBound('Map.prototype.set', true);
+var $mapHas = callBound('Map.prototype.has', true);
+
+/*
+ * This function traverses the list returning the node corresponding to the
+ * given key.
+ *
+ * That node is also moved to the head of the list, so that if it's accessed
+ * again we don't need to traverse the whole list. By doing so, all the recently
+ * used nodes can be accessed relatively quickly.
+ */
+var listGetNode = function (list, key) { // eslint-disable-line consistent-return
+	for (var prev = list, curr; (curr = prev.next) !== null; prev = curr) {
+		if (curr.key === key) {
+			prev.next = curr.next;
+			curr.next = list.next;
+			list.next = curr; // eslint-disable-line no-param-reassign
+			return curr;
+		}
+	}
+};
+
+var listGet = function (objects, key) {
+	var node = listGetNode(objects, key);
+	return node && node.value;
+};
+var listSet = function (objects, key, value) {
+	var node = listGetNode(objects, key);
+	if (node) {
+		node.value = value;
+	} else {
+		// Prepend the new node to the beginning of the list
+		objects.next = { // eslint-disable-line no-param-reassign
+			key: key,
+			next: objects.next,
+			value: value
+		};
+	}
+};
+var listHas = function (objects, key) {
+	return !!listGetNode(objects, key);
+};
+
+var sideChannel = function getSideChannel() {
+	var $wm;
+	var $m;
+	var $o;
+	var channel = {
+		assert: function (key) {
+			if (!channel.has(key)) {
+				throw new $TypeError('Side channel does not contain ' + inspect(key));
+			}
+		},
+		get: function (key) { // eslint-disable-line consistent-return
+			if ($WeakMap && key && (typeof key === 'object' || typeof key === 'function')) {
+				if ($wm) {
+					return $weakMapGet($wm, key);
+				}
+			} else if ($Map) {
+				if ($m) {
+					return $mapGet($m, key);
+				}
+			} else {
+				if ($o) { // eslint-disable-line no-lonely-if
+					return listGet($o, key);
+				}
+			}
+		},
+		has: function (key) {
+			if ($WeakMap && key && (typeof key === 'object' || typeof key === 'function')) {
+				if ($wm) {
+					return $weakMapHas($wm, key);
+				}
+			} else if ($Map) {
+				if ($m) {
+					return $mapHas($m, key);
+				}
+			} else {
+				if ($o) { // eslint-disable-line no-lonely-if
+					return listHas($o, key);
+				}
+			}
+			return false;
+		},
+		set: function (key, value) {
+			if ($WeakMap && key && (typeof key === 'object' || typeof key === 'function')) {
+				if (!$wm) {
+					$wm = new $WeakMap();
+				}
+				$weakMapSet($wm, key, value);
+			} else if ($Map) {
+				if (!$m) {
+					$m = new $Map();
+				}
+				$mapSet($m, key, value);
+			} else {
+				if (!$o) {
+					/*
+					 * Initialize the linked list as an empty node, so that we don't have
+					 * to special-case handling of the first node: we can always refer to
+					 * it as (previous node).next, instead of something like (list).head
+					 */
+					$o = { key: {}, next: null };
+				}
+				listSet($o, key, value);
+			}
+		}
+	};
+	return channel;
+};
+
+var replace = String.prototype.replace;
+var percentTwenties = /%20/g;
+
+var Format = {
+    RFC1738: 'RFC1738',
+    RFC3986: 'RFC3986'
+};
+
+var formats$3 = {
+    'default': Format.RFC3986,
+    formatters: {
+        RFC1738: function (value) {
+            return replace.call(value, percentTwenties, '+');
+        },
+        RFC3986: function (value) {
+            return String(value);
+        }
+    },
+    RFC1738: Format.RFC1738,
+    RFC3986: Format.RFC3986
+};
+
+var formats$2 = formats$3;
+
+var has$2 = Object.prototype.hasOwnProperty;
+var isArray$2 = Array.isArray;
+
+var hexTable = (function () {
+    var array = [];
+    for (var i = 0; i < 256; ++i) {
+        array.push('%' + ((i < 16 ? '0' : '') + i.toString(16)).toUpperCase());
+    }
+
+    return array;
+}());
+
+var compactQueue = function compactQueue(queue) {
+    while (queue.length > 1) {
+        var item = queue.pop();
+        var obj = item.obj[item.prop];
+
+        if (isArray$2(obj)) {
+            var compacted = [];
+
+            for (var j = 0; j < obj.length; ++j) {
+                if (typeof obj[j] !== 'undefined') {
+                    compacted.push(obj[j]);
+                }
+            }
+
+            item.obj[item.prop] = compacted;
+        }
+    }
+};
+
+var arrayToObject = function arrayToObject(source, options) {
+    var obj = options && options.plainObjects ? Object.create(null) : {};
+    for (var i = 0; i < source.length; ++i) {
+        if (typeof source[i] !== 'undefined') {
+            obj[i] = source[i];
+        }
+    }
+
+    return obj;
+};
+
+var merge = function merge(target, source, options) {
+    /* eslint no-param-reassign: 0 */
+    if (!source) {
+        return target;
+    }
+
+    if (typeof source !== 'object') {
+        if (isArray$2(target)) {
+            target.push(source);
+        } else if (target && typeof target === 'object') {
+            if ((options && (options.plainObjects || options.allowPrototypes)) || !has$2.call(Object.prototype, source)) {
+                target[source] = true;
+            }
+        } else {
+            return [target, source];
+        }
+
+        return target;
+    }
+
+    if (!target || typeof target !== 'object') {
+        return [target].concat(source);
+    }
+
+    var mergeTarget = target;
+    if (isArray$2(target) && !isArray$2(source)) {
+        mergeTarget = arrayToObject(target, options);
+    }
+
+    if (isArray$2(target) && isArray$2(source)) {
+        source.forEach(function (item, i) {
+            if (has$2.call(target, i)) {
+                var targetItem = target[i];
+                if (targetItem && typeof targetItem === 'object' && item && typeof item === 'object') {
+                    target[i] = merge(targetItem, item, options);
+                } else {
+                    target.push(item);
+                }
+            } else {
+                target[i] = item;
+            }
+        });
+        return target;
+    }
+
+    return Object.keys(source).reduce(function (acc, key) {
+        var value = source[key];
+
+        if (has$2.call(acc, key)) {
+            acc[key] = merge(acc[key], value, options);
+        } else {
+            acc[key] = value;
+        }
+        return acc;
+    }, mergeTarget);
+};
+
+var assign = function assignSingleSource(target, source) {
+    return Object.keys(source).reduce(function (acc, key) {
+        acc[key] = source[key];
+        return acc;
+    }, target);
+};
+
+var decode = function (str, decoder, charset) {
+    var strWithoutPlus = str.replace(/\+/g, ' ');
+    if (charset === 'iso-8859-1') {
+        // unescape never throws, no try...catch needed:
+        return strWithoutPlus.replace(/%[0-9a-f]{2}/gi, unescape);
+    }
+    // utf-8
+    try {
+        return decodeURIComponent(strWithoutPlus);
+    } catch (e) {
+        return strWithoutPlus;
+    }
+};
+
+var encode = function encode(str, defaultEncoder, charset, kind, format) {
+    // This code was originally written by Brian White (mscdex) for the io.js core querystring library.
+    // It has been adapted here for stricter adherence to RFC 3986
+    if (str.length === 0) {
+        return str;
+    }
+
+    var string = str;
+    if (typeof str === 'symbol') {
+        string = Symbol.prototype.toString.call(str);
+    } else if (typeof str !== 'string') {
+        string = String(str);
+    }
+
+    if (charset === 'iso-8859-1') {
+        return escape(string).replace(/%u[0-9a-f]{4}/gi, function ($0) {
+            return '%26%23' + parseInt($0.slice(2), 16) + '%3B';
+        });
+    }
+
+    var out = '';
+    for (var i = 0; i < string.length; ++i) {
+        var c = string.charCodeAt(i);
+
+        if (
+            c === 0x2D // -
+            || c === 0x2E // .
+            || c === 0x5F // _
+            || c === 0x7E // ~
+            || (c >= 0x30 && c <= 0x39) // 0-9
+            || (c >= 0x41 && c <= 0x5A) // a-z
+            || (c >= 0x61 && c <= 0x7A) // A-Z
+            || (format === formats$2.RFC1738 && (c === 0x28 || c === 0x29)) // ( )
+        ) {
+            out += string.charAt(i);
+            continue;
+        }
+
+        if (c < 0x80) {
+            out = out + hexTable[c];
+            continue;
+        }
+
+        if (c < 0x800) {
+            out = out + (hexTable[0xC0 | (c >> 6)] + hexTable[0x80 | (c & 0x3F)]);
+            continue;
+        }
+
+        if (c < 0xD800 || c >= 0xE000) {
+            out = out + (hexTable[0xE0 | (c >> 12)] + hexTable[0x80 | ((c >> 6) & 0x3F)] + hexTable[0x80 | (c & 0x3F)]);
+            continue;
+        }
+
+        i += 1;
+        c = 0x10000 + (((c & 0x3FF) << 10) | (string.charCodeAt(i) & 0x3FF));
+        /* eslint operator-linebreak: [2, "before"] */
+        out += hexTable[0xF0 | (c >> 18)]
+            + hexTable[0x80 | ((c >> 12) & 0x3F)]
+            + hexTable[0x80 | ((c >> 6) & 0x3F)]
+            + hexTable[0x80 | (c & 0x3F)];
+    }
+
+    return out;
+};
+
+var compact = function compact(value) {
+    var queue = [{ obj: { o: value }, prop: 'o' }];
+    var refs = [];
+
+    for (var i = 0; i < queue.length; ++i) {
+        var item = queue[i];
+        var obj = item.obj[item.prop];
+
+        var keys = Object.keys(obj);
+        for (var j = 0; j < keys.length; ++j) {
+            var key = keys[j];
+            var val = obj[key];
+            if (typeof val === 'object' && val !== null && refs.indexOf(val) === -1) {
+                queue.push({ obj: obj, prop: key });
+                refs.push(val);
+            }
+        }
+    }
+
+    compactQueue(queue);
+
+    return value;
+};
+
+var isRegExp = function isRegExp(obj) {
+    return Object.prototype.toString.call(obj) === '[object RegExp]';
+};
+
+var isBuffer = function isBuffer(obj) {
+    if (!obj || typeof obj !== 'object') {
+        return false;
+    }
+
+    return !!(obj.constructor && obj.constructor.isBuffer && obj.constructor.isBuffer(obj));
+};
+
+var combine = function combine(a, b) {
+    return [].concat(a, b);
+};
+
+var maybeMap = function maybeMap(val, fn) {
+    if (isArray$2(val)) {
+        var mapped = [];
+        for (var i = 0; i < val.length; i += 1) {
+            mapped.push(fn(val[i]));
+        }
+        return mapped;
+    }
+    return fn(val);
+};
+
+var utils$2 = {
+    arrayToObject: arrayToObject,
+    assign: assign,
+    combine: combine,
+    compact: compact,
+    decode: decode,
+    encode: encode,
+    isBuffer: isBuffer,
+    isRegExp: isRegExp,
+    maybeMap: maybeMap,
+    merge: merge
+};
+
+var getSideChannel = sideChannel;
+var utils$1 = utils$2;
+var formats$1 = formats$3;
+var has$1 = Object.prototype.hasOwnProperty;
+
+var arrayPrefixGenerators = {
+    brackets: function brackets(prefix) {
+        return prefix + '[]';
+    },
+    comma: 'comma',
+    indices: function indices(prefix, key) {
+        return prefix + '[' + key + ']';
+    },
+    repeat: function repeat(prefix) {
+        return prefix;
+    }
+};
+
+var isArray$1 = Array.isArray;
+var split = String.prototype.split;
+var push = Array.prototype.push;
+var pushToArray = function (arr, valueOrArray) {
+    push.apply(arr, isArray$1(valueOrArray) ? valueOrArray : [valueOrArray]);
+};
+
+var toISO = Date.prototype.toISOString;
+
+var defaultFormat = formats$1['default'];
+var defaults$1 = {
+    addQueryPrefix: false,
+    allowDots: false,
+    charset: 'utf-8',
+    charsetSentinel: false,
+    delimiter: '&',
+    encode: true,
+    encoder: utils$1.encode,
+    encodeValuesOnly: false,
+    format: defaultFormat,
+    formatter: formats$1.formatters[defaultFormat],
+    // deprecated
+    indices: false,
+    serializeDate: function serializeDate(date) {
+        return toISO.call(date);
+    },
+    skipNulls: false,
+    strictNullHandling: false
+};
+
+var isNonNullishPrimitive = function isNonNullishPrimitive(v) {
+    return typeof v === 'string'
+        || typeof v === 'number'
+        || typeof v === 'boolean'
+        || typeof v === 'symbol'
+        || typeof v === 'bigint';
+};
+
+var sentinel = {};
+
+var stringify$1 = function stringify(
+    object,
+    prefix,
+    generateArrayPrefix,
+    commaRoundTrip,
+    strictNullHandling,
+    skipNulls,
+    encoder,
+    filter,
+    sort,
+    allowDots,
+    serializeDate,
+    format,
+    formatter,
+    encodeValuesOnly,
+    charset,
+    sideChannel
+) {
+    var obj = object;
+
+    var tmpSc = sideChannel;
+    var step = 0;
+    var findFlag = false;
+    while ((tmpSc = tmpSc.get(sentinel)) !== void undefined && !findFlag) {
+        // Where object last appeared in the ref tree
+        var pos = tmpSc.get(object);
+        step += 1;
+        if (typeof pos !== 'undefined') {
+            if (pos === step) {
+                throw new RangeError('Cyclic object value');
+            } else {
+                findFlag = true; // Break while
+            }
+        }
+        if (typeof tmpSc.get(sentinel) === 'undefined') {
+            step = 0;
+        }
+    }
+
+    if (typeof filter === 'function') {
+        obj = filter(prefix, obj);
+    } else if (obj instanceof Date) {
+        obj = serializeDate(obj);
+    } else if (generateArrayPrefix === 'comma' && isArray$1(obj)) {
+        obj = utils$1.maybeMap(obj, function (value) {
+            if (value instanceof Date) {
+                return serializeDate(value);
+            }
+            return value;
+        });
+    }
+
+    if (obj === null) {
+        if (strictNullHandling) {
+            return encoder && !encodeValuesOnly ? encoder(prefix, defaults$1.encoder, charset, 'key', format) : prefix;
+        }
+
+        obj = '';
+    }
+
+    if (isNonNullishPrimitive(obj) || utils$1.isBuffer(obj)) {
+        if (encoder) {
+            var keyValue = encodeValuesOnly ? prefix : encoder(prefix, defaults$1.encoder, charset, 'key', format);
+            if (generateArrayPrefix === 'comma' && encodeValuesOnly) {
+                var valuesArray = split.call(String(obj), ',');
+                var valuesJoined = '';
+                for (var i = 0; i < valuesArray.length; ++i) {
+                    valuesJoined += (i === 0 ? '' : ',') + formatter(encoder(valuesArray[i], defaults$1.encoder, charset, 'value', format));
+                }
+                return [formatter(keyValue) + (commaRoundTrip && isArray$1(obj) && valuesArray.length === 1 ? '[]' : '') + '=' + valuesJoined];
+            }
+            return [formatter(keyValue) + '=' + formatter(encoder(obj, defaults$1.encoder, charset, 'value', format))];
+        }
+        return [formatter(prefix) + '=' + formatter(String(obj))];
+    }
+
+    var values = [];
+
+    if (typeof obj === 'undefined') {
+        return values;
+    }
+
+    var objKeys;
+    if (generateArrayPrefix === 'comma' && isArray$1(obj)) {
+        // we need to join elements in
+        objKeys = [{ value: obj.length > 0 ? obj.join(',') || null : void undefined }];
+    } else if (isArray$1(filter)) {
+        objKeys = filter;
+    } else {
+        var keys = Object.keys(obj);
+        objKeys = sort ? keys.sort(sort) : keys;
+    }
+
+    var adjustedPrefix = commaRoundTrip && isArray$1(obj) && obj.length === 1 ? prefix + '[]' : prefix;
+
+    for (var j = 0; j < objKeys.length; ++j) {
+        var key = objKeys[j];
+        var value = typeof key === 'object' && typeof key.value !== 'undefined' ? key.value : obj[key];
+
+        if (skipNulls && value === null) {
+            continue;
+        }
+
+        var keyPrefix = isArray$1(obj)
+            ? typeof generateArrayPrefix === 'function' ? generateArrayPrefix(adjustedPrefix, key) : adjustedPrefix
+            : adjustedPrefix + (allowDots ? '.' + key : '[' + key + ']');
+
+        sideChannel.set(object, step);
+        var valueSideChannel = getSideChannel();
+        valueSideChannel.set(sentinel, sideChannel);
+        pushToArray(values, stringify(
+            value,
+            keyPrefix,
+            generateArrayPrefix,
+            commaRoundTrip,
+            strictNullHandling,
+            skipNulls,
+            encoder,
+            filter,
+            sort,
+            allowDots,
+            serializeDate,
+            format,
+            formatter,
+            encodeValuesOnly,
+            charset,
+            valueSideChannel
+        ));
+    }
+
+    return values;
+};
+
+var normalizeStringifyOptions = function normalizeStringifyOptions(opts) {
+    if (!opts) {
+        return defaults$1;
+    }
+
+    if (opts.encoder !== null && typeof opts.encoder !== 'undefined' && typeof opts.encoder !== 'function') {
+        throw new TypeError('Encoder has to be a function.');
+    }
+
+    var charset = opts.charset || defaults$1.charset;
+    if (typeof opts.charset !== 'undefined' && opts.charset !== 'utf-8' && opts.charset !== 'iso-8859-1') {
+        throw new TypeError('The charset option must be either utf-8, iso-8859-1, or undefined');
+    }
+
+    var format = formats$1['default'];
+    if (typeof opts.format !== 'undefined') {
+        if (!has$1.call(formats$1.formatters, opts.format)) {
+            throw new TypeError('Unknown format option provided.');
+        }
+        format = opts.format;
+    }
+    var formatter = formats$1.formatters[format];
+
+    var filter = defaults$1.filter;
+    if (typeof opts.filter === 'function' || isArray$1(opts.filter)) {
+        filter = opts.filter;
+    }
+
+    return {
+        addQueryPrefix: typeof opts.addQueryPrefix === 'boolean' ? opts.addQueryPrefix : defaults$1.addQueryPrefix,
+        allowDots: typeof opts.allowDots === 'undefined' ? defaults$1.allowDots : !!opts.allowDots,
+        charset: charset,
+        charsetSentinel: typeof opts.charsetSentinel === 'boolean' ? opts.charsetSentinel : defaults$1.charsetSentinel,
+        delimiter: typeof opts.delimiter === 'undefined' ? defaults$1.delimiter : opts.delimiter,
+        encode: typeof opts.encode === 'boolean' ? opts.encode : defaults$1.encode,
+        encoder: typeof opts.encoder === 'function' ? opts.encoder : defaults$1.encoder,
+        encodeValuesOnly: typeof opts.encodeValuesOnly === 'boolean' ? opts.encodeValuesOnly : defaults$1.encodeValuesOnly,
+        filter: filter,
+        format: format,
+        formatter: formatter,
+        serializeDate: typeof opts.serializeDate === 'function' ? opts.serializeDate : defaults$1.serializeDate,
+        skipNulls: typeof opts.skipNulls === 'boolean' ? opts.skipNulls : defaults$1.skipNulls,
+        sort: typeof opts.sort === 'function' ? opts.sort : null,
+        strictNullHandling: typeof opts.strictNullHandling === 'boolean' ? opts.strictNullHandling : defaults$1.strictNullHandling
+    };
+};
+
+var stringify_1 = function (object, opts) {
+    var obj = object;
+    var options = normalizeStringifyOptions(opts);
+
+    var objKeys;
+    var filter;
+
+    if (typeof options.filter === 'function') {
+        filter = options.filter;
+        obj = filter('', obj);
+    } else if (isArray$1(options.filter)) {
+        filter = options.filter;
+        objKeys = filter;
+    }
+
+    var keys = [];
+
+    if (typeof obj !== 'object' || obj === null) {
+        return '';
+    }
+
+    var arrayFormat;
+    if (opts && opts.arrayFormat in arrayPrefixGenerators) {
+        arrayFormat = opts.arrayFormat;
+    } else if (opts && 'indices' in opts) {
+        arrayFormat = opts.indices ? 'indices' : 'repeat';
+    } else {
+        arrayFormat = 'indices';
+    }
+
+    var generateArrayPrefix = arrayPrefixGenerators[arrayFormat];
+    if (opts && 'commaRoundTrip' in opts && typeof opts.commaRoundTrip !== 'boolean') {
+        throw new TypeError('`commaRoundTrip` must be a boolean, or absent');
+    }
+    var commaRoundTrip = generateArrayPrefix === 'comma' && opts && opts.commaRoundTrip;
+
+    if (!objKeys) {
+        objKeys = Object.keys(obj);
+    }
+
+    if (options.sort) {
+        objKeys.sort(options.sort);
+    }
+
+    var sideChannel = getSideChannel();
+    for (var i = 0; i < objKeys.length; ++i) {
+        var key = objKeys[i];
+
+        if (options.skipNulls && obj[key] === null) {
+            continue;
+        }
+        pushToArray(keys, stringify$1(
+            obj[key],
+            key,
+            generateArrayPrefix,
+            commaRoundTrip,
+            options.strictNullHandling,
+            options.skipNulls,
+            options.encode ? options.encoder : null,
+            options.filter,
+            options.sort,
+            options.allowDots,
+            options.serializeDate,
+            options.format,
+            options.formatter,
+            options.encodeValuesOnly,
+            options.charset,
+            sideChannel
+        ));
+    }
+
+    var joined = keys.join(options.delimiter);
+    var prefix = options.addQueryPrefix === true ? '?' : '';
+
+    if (options.charsetSentinel) {
+        if (options.charset === 'iso-8859-1') {
+            // encodeURIComponent('&#10003;'), the "numeric entity" representation of a checkmark
+            prefix += 'utf8=%26%2310003%3B&';
+        } else {
+            // encodeURIComponent('✓')
+            prefix += 'utf8=%E2%9C%93&';
+        }
+    }
+
+    return joined.length > 0 ? prefix + joined : '';
+};
+
+var utils = utils$2;
+
+var has = Object.prototype.hasOwnProperty;
+var isArray = Array.isArray;
+
+var defaults = {
+    allowDots: false,
+    allowPrototypes: false,
+    allowSparse: false,
+    arrayLimit: 20,
+    charset: 'utf-8',
+    charsetSentinel: false,
+    comma: false,
+    decoder: utils.decode,
+    delimiter: '&',
+    depth: 5,
+    ignoreQueryPrefix: false,
+    interpretNumericEntities: false,
+    parameterLimit: 1000,
+    parseArrays: true,
+    plainObjects: false,
+    strictNullHandling: false
+};
+
+var interpretNumericEntities = function (str) {
+    return str.replace(/&#(\d+);/g, function ($0, numberStr) {
+        return String.fromCharCode(parseInt(numberStr, 10));
+    });
+};
+
+var parseArrayValue = function (val, options) {
+    if (val && typeof val === 'string' && options.comma && val.indexOf(',') > -1) {
+        return val.split(',');
+    }
+
+    return val;
+};
+
+// This is what browsers will submit when the ✓ character occurs in an
+// application/x-www-form-urlencoded body and the encoding of the page containing
+// the form is iso-8859-1, or when the submitted form has an accept-charset
+// attribute of iso-8859-1. Presumably also with other charsets that do not contain
+// the ✓ character, such as us-ascii.
+var isoSentinel = 'utf8=%26%2310003%3B'; // encodeURIComponent('&#10003;')
+
+// These are the percent-encoded utf-8 octets representing a checkmark, indicating that the request actually is utf-8 encoded.
+var charsetSentinel = 'utf8=%E2%9C%93'; // encodeURIComponent('✓')
+
+var parseValues = function parseQueryStringValues(str, options) {
+    var obj = {};
+    var cleanStr = options.ignoreQueryPrefix ? str.replace(/^\?/, '') : str;
+    var limit = options.parameterLimit === Infinity ? undefined : options.parameterLimit;
+    var parts = cleanStr.split(options.delimiter, limit);
+    var skipIndex = -1; // Keep track of where the utf8 sentinel was found
+    var i;
+
+    var charset = options.charset;
+    if (options.charsetSentinel) {
+        for (i = 0; i < parts.length; ++i) {
+            if (parts[i].indexOf('utf8=') === 0) {
+                if (parts[i] === charsetSentinel) {
+                    charset = 'utf-8';
+                } else if (parts[i] === isoSentinel) {
+                    charset = 'iso-8859-1';
+                }
+                skipIndex = i;
+                i = parts.length; // The eslint settings do not allow break;
+            }
+        }
+    }
+
+    for (i = 0; i < parts.length; ++i) {
+        if (i === skipIndex) {
+            continue;
+        }
+        var part = parts[i];
+
+        var bracketEqualsPos = part.indexOf(']=');
+        var pos = bracketEqualsPos === -1 ? part.indexOf('=') : bracketEqualsPos + 1;
+
+        var key, val;
+        if (pos === -1) {
+            key = options.decoder(part, defaults.decoder, charset, 'key');
+            val = options.strictNullHandling ? null : '';
+        } else {
+            key = options.decoder(part.slice(0, pos), defaults.decoder, charset, 'key');
+            val = utils.maybeMap(
+                parseArrayValue(part.slice(pos + 1), options),
+                function (encodedVal) {
+                    return options.decoder(encodedVal, defaults.decoder, charset, 'value');
+                }
+            );
+        }
+
+        if (val && options.interpretNumericEntities && charset === 'iso-8859-1') {
+            val = interpretNumericEntities(val);
+        }
+
+        if (part.indexOf('[]=') > -1) {
+            val = isArray(val) ? [val] : val;
+        }
+
+        if (has.call(obj, key)) {
+            obj[key] = utils.combine(obj[key], val);
+        } else {
+            obj[key] = val;
+        }
+    }
+
+    return obj;
+};
+
+var parseObject = function (chain, val, options, valuesParsed) {
+    var leaf = valuesParsed ? val : parseArrayValue(val, options);
+
+    for (var i = chain.length - 1; i >= 0; --i) {
+        var obj;
+        var root = chain[i];
+
+        if (root === '[]' && options.parseArrays) {
+            obj = [].concat(leaf);
+        } else {
+            obj = options.plainObjects ? Object.create(null) : {};
+            var cleanRoot = root.charAt(0) === '[' && root.charAt(root.length - 1) === ']' ? root.slice(1, -1) : root;
+            var index = parseInt(cleanRoot, 10);
+            if (!options.parseArrays && cleanRoot === '') {
+                obj = { 0: leaf };
+            } else if (
+                !isNaN(index)
+                && root !== cleanRoot
+                && String(index) === cleanRoot
+                && index >= 0
+                && (options.parseArrays && index <= options.arrayLimit)
+            ) {
+                obj = [];
+                obj[index] = leaf;
+            } else if (cleanRoot !== '__proto__') {
+                obj[cleanRoot] = leaf;
+            }
+        }
+
+        leaf = obj;
+    }
+
+    return leaf;
+};
+
+var parseKeys = function parseQueryStringKeys(givenKey, val, options, valuesParsed) {
+    if (!givenKey) {
+        return;
+    }
+
+    // Transform dot notation to bracket notation
+    var key = options.allowDots ? givenKey.replace(/\.([^.[]+)/g, '[$1]') : givenKey;
+
+    // The regex chunks
+
+    var brackets = /(\[[^[\]]*])/;
+    var child = /(\[[^[\]]*])/g;
+
+    // Get the parent
+
+    var segment = options.depth > 0 && brackets.exec(key);
+    var parent = segment ? key.slice(0, segment.index) : key;
+
+    // Stash the parent if it exists
+
+    var keys = [];
+    if (parent) {
+        // If we aren't using plain objects, optionally prefix keys that would overwrite object prototype properties
+        if (!options.plainObjects && has.call(Object.prototype, parent)) {
+            if (!options.allowPrototypes) {
+                return;
+            }
+        }
+
+        keys.push(parent);
+    }
+
+    // Loop through children appending to the array until we hit depth
+
+    var i = 0;
+    while (options.depth > 0 && (segment = child.exec(key)) !== null && i < options.depth) {
+        i += 1;
+        if (!options.plainObjects && has.call(Object.prototype, segment[1].slice(1, -1))) {
+            if (!options.allowPrototypes) {
+                return;
+            }
+        }
+        keys.push(segment[1]);
+    }
+
+    // If there's a remainder, just add whatever is left
+
+    if (segment) {
+        keys.push('[' + key.slice(segment.index) + ']');
+    }
+
+    return parseObject(keys, val, options, valuesParsed);
+};
+
+var normalizeParseOptions = function normalizeParseOptions(opts) {
+    if (!opts) {
+        return defaults;
+    }
+
+    if (opts.decoder !== null && opts.decoder !== undefined && typeof opts.decoder !== 'function') {
+        throw new TypeError('Decoder has to be a function.');
+    }
+
+    if (typeof opts.charset !== 'undefined' && opts.charset !== 'utf-8' && opts.charset !== 'iso-8859-1') {
+        throw new TypeError('The charset option must be either utf-8, iso-8859-1, or undefined');
+    }
+    var charset = typeof opts.charset === 'undefined' ? defaults.charset : opts.charset;
+
+    return {
+        allowDots: typeof opts.allowDots === 'undefined' ? defaults.allowDots : !!opts.allowDots,
+        allowPrototypes: typeof opts.allowPrototypes === 'boolean' ? opts.allowPrototypes : defaults.allowPrototypes,
+        allowSparse: typeof opts.allowSparse === 'boolean' ? opts.allowSparse : defaults.allowSparse,
+        arrayLimit: typeof opts.arrayLimit === 'number' ? opts.arrayLimit : defaults.arrayLimit,
+        charset: charset,
+        charsetSentinel: typeof opts.charsetSentinel === 'boolean' ? opts.charsetSentinel : defaults.charsetSentinel,
+        comma: typeof opts.comma === 'boolean' ? opts.comma : defaults.comma,
+        decoder: typeof opts.decoder === 'function' ? opts.decoder : defaults.decoder,
+        delimiter: typeof opts.delimiter === 'string' || utils.isRegExp(opts.delimiter) ? opts.delimiter : defaults.delimiter,
+        // eslint-disable-next-line no-implicit-coercion, no-extra-parens
+        depth: (typeof opts.depth === 'number' || opts.depth === false) ? +opts.depth : defaults.depth,
+        ignoreQueryPrefix: opts.ignoreQueryPrefix === true,
+        interpretNumericEntities: typeof opts.interpretNumericEntities === 'boolean' ? opts.interpretNumericEntities : defaults.interpretNumericEntities,
+        parameterLimit: typeof opts.parameterLimit === 'number' ? opts.parameterLimit : defaults.parameterLimit,
+        parseArrays: opts.parseArrays !== false,
+        plainObjects: typeof opts.plainObjects === 'boolean' ? opts.plainObjects : defaults.plainObjects,
+        strictNullHandling: typeof opts.strictNullHandling === 'boolean' ? opts.strictNullHandling : defaults.strictNullHandling
+    };
+};
+
+var parse$1 = function (str, opts) {
+    var options = normalizeParseOptions(opts);
+
+    if (str === '' || str === null || typeof str === 'undefined') {
+        return options.plainObjects ? Object.create(null) : {};
+    }
+
+    var tempObj = typeof str === 'string' ? parseValues(str, options) : str;
+    var obj = options.plainObjects ? Object.create(null) : {};
+
+    // Iterate over the keys and setup the new object
+
+    var keys = Object.keys(tempObj);
+    for (var i = 0; i < keys.length; ++i) {
+        var key = keys[i];
+        var newObj = parseKeys(key, tempObj[key], options, typeof str === 'string');
+        obj = utils.merge(obj, newObj, options);
+    }
+
+    if (options.allowSparse === true) {
+        return obj;
+    }
+
+    return utils.compact(obj);
+};
+
+var stringify = stringify_1;
+var parse = parse$1;
+var formats = formats$3;
+
+var lib = {
+    formats: formats,
+    parse: parse,
+    stringify: stringify
+};
+
 axios.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+axios.defaults.withCredentials = true;
 function fetch ({ url, baseURL, method, headers, data }, proxy) {
     const requestOptions = {
         url,
@@ -16833,7 +18852,7 @@ function fetch ({ url, baseURL, method, headers, data }, proxy) {
         };
         requestOptions.httpsAgent = new require$$4__default["default"].Agent({ keepAlive: true });
     }
-    return axios(requestOptions);
+    return axios.post(requestOptions.baseURL + url, lib.stringify(data), { headers, withCredentials: true });
 }
 
 var SignMethod;
@@ -16872,17 +18891,13 @@ var CorpIdentTypeEnum;
     /** 其他类型 */
     CorpIdentTypeEnum["OTHER"] = "other";
 })(CorpIdentTypeEnum || (CorpIdentTypeEnum = {}));
-/** 参与方类型 */
+/** 参与方主体类型 */
 var ActorTypeEnum;
 (function (ActorTypeEnum) {
-    /** 发起方 */
-    ActorTypeEnum["INITIATOR"] = "initiator";
-    /** 填写方 */
-    ActorTypeEnum["FILLER"] = "filler";
-    /** 签署方 */
-    ActorTypeEnum["SIGNER"] = "signer";
-    /** 抄送方 */
-    ActorTypeEnum["CC"] = "cc";
+    /** 企业 */
+    ActorTypeEnum["CORP"] = "corp";
+    /** 个人 */
+    ActorTypeEnum["PERSON"] = "person";
 })(ActorTypeEnum || (ActorTypeEnum = {}));
 /** eui环境枚举 */
 var EuiEnvironmentEnum;
@@ -16894,8 +18909,8 @@ var EuiEnvironmentEnum;
 var RequestParamsEnum;
 (function (RequestParamsEnum) {
     /**
-    * 企业控制台创建应用后得到的应用ID
-   */
+     * 企业控制台创建应用后得到的应用ID
+    */
     RequestParamsEnum["APP_ID"] = "X-FASC-App-Id";
     /**
      * 签名算法类型:固定HMAC-SHA256
@@ -16909,6 +18924,10 @@ var RequestParamsEnum;
      * 时间戳(yyyy-MM-dd HH:mm:ss.sss)，时间戳必须是保证是当前时间，同时跟法大大这边的服务器时间正负不能相差5分钟
      */
     RequestParamsEnum["TIMESTAMP"] = "X-FASC-Timestamp";
+    /**
+     * FASC.openApi子版本号。如当前规划新版本为：5.1。注意：若指定子版本号下不存在接口，系统将会报错返回。
+     */
+    RequestParamsEnum["SUBVERSION"] = "X-FASC-Api-SubVersion";
     /**
      * 随机数(32位, 10分钟内不能重复请求)
      */
@@ -16932,6 +18951,15 @@ var RequestParamsEnum;
     RequestParamsEnum["METHOD_POST"] = "POST";
     RequestParamsEnum["METHOD_GET"] = "GET";
 })(RequestParamsEnum || (RequestParamsEnum = {}));
+const SUBVERSION = '5.1';
+/** 参与方权限 */
+var Permissions;
+(function (Permissions) {
+    /** 填写和确认内容 */
+    Permissions["FILL"] = "fill";
+    /** 确定签署 */
+    Permissions["SIGN"] = "sign";
+})(Permissions || (Permissions = {}));
 
 class FascOpenApiSDKHttpException extends Error {
     constructor(error, requestId = "") {
@@ -16990,6 +19018,7 @@ class AbstractClient {
             [RequestParamsEnum.SIGN_TYPE]: this.profile.signMethod,
             [RequestParamsEnum.NONCE]: nonce,
             [RequestParamsEnum.TIMESTAMP]: timestamp,
+            [RequestParamsEnum.SUBVERSION]: SUBVERSION,
             "Content-Type": "application/x-www-form-urlencoded",
         };
         let reqData = JSON.stringify(data) || "";
@@ -17009,6 +19038,7 @@ class AbstractClient {
             nonce,
             timestamp,
             accessToken: this.credential.accessToken,
+            subversion: SUBVERSION
         });
         const signStr = Sign.formatSignString(params);
         const signature = Sign.sign({
@@ -17036,13 +19066,14 @@ class AbstractClient {
         console.log(curl);
         return await fetch(fetchParams, this.profile.proxyProfile);
     }
-    formatParams({ data, appId, signMethod, nonce, timestamp, accessToken = null, }) {
+    formatParams({ data, appId, signMethod, nonce, timestamp, accessToken = null, subversion }) {
         const signParams = {
             [RequestParamsEnum.DATA_KEY]: JSON.stringify(data || ''),
             [RequestParamsEnum.APP_ID]: appId,
             [RequestParamsEnum.SIGN_TYPE]: signMethod,
             [RequestParamsEnum.NONCE]: nonce,
             [RequestParamsEnum.TIMESTAMP]: timestamp,
+            [RequestParamsEnum.SUBVERSION]: subversion
         };
         if (accessToken !== null) {
             signParams[RequestParamsEnum.ACCESS_TOKEN] = accessToken;
@@ -17055,28 +19086,215 @@ class AbstractClient {
     }
 }
 
-class Client$a extends AbstractClient {
+class Client$8 extends AbstractClient {
     constructor(clientConfig) {
         super(clientConfig);
     }
     /**
-     * 把应用系统上将要使用法大大平台服务的个人用户添加到法大大平台。法大大平台会为这些用户分配在该appId范围内的唯一标识openUserId。
-     * 后续，针对该用户进行的授权请求、签署任务等调用都将使用该openUserId标识该用户。您可在应该管理后台查看和管理已经添加的用户
+     * 将已添加的企业用户暂时禁用。禁用后，该企业暂时不能通过该应用系统使用法大大平台服务
      */
-    async addUser(req) {
-        return this.request({ url: "/user/add", req, reqMethod: "POST" });
+    async disable(req) {
+        return this.request({ url: "/corp/disable", req, reqMethod: "POST" });
     }
     /**
-     * 为已添加的个人用户修改在应用系统中的关联参数
+     * 将已禁用的企业用户再次激活。激活后，该企业用户可继续通过该应用系统使用法大大平台服务
      */
-    async updateUser(req) {
-        return this.request({ url: "/user/update", req, reqMethod: "POST" });
+    async enable(req) {
+        return this.request({ url: "/corp/enable", req, reqMethod: "POST" });
     }
     /**
-     * 删除个人用户。删除后再次使用相同的clientUserId添加个人用户时，返回新的openUserId
+   * 将已禁用的企业用户再次激活。激活后，该企业用户可继续通过该应用系统使用法大大平台服务
+   */
+    async unbind(req) {
+        return this.request({ url: "/corp/unbind", req, reqMethod: "POST" });
+    }
+    /**
+     * 获取企业的基本信息、认证状态、授权状态和范围等。注意：该接口返回的信息中不涉及隐私，因此不需要授权
      */
-    async deleteUser(req) {
-        return this.request({ url: "/user/delete", req, reqMethod: "POST" });
+    async get(req) {
+        return this.request({ url: "/corp/get", req, reqMethod: "POST" });
+    }
+    /**
+     * 用于获取企业的实名身份信息。注意：只有经过企业授权后，应用系统方可获得此信息
+     */
+    async getIdentityInfo(req) {
+        return this.request({ url: "/corp/get-identity-info", req, reqMethod: "POST" });
+    }
+}
+
+const corpClient = {
+    Client: Client$8,
+    Models: Models$8,
+};
+
+class Client$7 extends AbstractClient {
+    constructor(clientConfig) {
+        super(clientConfig);
+    }
+    /**
+     * 通过网络文件地址上传文件(文档或附件)到法大大存储服务
+     */
+    async uploadFileByUrl(req) {
+        return this.request({ url: "/file/upload-by-url", reqMethod: "POST", req });
+    }
+    /**
+     * 上传本地文件到法大大
+     */
+    async getUploadUrl(req) {
+        return this.request({ url: "/file/get-upload-url", reqMethod: "POST", req });
+    }
+    /**
+     * 文件处理
+     */
+    async FileProcess(req) {
+        return this.request({ url: "/file/process", reqMethod: "POST", req });
+    }
+}
+
+var Models$7 = /*#__PURE__*/Object.freeze({
+  __proto__: null
+});
+
+const docClient = {
+    Client: Client$7,
+    Models: Models$7,
+};
+
+var Models$6 = /*#__PURE__*/Object.freeze({
+  __proto__: null
+});
+
+const SYMBOL = '%s';
+const EnvEnvironmentMap = new Map([
+    [EuiEnvironmentEnum.SIT, `https://${SYMBOL}.sit-e.fadada.com`],
+    [EuiEnvironmentEnum.UAT, `https://${SYMBOL}.uat-e.fadada.com`],
+    [EuiEnvironmentEnum.PROD, `https://${SYMBOL}.e.fadada.com`],
+]);
+class Client$6 extends AbstractClient {
+    constructor(clientConfig) {
+        super(clientConfig);
+    }
+    getOpenCorpAuthorizeUrl(data, environmentEnum) {
+        const { openCorpId, corpName, authScopes, redirectUrl } = data;
+        const timestamp = new Date().getTime();
+        const appId = this.credential.appId.toUpperCase();
+        const signParams = {
+            appId,
+            openCorpId,
+            corpName,
+            authScopes,
+            redirectUrl
+        };
+        const signStr = Sign.formatSignString(signParams);
+        const signature = Sign.sign({
+            signStr,
+            timestamp,
+            appSecret: this.credential.appSecret,
+        });
+        const params = new require$$5.URLSearchParams();
+        params.append('openCorpId', openCorpId);
+        params.append('corpName', corpName);
+        params.append('authScopes', authScopes);
+        params.append('redirectUrl', redirectUrl);
+        params.append('timestamp', String(timestamp));
+        params.append('signature', signature);
+        const host = EnvEnvironmentMap.get(environmentEnum).replace(SYMBOL, appId);
+        return (host + '/authorize/list?' + decodeURIComponent(params.toString()));
+    }
+    /**
+     * 应用系统向法大大平台获取一个页面链接，用于提醒企业经办人进行授权操作，以授权应用系统访问该企业在法大大平台的某些数据和操作权限。
+     * 在企业操作授权前，法大大平台要求企业及其经办人必须先完成登录和实名认证 (即: Authorization的前提是必须先完成Authentication)
+     */
+    async getCorpAuthUrl(req) {
+        return this.request({ url: "/corp/get-auth-url", req, reqMethod: "POST" });
+    }
+    /**
+     * 应用系统向法大大平台获取一个页面链接，用于提醒用户进行授权操作，以授权应用系统访问用户在法大大平台的某些数据资源和操作权限。
+     * 在用户操作授权前，法大大平台要求用户必须先完成登录和实名认证 (即: Authorization的前提是必须先完成Authentication)
+     */
+    async getUserAuthUrl(req) {
+        return this.request({ url: "/user/get-auth-url", req, reqMethod: "POST" });
+    }
+    /**
+     * 获取应用级资源访问链接
+     * 获取法大大平台主体授权给应用可访问的资源链接
+     */
+    async getAppPageResourceUrl(req) {
+        return this.request({ url: "/app-page-resource/get-url", req, reqMethod: "POST" });
+    }
+    /**
+     * 获取用户级资源访问链接
+     * 获取法大大登录用户访问资源的链接
+     */
+    async getUserPageResourceUrl(req) {
+        return this.request({ url: "/user-page-resource/get-url", req, reqMethod: "POST" });
+    }
+    /**
+     * 获取计费链接
+     * 应用系统向法大大平台获取计费页面链接，用于账户信息查询或套餐订购
+     */
+    async getBillUrl(req) {
+        return this.request({ url: "/billing/get-bill-url", req, reqMethod: "POST" });
+    }
+}
+
+const euiClient = {
+    Client: Client$6,
+    Models: Models$6,
+};
+
+class Client$5 extends AbstractClient {
+    /**
+     * 查询企业成员列表
+     * 根据指定的企业主体openCorpId查询企业在法大大组织中管理的员工列表数据
+     */
+    async getMemberList(req) {
+        return this.request({ url: "/corp/member/get-list", req, reqMethod: "POST" });
+    }
+}
+
+var Models$5 = /*#__PURE__*/Object.freeze({
+  __proto__: null
+});
+
+const orgClient = {
+    Client: Client$5,
+    Models: Models$5,
+};
+
+class Client$4 extends AbstractClient {
+    /**
+     * 查询印章列表
+     * 根据指定的企业主体openCorpId查询企业在法大大组织中管理的印章列表数据
+     */
+    async getSealList(req) {
+        return this.request({ url: "/seal/get-list", req, reqMethod: "POST" });
+    }
+    /**
+     * 查询企业用印员列表
+     * 根据指定的企业主体openCorpId查询企业在法大大组织中管理的印章的用印人员列表
+     */
+    async getSealUserList(req) {
+        return this.request({ url: "/seal/get-user-list", req, reqMethod: "POST" });
+    }
+}
+
+var Models$4 = /*#__PURE__*/Object.freeze({
+  __proto__: null
+});
+
+const sealClient = {
+    Client: Client$4,
+    Models: Models$4,
+};
+
+var Models$3 = /*#__PURE__*/Object.freeze({
+  __proto__: null
+});
+
+class Client$3 extends AbstractClient {
+    constructor(clientConfig) {
+        super(clientConfig);
     }
     /**
      * 将已添加的用户暂时禁用。禁用后，该用户暂时不能通过该应用系统使用法大大平台服务
@@ -17097,13 +19315,6 @@ class Client$a extends AbstractClient {
         return this.request({ url: "/user/unbind", req, reqMethod: "POST" });
     }
     /**
-     * 应用系统向法大大平台获取一个页面链接，用于提醒用户进行授权操作，以授权应用系统访问用户在法大大平台的某些数据资源和操作权限。
-     * 在用户操作授权前，法大大平台要求用户必须先完成登录和实名认证 (即: Authorization的前提是必须先完成Authentication)
-     */
-    async getAuthUrl(req) {
-        return this.request({ url: "/user/get-auth-url", req, reqMethod: "POST" });
-    }
-    /**
      * 获取个人用户的基本信息、认证状态、授权状态和范围等。注意：该接口返回的信息中不涉及个人隐私，因此不需要授权
      */
     async getUserInfo(req) {
@@ -17118,15 +19329,15 @@ class Client$a extends AbstractClient {
 }
 
 const userClient = {
-    Client: Client$a,
-    Models: Models$a,
+    Client: Client$3,
+    Models: Models$3,
 };
 
-var Models$9 = /*#__PURE__*/Object.freeze({
+var Models$2 = /*#__PURE__*/Object.freeze({
   __proto__: null
 });
 
-class Client$9 extends AbstractClient {
+class Client$2 extends AbstractClient {
     constructor(clientConfig) {
         super(clientConfig);
     }
@@ -17139,186 +19350,19 @@ class Client$9 extends AbstractClient {
     }
 }
 
-const accessTokenClient = {
-    Client: Client$9,
-    Models: Models$9,
+const serviceClient = {
+    Client: Client$2,
+    Models: Models$2,
 };
 
-class Client$8 extends AbstractClient {
-    constructor(clientConfig) {
-        super(clientConfig);
-    }
-    /**
-     * 应用系统向法大大平台获取计费页面链接，用于账户信息查询或套餐订购
-     */
-    async getBillUrl(req) {
-        return this.request({ url: "/billing/get-bill-url", reqMethod: "POST", req });
-    }
-}
-
-var Models$8 = /*#__PURE__*/Object.freeze({
-  __proto__: null
-});
-
-const billingClient = {
-    Client: Client$8,
-    Models: Models$8,
-};
-
-var Models$7 = /*#__PURE__*/Object.freeze({
-  __proto__: null
-});
-
-class Client$7 extends AbstractClient {
-    constructor(clientConfig) {
-        super(clientConfig);
-    }
-    /**
-     * 把应用系统上将要使用法大大电子签服务的企业添加到法大大平台。法大大平台会为这些企业分配在该appId范围内的唯一标识openCorpId。
-     * 后续，针对该企业进行的授权请求、签署任务等调用都将使用该openCorpId标识该企业。您可以在应该管理后台查看和管理已经添加的企业
-     */
-    async addCorp(req) {
-        return this.request({ url: "/corp/add", req, reqMethod: "POST" });
-    }
-    /**
-     * 为已添加的企业修改在应用系统中的关联参数
-     */
-    async updateCorp(req) {
-        return this.request({ url: "/corp/update", req, reqMethod: "POST" });
-    }
-    /**
-     * 删除企业。删除后再次使用相同的clientCorpId添加该企业时，返回新的openCorpId
-     */
-    async deleteCorp(req) {
-        return this.request({ url: "/corp/delete", req, reqMethod: "POST" });
-    }
-    /**
-     * 将已添加的企业用户暂时禁用。禁用后，该企业暂时不能通过该应用系统使用法大大平台服务
-     */
-    async disableCorp(req) {
-        return this.request({ url: "/corp/disable", req, reqMethod: "POST" });
-    }
-    /**
-     * 将已禁用的企业用户再次激活。激活后，该企业用户可继续通过该应用系统使用法大大平台服务
-     */
-    async enableCorp(req) {
-        return this.request({ url: "/corp/enable", req, reqMethod: "POST" });
-    }
-    /**
-   * 将已禁用的企业用户再次激活。激活后，该企业用户可继续通过该应用系统使用法大大平台服务
-   */
-    async unbindCorp(req) {
-        return this.request({ url: "/corp/unbind", req, reqMethod: "POST" });
-    }
-    /**
-     * 应用系统向法大大平台获取一个页面链接，用于提醒企业经办人进行授权操作，以授权应用系统访问该企业在法大大平台的某些数据和操作权限。
-     * 在企业操作授权前，法大大平台要求企业及其经办人必须先完成登录和实名认证 (即: Authorization的前提是必须先完成Authentication)
-     */
-    async getAuthUrl(req) {
-        return this.request({ url: "/corp/get-auth-url", req, reqMethod: "POST" });
-    }
-    /**
-     * 获取企业的基本信息、认证状态、授权状态和范围等。注意：该接口返回的信息中不涉及隐私，因此不需要授权
-     */
-    async getBasicInfo(req) {
-        return this.request({ url: "/corp/get", req, reqMethod: "POST" });
-    }
-    /**
-     * 用于获取企业的实名身份信息。注意：只有经过企业授权后，应用系统方可获得此信息
-     */
-    async getIdentityInfo(req) {
-        return this.request({ url: "/corp/get-identity-info", req, reqMethod: "POST" });
-    }
-}
-
-const corpClient = {
-    Client: Client$7,
-    Models: Models$7,
-};
-
-var Models$6 = /*#__PURE__*/Object.freeze({
-  __proto__: null
-});
-
-class Client$6 extends AbstractClient {
-    constructor(clientConfig) {
-        super(clientConfig);
-    }
-    /**
-     * 业务系统向法大大平台获取一个页面链接，用于对指定模块进行管理操作，如印章管理、模板管理等
-     */
-    async getManageUrl(req) {
-        return this.request({ url: "/manage/get-manage-url", req, reqMethod: "POST" });
-    }
-}
-
-const corpManageClient = {
-    Client: Client$6,
-    Models: Models$6,
-};
-
-class Client$5 extends AbstractClient {
-    constructor(clientConfig) {
-        super(clientConfig);
-    }
-    /**
-     * 查询文档模板列表，列表根据文档模板更新时间倒序排序返回
-     */
-    async getDocTemplateList(req) {
-        return this.request({ url: "/doc-template/get-list", reqMethod: "POST", req });
-    }
-    /**
-     * 获取文档模板详情，包括文档模板的基本信息、填写和签章控件和区域信息等
-     */
-    async getDocTemplateDetail(req) {
-        return this.request({ url: "/doc-template/get-detail", reqMethod: "POST", req });
-    }
-}
-
-var Models$5 = /*#__PURE__*/Object.freeze({
-  __proto__: null
-});
-
-const docTemplateClient = {
-    Client: Client$5,
-    Models: Models$5,
-};
-
-class Client$4 extends AbstractClient {
-    constructor(clientConfig) {
-        super(clientConfig);
-    }
-    /**
-     * 将待签署的文档文件或附件上传到法大大平台。法大大平台为每个成功上传的文件分配一个唯一的标识fileId。
-     * 文件源数据要么通过文件流形式直接传送，要么提供fileUrl，法大大平台将从该fileUrl拉取文档文件。即：fileContent和fileUrl必须有一个参数是有效的。
-     */
-    async uploadInstant(req) {
-        return this.request({
-            url: "/file/upload-instant",
-            req,
-            reqMethod: "POST",
-            options: { multipart: true },
-        });
-    }
-}
-
-var Models$4 = /*#__PURE__*/Object.freeze({
-  __proto__: null
-});
-
-const fileClient = {
-    Client: Client$4,
-    Models: Models$4,
-};
-
-class Client$3 extends AbstractClient {
+class Client$1 extends AbstractClient {
     constructor(clientConfig) {
         super(clientConfig);
     }
     /**
      * 创建一个签署任务。该接口可创建一个简单的或要素完备的签署任务
      */
-    async createSignTask(req) {
+    async create(req) {
         return this.request({ url: "/sign-task/create", reqMethod: "POST", req });
     }
     /**
@@ -17328,34 +19372,28 @@ class Client$3 extends AbstractClient {
         return this.request({ url: "/sign-task/create-with-template", reqMethod: "POST", req });
     }
     /**
-     * 从已经创建但尚未发起的签署任务删除文档
+     * 在**签署任务提交**之前，向签署任务添加文档。可以将已经上传的文档文件或预先定义好的文档模板作为签署任务文档添加进去
      */
-    async addSignTaskDoc(req) {
+    async addDoc(req) {
         return this.request({ url: "/sign-task/doc/add", reqMethod: "POST", req });
     }
     /**
-     * 从已经创建但尚未发起的签署任务删除文档
+     * 在**签署任务提交**之前，从签署任务中删除文档
      */
-    async deleteSignTaskDoc(req) {
+    async deleteDoc(req) {
         return this.request({ url: "/sign-task/doc/delete", reqMethod: "POST", req });
     }
     /**
      * 在签署任务发起之前，向签署任务添加文档控件
      */
-    async addSignTaskField(req) {
+    async addField(req) {
         return this.request({ url: "/sign-task/field/add", reqMethod: "POST", req });
     }
     /**
      * 在签署任务发起之前，从签署任务的文档中删除指定控件
      */
-    async deleteSignTaskField(req) {
+    async deleteField(req) {
         return this.request({ url: "/sign-task/field/delete", reqMethod: "POST", req });
-    }
-    /**
-     * 获取签署任务的填写控件、签章控件与参与方关系的设置链接
-     */
-    async getFieldUrl(req) {
-        return this.request({ url: "/sign-task/field/get-url", reqMethod: "POST", req });
     }
     /**
      * 在签署任务发起之前，向一些填写控件中预先填写内容
@@ -17388,81 +19426,82 @@ class Client$3 extends AbstractClient {
         return this.request({ url: "/sign-task/actor/delete", reqMethod: "POST", req });
     }
     /**
-     * 对已经创建好且尚未发起的签署任务，下发发起指令，签署任务将按照预先设定的流程流转。只有签署任务中的必备要素完备时，才可以发起，例如：必须有文档、参与方等基本参数
+     * 提交签署任务
+     * 对**尚未提交**的签署任务，下发提交指令，签署任务将进入内容协同流程
      */
-    async initiateSignTask(req) {
-        return this.request({ url: "/sign-task/initiate", reqMethod: "POST", req });
+    async start(req) {
+        return this.request({ url: "/sign-task/start", reqMethod: "POST", req });
     }
     /**
      * 发起方撤销尚未结束的签署任务
      */
-    async cancelSignTask(req) {
+    async cancel(req) {
         return this.request({ url: "/sign-task/cancel", reqMethod: "POST", req });
     }
     /**
-     * 如果创建时设定签署任务不自动定稿(autoFillFinalize=false)，签署任务的所有必填控件填写完成后，调用本接口定稿，定稿完成后的文档将不可再被做任何填写修改
+     * 对**内容已填写**的签署任务，下发定稿指令，签署任务将进入定稿流程。如果创建时设定签署任务不自动定稿
      */
-    async finalizeSignTaskDoc(req) {
-        return this.request({ url: "/sign-task/doc/finalize", reqMethod: "POST", req });
+    async finalizeDoc(req) {
+        return this.request({ url: "/sign-task/doc-finalize", reqMethod: "POST", req });
     }
     /**
      * 设置签署任务在某个参与方节点的自动阻塞
      */
-    async blockSignTask(req) {
+    async block(req) {
         return this.request({ url: "/sign-task/block", reqMethod: "POST", req });
     }
     /**
      * 解除签署任务某个参与方节点的阻塞设置。如果该签署任务正巧被阻塞在指定的参与方节点，则签署任务继续向下流转
      */
-    async unblockSignTask(req) {
+    async unblock(req) {
         return this.request({ url: "/sign-task/unblock", reqMethod: "POST", req });
-    }
-    /**
-     * 催办签署任务
-     * 填写中、签署中状态的签署任务，对当前流程节点需要处理但未处理的填写人或签署人进行催办
-     */
-    async urgeSign(req) {
-        return this.request({ url: "/sign-task/urge-sign", reqMethod: "POST", req });
-    }
-    /**
-     * 若创建签署任务时设定不自动结束(autoFinish=false)，则在所有签署方都完成签署后，需要调动本接口驱动签署任务结束。
-     * 签署任务结束后，会形成签署完结的合同，且不可再对该签署任务做任何动作
-     */
-    async finishSignTask(req) {
-        return this.request({ url: "/sign-task/finish", reqMethod: "POST", req });
     }
     /**
      * 获取指定签署任务的详情信息和状态
      */
-    async getSignTaskDetail(req) {
-        return this.request({ url: "/sign-task/get-detail", reqMethod: "POST", req });
+    async getDetail(req) {
+        return this.request({ url: "/sign-task/app/get-detail", reqMethod: "POST", req });
     }
     /**
-     * 直接以文件流形式下载签署任务中的文档或附件
+     * 获取指定归属方的签署任务列表
+     * 支持指定归属方的签署任务列表
      */
-    async downloadFiles(req) {
-        return this.request({ url: "/sign-task/download-files", reqMethod: "POST", req });
+    async getOwnerList(req) {
+        return this.request({ url: "/sign-task/owner/get-list", reqMethod: "POST", req });
     }
     /**
-     * 针对有访问此签署任务详情和操作权限的**参与方或发起方**，返回该签署任务的链接
+     * 获取指定归属方的签署任务文档下载地址
+     * 获取签署文档的下载地址，集成方根据该接口返回的下载地址下载具体的签署文档或附件
      */
-    async getSignTaskUrl(req) {
-        return this.request({ url: "/sign-task/get-url", reqMethod: "POST", req });
+    async getOwnerDownLoadUrl(req) {
+        return this.request({ url: "/sign-task/owner/get-download-url", reqMethod: "POST", req });
     }
 }
 
-var Models$3 = /*#__PURE__*/Object.freeze({
+var Models$1 = /*#__PURE__*/Object.freeze({
   __proto__: null
 });
 
 const signTaskClient = {
-    Client: Client$3,
-    Models: Models$3,
+    Client: Client$1,
+    Models: Models$1,
 };
 
-class Client$2 extends AbstractClient {
+class Client extends AbstractClient {
     constructor(clientConfig) {
         super(clientConfig);
+    }
+    /**
+     * 查询文档模板列表，列表根据文档模板更新时间倒序排序返回
+     */
+    async getDocTemplateList(req) {
+        return this.request({ url: "/doc-template/get-list", reqMethod: "POST", req });
+    }
+    /**
+     * 获取文档模板详情，包括文档模板的基本信息、填写和签章控件和区域信息等
+     */
+    async getDocTemplateDetail(req) {
+        return this.request({ url: "/doc-template/get-detail", reqMethod: "POST", req });
     }
     /**
      * 查询签署模板列表，列表根据签署模板更新时间倒序排序返回
@@ -17476,95 +19515,29 @@ class Client$2 extends AbstractClient {
     async getSignTemplateDetail(req) {
         return this.request({ url: "/sign-template/get-detail", reqMethod: "POST", req });
     }
-}
-
-var Models$2 = /*#__PURE__*/Object.freeze({
-  __proto__: null
-});
-
-const signTemplateClient = {
-    Client: Client$2,
-    Models: Models$2,
-};
-
-class Client$1 extends AbstractClient {
-    constructor(clientConfig) {
-        super(clientConfig);
-    }
     /**
-    * 获取模板管理链接
-    * 业务系统向法大大平台获取模板管理页面链接，该页面无需法大大账号登录，用于对指定企业主体的模板进行管理操作
-    */
-    async getPageManageUrl(req) {
-        return this.request({ url: "/template/get-pagemanage-url", reqMethod: "POST", req });
+     * 业务系统向法大大平台获取模板管理页面链接，该页面无需法大大账号登录，用于对指定企业主体的模板进行管理操作
+     */
+    async getManageUrl(req) {
+        return this.request({ url: "/template/get-manage-url", reqMethod: "POST", req });
     }
 }
-
-var Models$1 = /*#__PURE__*/Object.freeze({
-  __proto__: null
-});
-
-const templateClient = {
-    Client: Client$1,
-    Models: Models$1
-};
 
 var Models = /*#__PURE__*/Object.freeze({
   __proto__: null
 });
 
-const SYMBOL = '%s';
-const EnvEnvironmentMap = new Map([
-    [EuiEnvironmentEnum.SIT, `https://${SYMBOL}.sit-e.fadada.com`],
-    [EuiEnvironmentEnum.UAT, `https://${SYMBOL}.uat-e.fadada.com`],
-    [EuiEnvironmentEnum.PROD, `https://${SYMBOL}.e.fadada.com`],
-]);
-class Client extends AbstractClient {
-    constructor(clientConfig) {
-        super(clientConfig);
-    }
-    getOpenCorpAuthorizeUrl(data, environmentEnum) {
-        const { openCorpId, corpName, authScopes, redirectUrl } = data;
-        const timestamp = new Date().getTime();
-        const appId = this.credential.appId.toUpperCase();
-        const signParams = {
-            appId,
-            openCorpId,
-            corpName,
-            authScopes,
-            redirectUrl
-        };
-        const signStr = Sign.formatSignString(signParams);
-        const signature = Sign.sign({
-            signStr,
-            timestamp,
-            appSecret: this.credential.appSecret,
-        });
-        const params = new require$$5.URLSearchParams();
-        params.append('openCorpId', openCorpId);
-        params.append('corpName', corpName);
-        params.append('authScopes', authScopes);
-        params.append('redirectUrl', redirectUrl);
-        params.append('timestamp', String(timestamp));
-        params.append('signature', signature);
-        const host = EnvEnvironmentMap.get(environmentEnum).replace(SYMBOL, appId);
-        return (host + '/authorize/list?' + decodeURIComponent(params.toString()));
-    }
-}
-
-const euiClient = {
+const templateClient = {
     Client,
-    Models,
+    Models
 };
 
-exports.accessTokenClient = accessTokenClient;
-exports.billingClient = billingClient;
 exports.corpClient = corpClient;
-exports.corpManageClient = corpManageClient;
-exports.docTemplateClient = docTemplateClient;
+exports.docClient = docClient;
 exports.euiClient = euiClient;
-exports.fileClient = fileClient;
+exports.orgClient = orgClient;
+exports.sealClient = sealClient;
+exports.serviceClient = serviceClient;
 exports.signTaskClient = signTaskClient;
-exports.signTemplateClient = signTemplateClient;
 exports.templateClient = templateClient;
 exports.userClient = userClient;

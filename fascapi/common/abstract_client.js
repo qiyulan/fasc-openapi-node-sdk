@@ -49,6 +49,7 @@ class AbstractClient {
             [models_1.RequestParamsEnum.SIGN_TYPE]: this.profile.signMethod,
             [models_1.RequestParamsEnum.NONCE]: nonce,
             [models_1.RequestParamsEnum.TIMESTAMP]: timestamp,
+            [models_1.RequestParamsEnum.SUBVERSION]: models_1.SUBVERSION,
             "Content-Type": "application/x-www-form-urlencoded",
         };
         let reqData = JSON.stringify(data) || "";
@@ -68,6 +69,7 @@ class AbstractClient {
             nonce,
             timestamp,
             accessToken: this.credential.accessToken,
+            subversion: models_1.SUBVERSION
         });
         const signStr = sign_1.default.formatSignString(params);
         const signature = sign_1.default.sign({
@@ -95,13 +97,14 @@ class AbstractClient {
         console.log(curl);
         return await (0, fetch_1.default)(fetchParams, this.profile.proxyProfile);
     }
-    formatParams({ data, appId, signMethod, nonce, timestamp, accessToken = null, }) {
+    formatParams({ data, appId, signMethod, nonce, timestamp, accessToken = null, subversion }) {
         const signParams = {
             [models_1.RequestParamsEnum.DATA_KEY]: JSON.stringify(data || ''),
             [models_1.RequestParamsEnum.APP_ID]: appId,
             [models_1.RequestParamsEnum.SIGN_TYPE]: signMethod,
             [models_1.RequestParamsEnum.NONCE]: nonce,
             [models_1.RequestParamsEnum.TIMESTAMP]: timestamp,
+            [models_1.RequestParamsEnum.SUBVERSION]: subversion
         };
         if (accessToken !== null) {
             signParams[models_1.RequestParamsEnum.ACCESS_TOKEN] = accessToken;

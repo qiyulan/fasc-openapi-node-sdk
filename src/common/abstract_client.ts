@@ -4,7 +4,7 @@ import r2curl from 'r2curl'
 import { ClientConfig, Credential, ClientProfile } from "./interface"
 import Sign from "./sign"
 import fetch from "./fetch"
-import { SignMethod, RequestParamsEnum } from "./models"
+import { SignMethod, RequestParamsEnum, SUBVERSION } from "./models"
 import FascOpenApiSDKHttpException from "./fasc_openapi_sdk_exception"
 
 export type ReqMethod = "POST" | "GET"
@@ -22,6 +22,7 @@ export interface RequestData {
   "X-FASC-AccessToken"?: string
   "X-FASC-Sign"?: string
   "X-FASC-Grant-Type"?: string
+  "X-FASC-Api-SubVersion": string
   bizContent: string
 }
 
@@ -88,6 +89,7 @@ export class AbstractClient {
       [RequestParamsEnum.SIGN_TYPE]: this.profile.signMethod,
       [RequestParamsEnum.NONCE]: nonce,
       [RequestParamsEnum.TIMESTAMP]: timestamp,
+      [RequestParamsEnum.SUBVERSION]: SUBVERSION,
       "Content-Type": "application/x-www-form-urlencoded",
     }
 
@@ -110,6 +112,7 @@ export class AbstractClient {
       nonce,
       timestamp,
       accessToken: this.credential.accessToken,
+      subversion: SUBVERSION
     })
 
     const signStr = Sign.formatSignString(params)
@@ -149,13 +152,15 @@ export class AbstractClient {
     nonce,
     timestamp,
     accessToken = null,
+    subversion
   }: {
     data: any
     appId: string
     signMethod: SignMethod
     nonce: string
     timestamp: number
-    accessToken?: string
+    accessToken?: string,
+    subversion: string
   }): RequestData {
     const signParams: RequestData = {
       [RequestParamsEnum.DATA_KEY]: JSON.stringify(data || ''),
@@ -163,6 +168,7 @@ export class AbstractClient {
       [RequestParamsEnum.SIGN_TYPE]: signMethod,
       [RequestParamsEnum.NONCE]: nonce,
       [RequestParamsEnum.TIMESTAMP]: timestamp,
+      [RequestParamsEnum.SUBVERSION]: subversion
     }
 
     if (accessToken !== null) {

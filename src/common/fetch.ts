@@ -1,8 +1,10 @@
 import axios, { AxiosRequestConfig } from "axios"
 import https from "https"
+import qs from "qs"
 import { ProxyProfile } from "./interface"
 
 axios.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded"
+axios.defaults.withCredentials = true
 
 export default function (
   { url, baseURL, method, headers, data }: AxiosRequestConfig,
@@ -23,5 +25,5 @@ export default function (
     }
     requestOptions.httpsAgent = new https.Agent({ keepAlive: true })
   }
-  return axios(requestOptions)
+  return axios.post(requestOptions.baseURL + url, qs.stringify(data), { headers, withCredentials: true })
 }

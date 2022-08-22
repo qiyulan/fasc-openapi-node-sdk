@@ -9,7 +9,7 @@ class Client extends abstract_client_1.AbstractClient {
     /**
      * 创建一个签署任务。该接口可创建一个简单的或要素完备的签署任务
      */
-    async createSignTask(req) {
+    async create(req) {
         return this.request({ url: "/sign-task/create", reqMethod: "POST", req });
     }
     /**
@@ -19,34 +19,28 @@ class Client extends abstract_client_1.AbstractClient {
         return this.request({ url: "/sign-task/create-with-template", reqMethod: "POST", req });
     }
     /**
-     * 从已经创建但尚未发起的签署任务删除文档
+     * 在**签署任务提交**之前，向签署任务添加文档。可以将已经上传的文档文件或预先定义好的文档模板作为签署任务文档添加进去
      */
-    async addSignTaskDoc(req) {
+    async addDoc(req) {
         return this.request({ url: "/sign-task/doc/add", reqMethod: "POST", req });
     }
     /**
-     * 从已经创建但尚未发起的签署任务删除文档
+     * 在**签署任务提交**之前，从签署任务中删除文档
      */
-    async deleteSignTaskDoc(req) {
+    async deleteDoc(req) {
         return this.request({ url: "/sign-task/doc/delete", reqMethod: "POST", req });
     }
     /**
      * 在签署任务发起之前，向签署任务添加文档控件
      */
-    async addSignTaskField(req) {
+    async addField(req) {
         return this.request({ url: "/sign-task/field/add", reqMethod: "POST", req });
     }
     /**
      * 在签署任务发起之前，从签署任务的文档中删除指定控件
      */
-    async deleteSignTaskField(req) {
+    async deleteField(req) {
         return this.request({ url: "/sign-task/field/delete", reqMethod: "POST", req });
-    }
-    /**
-     * 获取签署任务的填写控件、签章控件与参与方关系的设置链接
-     */
-    async getFieldUrl(req) {
-        return this.request({ url: "/sign-task/field/get-url", reqMethod: "POST", req });
     }
     /**
      * 在签署任务发起之前，向一些填写控件中预先填写内容
@@ -79,66 +73,55 @@ class Client extends abstract_client_1.AbstractClient {
         return this.request({ url: "/sign-task/actor/delete", reqMethod: "POST", req });
     }
     /**
-     * 对已经创建好且尚未发起的签署任务，下发发起指令，签署任务将按照预先设定的流程流转。只有签署任务中的必备要素完备时，才可以发起，例如：必须有文档、参与方等基本参数
+     * 提交签署任务
+     * 对**尚未提交**的签署任务，下发提交指令，签署任务将进入内容协同流程
      */
-    async initiateSignTask(req) {
-        return this.request({ url: "/sign-task/initiate", reqMethod: "POST", req });
+    async start(req) {
+        return this.request({ url: "/sign-task/start", reqMethod: "POST", req });
     }
     /**
      * 发起方撤销尚未结束的签署任务
      */
-    async cancelSignTask(req) {
+    async cancel(req) {
         return this.request({ url: "/sign-task/cancel", reqMethod: "POST", req });
     }
     /**
-     * 如果创建时设定签署任务不自动定稿(autoFillFinalize=false)，签署任务的所有必填控件填写完成后，调用本接口定稿，定稿完成后的文档将不可再被做任何填写修改
+     * 对**内容已填写**的签署任务，下发定稿指令，签署任务将进入定稿流程。如果创建时设定签署任务不自动定稿
      */
-    async finalizeSignTaskDoc(req) {
-        return this.request({ url: "/sign-task/doc/finalize", reqMethod: "POST", req });
+    async finalizeDoc(req) {
+        return this.request({ url: "/sign-task/doc-finalize", reqMethod: "POST", req });
     }
     /**
      * 设置签署任务在某个参与方节点的自动阻塞
      */
-    async blockSignTask(req) {
+    async block(req) {
         return this.request({ url: "/sign-task/block", reqMethod: "POST", req });
     }
     /**
      * 解除签署任务某个参与方节点的阻塞设置。如果该签署任务正巧被阻塞在指定的参与方节点，则签署任务继续向下流转
      */
-    async unblockSignTask(req) {
+    async unblock(req) {
         return this.request({ url: "/sign-task/unblock", reqMethod: "POST", req });
-    }
-    /**
-     * 催办签署任务
-     * 填写中、签署中状态的签署任务，对当前流程节点需要处理但未处理的填写人或签署人进行催办
-     */
-    async urgeSign(req) {
-        return this.request({ url: "/sign-task/urge-sign", reqMethod: "POST", req });
-    }
-    /**
-     * 若创建签署任务时设定不自动结束(autoFinish=false)，则在所有签署方都完成签署后，需要调动本接口驱动签署任务结束。
-     * 签署任务结束后，会形成签署完结的合同，且不可再对该签署任务做任何动作
-     */
-    async finishSignTask(req) {
-        return this.request({ url: "/sign-task/finish", reqMethod: "POST", req });
     }
     /**
      * 获取指定签署任务的详情信息和状态
      */
-    async getSignTaskDetail(req) {
-        return this.request({ url: "/sign-task/get-detail", reqMethod: "POST", req });
+    async getDetail(req) {
+        return this.request({ url: "/sign-task/app/get-detail", reqMethod: "POST", req });
     }
     /**
-     * 直接以文件流形式下载签署任务中的文档或附件
+     * 获取指定归属方的签署任务列表
+     * 支持指定归属方的签署任务列表
      */
-    async downloadFiles(req) {
-        return this.request({ url: "/sign-task/download-files", reqMethod: "POST", req });
+    async getOwnerList(req) {
+        return this.request({ url: "/sign-task/owner/get-list", reqMethod: "POST", req });
     }
     /**
-     * 针对有访问此签署任务详情和操作权限的**参与方或发起方**，返回该签署任务的链接
+     * 获取指定归属方的签署任务文档下载地址
+     * 获取签署文档的下载地址，集成方根据该接口返回的下载地址下载具体的签署文档或附件
      */
-    async getSignTaskUrl(req) {
-        return this.request({ url: "/sign-task/get-url", reqMethod: "POST", req });
+    async getOwnerDownLoadUrl(req) {
+        return this.request({ url: "/sign-task/owner/get-download-url", reqMethod: "POST", req });
     }
 }
 exports.Client = Client;

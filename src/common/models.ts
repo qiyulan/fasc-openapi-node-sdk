@@ -34,16 +34,12 @@ export enum CorpIdentTypeEnum {
   OTHER = "other",
 }
 
-/** 参与方类型 */
+/** 参与方主体类型 */
 export enum ActorTypeEnum {
-  /** 发起方 */
-  INITIATOR = "initiator",
-  /** 填写方 */
-  FILLER = "filler",
-  /** 签署方 */
-  SIGNER = "signer",
-  /** 抄送方 */
-  CC = "cc",
+  /** 企业 */
+  CORP = "corp",
+  /** 个人 */
+  PERSON = "person",
 }
 
 /** eui环境枚举 */
@@ -54,7 +50,7 @@ export enum EuiEnvironmentEnum {
 }
 
 export enum RequestParamsEnum {
-   /**
+  /**
    * 企业控制台创建应用后得到的应用ID
   */
   APP_ID = "X-FASC-App-Id",
@@ -70,6 +66,10 @@ export enum RequestParamsEnum {
    * 时间戳(yyyy-MM-dd HH:mm:ss.sss)，时间戳必须是保证是当前时间，同时跟法大大这边的服务器时间正负不能相差5分钟
    */
   TIMESTAMP = "X-FASC-Timestamp",
+  /**
+   * FASC.openApi子版本号。如当前规划新版本为：5.1。注意：若指定子版本号下不存在接口，系统将会报错返回。
+   */
+  SUBVERSION = 'X-FASC-Api-SubVersion',
   /**
    * 随机数(32位, 10分钟内不能重复请求)
    */
@@ -94,12 +94,32 @@ export enum RequestParamsEnum {
   METHOD_GET = 'GET',
 }
 
+export const SUBVERSION = '5.1'
+
 /** 统一标识应用系统上的用户(个人或企业) */
 export interface OpenId {
   /** 主体类型 */
   idType: IdTypeEnum
-  openCorpId?: string
-  openUserId?: string
+  /**
+   * 主体标识，长度最大64个字符。
+   * 如果idType为corp：代表应用系统上的企业用户，主体方是openCorpId所指定的企业；
+   * 如果idType为person：代表应用系统上的个人用户，主体方是openUserId所指定的个人；
+   */
+  openId?: string
+}
+
+/** 参与方权限 */
+export enum Permissions {
+  /** 填写和确认内容 */
+  FILL = 'fill',
+  /** 确定签署 */
+  SIGN = 'sign'
+}
+
+/** 参与方企业成员信息 */
+export interface ActorCorpMember {
+  /** 企业成员ID */
+  memberId: string
 }
 
 /** 个人身份信息 */
@@ -124,7 +144,7 @@ export interface CorpIdentInfo {
   /** 企业名称全程 */
   corpName?: string
   /** 企业组织类型 */
-  corpIdentType: keyof CorpIdentTypeEnum
+  corpIdentType: CorpIdentTypeEnum
   /** 统一标识应用系统上的用户(个人或企业) */
   corpIdentNo: string
   /** 法定代表人名称 */
@@ -145,32 +165,6 @@ export interface CorpInfoExtend {
   bankCityName?: string
 }
 
-/** 个人用户参与方 */
-export interface ActorUser {
-  /** 个人用户参与方的openUserId */
-  actorUserId?: string
-  /** 个人用户参与方的身份信息 */
-  userIdentInfo?: UserIdentInfo
-  /** 个人用户参与方的补充信息 */
-  userInfoExtend?: UserInfoExtend
-}
-
-/** 企业参与方 */
-export interface ActorCorp {
-  /** 企业参与方的openCorpId */
-  actorCorpId?: string
-  /** 企业参与方的身份信息 */
-  corpIdentInfo?: CorpIdentInfo
-  /** 企业参与方的补充信息 */
-  corpInfoExtend?: CorpInfoExtend
-  /** 企业经办人的openUserId */
-  operatorId?: string
-  /** 企业经办人的身份信息 */
-  operatorIdentInfo?: UserIdentInfo
-  /** 企业经办人的补充信息 */
-  operatorInfoExtend?: UserInfoExtend
-}
-
 /** 通知控制参数 */
 export interface Notification {
   /** 是否需要法大大平台发送通知 */
@@ -181,26 +175,36 @@ export interface Notification {
   notifyAddress?: string
 }
 
-/** 签署任务参与方 */
+/** 签署任务参与方信息 */
 export interface Actor {
-  /** 参与方类型，filler: 填充方、signer: 签署方、cc: 抄送方 */
-  actorType: keyof ActorTypeEnum
   /** 参与方标识。在同一个签署任务中，同类型的各参与方标识不可重复 */
   actorId: string
+  /** 参与方类型，filler: 填充方、signer: 签署方、cc: 抄送方 */
+  actorType: ActorTypeEnum
   /** 参与方主体类型：corp、person */
   actorIdentType: string
-  /** 个人用户参与方信息。在actorIdentType=person(个人)时有效，但也可以不提供 */
-  actorUser?: ActorUser
-  /** 企业参与方信息。在actorIdentType=corp(企业)时有效，但也可以不提供 */
-  actorCorp?: ActorCorp
-  /** 定义是否及如何向该参与方发送通知。默认不通知，需要设置属性Notification.sendNotification=false */
-  notification: Notification
+  /** 参与方名称。长度最大128个字符 */
+  actorName: string
+  /** 参与方权限数组 */
+  permissions: Array<Permissions>
+  /** 参与方主体在应用上的OpenId，用于参与方主体身份识别 */
+  actorOpenId?: string
+  /** 参与方主体的法大大号，用于参与方主体身份识别 */
+  actorFDDId?: string
+  /** 参与方企业成员列表，用于参与方企业主体成员的身份识别 */
+  actorCorpMembers?: Array<ActorCorpMember>
+  /** 参与方身份名称匹配信息：个人姓名或企业全称 */
+  identNameForMatch?: string
+  /** 参与方证件号码匹配信息：个人身份证号或企业统信码 */
+  certNoForMatch?: string
+  /** 法大大通知信息 */
+  notification?: Notification
 }
 
 /** 控件定位 */
 export interface FieldPosition {
   /** 定位模式：pixel、keyword */
-  positionMode: string
+  positionMode: 'pixel' | 'keyword'
   /** 定位页码 */
   positionPageNo?: string
   /** 中心点定位坐标横向偏移量 */
@@ -219,13 +223,23 @@ export interface Field {
   fieldName: string
   /** 控件定位 */
   position: FieldPosition
-  /**  */
-  fieldType: string
   /** 控件类型：person_sign、corp_seal、corp_seal_cross_page、date_sign、text_single_line、text_multi_line、check_box */
+  fieldType: string
+  /** 单行文本控件属性参数 */
   fieldTextSingleLine?: FieldTextSingleLine
-  /**  */
+  /** 多行文本控件属性参数 */
   fieldTextMultiLine?: FieldTextMultiLine
-  /**  */
+  /** 数字控件属性参数 */
+  fieldNumber?: FieldNumber
+  /** 身份证控件属性参数 */
+  fieldIdCard?: FieldIdCard
+  /** 填写日期控件属性参数 */
+  fieldFillDate?: FieldFillDate
+  /** 单选框-多项控件属性参数 */
+  fieldMultiRadio?: FieldMultiRadio
+  /** 复选框-多项控件属性参数 */
+  fieldMultiCheckbox?: FieldMultiCheckbox
+  /** 复选框控件属性参数 */
   fieldCheckBox?: FieldCheckBox
 }
 
@@ -239,6 +253,46 @@ export interface FieldTextSingleLine {
 
 /** 多行文本控件 */
 export interface FieldTextMultiLine {
+  /** 是否必须：false/true，默认为true */
+  required?: boolean
+  /** 指定默认值 */
+  defaultValue?: string
+}
+
+/** 数字控件 */
+export interface FieldNumber {
+  /** 是否必须：false/true，默认为true */
+  required?: boolean
+  /** 指定默认值 */
+  defaultValue?: string
+}
+
+/** 身份证控件 */
+export interface FieldIdCard {
+  /** 是否必须：false/true，默认为true */
+  required?: boolean
+  /** 指定默认值 */
+  defaultValue?: string
+}
+
+/** 填写日期控件 */
+export interface FieldFillDate {
+  /** 是否必须：false/true，默认为true */
+  required?: boolean
+  /** 指定默认值 */
+  defaultValue?: string
+}
+
+/** 单选框-多项控件 */
+export interface FieldMultiRadio {
+  /** 是否必须：false/true，默认为true */
+  required?: boolean
+  /** 指定默认值 */
+  defaultValue?: string
+}
+
+/** 复选框-多项控件 */
+export interface FieldMultiCheckbox {
   /** 是否必须：false/true，默认为true */
   required?: boolean
   /** 指定默认值 */

@@ -1,19 +1,65 @@
 import { AbstractClient } from "../../common/abstract_client"
 import { ClientConfig } from "../../common/interface"
-import { GetPageManageUrlRequest, GetPageManageUrlResponse } from "./template_models"
+import {
+  GetDocTemplateDetailRequest,
+  GetDocTemplateDetailResponse,
+  GetDocTemplateListRequest,
+  GetDocTemplateListResponse,
+  GetSignTemplateDetailRequest,
+  GetSignTemplateDetailResponse,
+  GetSignTemplateListRequest,
+  GetSignTemplateListResponse,
+  GetManageUrlRequest,
+  GetManageUrlResponse
+} from "./template_models"
 
 export class Client extends AbstractClient {
   constructor(clientConfig: ClientConfig) {
     super(clientConfig)
   }
 
-   /**
-   * 获取模板管理链接
+  /**
+   * 查询文档模板列表，列表根据文档模板更新时间倒序排序返回
+   */
+  async getDocTemplateList(
+    req?: GetDocTemplateListRequest,
+  ): Promise<GetDocTemplateListResponse> {
+    return this.request({ url: "/doc-template/get-list", reqMethod: "POST", req })
+  }
+
+  /**
+   * 获取文档模板详情，包括文档模板的基本信息、填写和签章控件和区域信息等
+   */
+  async getDocTemplateDetail(
+    req: GetDocTemplateDetailRequest,
+  ): Promise<GetDocTemplateDetailResponse> {
+    return this.request({ url: "/doc-template/get-detail", reqMethod: "POST", req })
+  }
+
+  /**
+   * 查询签署模板列表，列表根据签署模板更新时间倒序排序返回
+   */
+  async getSignTemplateList(
+    req: GetSignTemplateListRequest,
+  ): Promise<GetSignTemplateListResponse> {
+    return this.request({ url: "/sign-template/get-list", reqMethod: "POST", req })
+  }
+
+  /**
+   * 获取签署模板详情，包括签署模板基本信息、文档信息、参与方信息(含各参与方填写控件、签章控件)
+   */
+  async getSignTemplateDetail(
+    req: GetSignTemplateDetailRequest,
+  ): Promise<GetSignTemplateDetailResponse> {
+    return this.request({ url: "/sign-template/get-detail", reqMethod: "POST", req })
+  }
+
+  /**
    * 业务系统向法大大平台获取模板管理页面链接，该页面无需法大大账号登录，用于对指定企业主体的模板进行管理操作
    */
-    async getPageManageUrl(
-      req: GetPageManageUrlRequest,
-    ): Promise<GetPageManageUrlResponse> {
-      return this.request({ url: "/template/get-pagemanage-url", reqMethod: "POST", req })
-    }
+  async getManageUrl(
+    req: GetManageUrlRequest,
+  ): Promise<GetManageUrlResponse> {
+    return this.request({ url: "/template/get-manage-url", reqMethod: "POST", req })
+  }
 }

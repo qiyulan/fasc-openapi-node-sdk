@@ -1,36 +1,32 @@
 import { AbstractClient } from "../../common/abstract_client";
 import { ClientConfig } from "../../common/interface";
-import { CreateSignTaskRequest, CreateSignTaskResponse, CreateWithTemplateRequest, CreateWithTemplateResponse, AddSignTaskDocRequest, AddSignTaskDocResponse, DeleteSignTaskDocRequest, DeleteSignTaskDocResponse, AddSignTaskFieldRequest, AddSignTaskFieldResponse, DeleteSignTaskFieldRequest, DeleteSignTaskFieldResponse, GetFieldUrlRequest, GetFieldUrlResponse, FillFieldValuesRequest, FillFieldValuesResponse, AddAttachRequest, AddAttachResponse, DeleteAttachRequest, DeleteAttachResponse, AddActorRequest, AddActorResponse, DeleteActorRequest, DeleteActorResponse, InitiateSignTaskRequest, InitiateSignTaskResponse, CancelSignTaskRequest, CancelSignTaskResponse, FinalizeSignTaskDocRequest, FinalizeSignTaskDocResponse, BlockSignTaskRequest, BlockSignTaskResponse, UnblockSignTaskRequest, UnblockSignTaskResponse, UrgeSignRequest, UrgeSignResponse, FinishSignTaskRequest, FinishSignTaskResponse, GetSignTaskDetailRequest, GetSignTaskDetailResponse, DownloadFilesRequest, DownloadFilesResponse, GetSignTaskUrlRequest, GetSignTaskUrlResponse } from "./sign_task_models";
+import { CreateRequest, CreateResponse, CreateWithTemplateRequest, CreateWithTemplateResponse, AddDocRequest, AddDocResponse, DeleteDocRequest, DeleteDocResponse, AddFieldRequest, AddFieldResponse, DeleteFieldRequest, DeleteFieldResponse, FillFieldValuesRequest, FillFieldValuesResponse, AddAttachRequest, AddAttachResponse, DeleteAttachRequest, DeleteAttachResponse, AddActorRequest, AddActorResponse, DeleteActorRequest, DeleteActorResponse, StartRequest, StartResponse, CancelRequest, CancelResponse, FinalizeDocRequest, FinalizeDocResponse, BlockRequest, BlockResponse, UnblockRequest, UnblockResponse, GetOwnerListRequest, GetOwnerListResponse, GetDetailRequest, GetDetailResponse, GetOwnerDownLoadUrlRequest, GetOwnerDownLoadUrlResponse } from "./sign_task_models";
 export declare class Client extends AbstractClient {
     constructor(clientConfig: ClientConfig);
     /**
      * 创建一个签署任务。该接口可创建一个简单的或要素完备的签署任务
      */
-    createSignTask(req: CreateSignTaskRequest): Promise<CreateSignTaskResponse>;
+    create(req: CreateRequest): Promise<CreateResponse>;
     /**
      * 在预先已经创作好签署模板的情况下，直接基于签署模板创建比较完整的签署任务。这种方式更快捷方便
      */
     createWithTemplate(req: CreateWithTemplateRequest): Promise<CreateWithTemplateResponse>;
     /**
-     * 从已经创建但尚未发起的签署任务删除文档
+     * 在**签署任务提交**之前，向签署任务添加文档。可以将已经上传的文档文件或预先定义好的文档模板作为签署任务文档添加进去
      */
-    addSignTaskDoc(req: AddSignTaskDocRequest): Promise<AddSignTaskDocResponse>;
+    addDoc(req: AddDocRequest): Promise<AddDocResponse>;
     /**
-     * 从已经创建但尚未发起的签署任务删除文档
+     * 在**签署任务提交**之前，从签署任务中删除文档
      */
-    deleteSignTaskDoc(req: DeleteSignTaskDocRequest): Promise<DeleteSignTaskDocResponse>;
+    deleteDoc(req: DeleteDocRequest): Promise<DeleteDocResponse>;
     /**
      * 在签署任务发起之前，向签署任务添加文档控件
      */
-    addSignTaskField(req: AddSignTaskFieldRequest): Promise<AddSignTaskFieldResponse>;
+    addField(req: AddFieldRequest): Promise<AddFieldResponse>;
     /**
      * 在签署任务发起之前，从签署任务的文档中删除指定控件
      */
-    deleteSignTaskField(req: DeleteSignTaskFieldRequest): Promise<DeleteSignTaskFieldResponse>;
-    /**
-     * 获取签署任务的填写控件、签章控件与参与方关系的设置链接
-     */
-    getFieldUrl(req: GetFieldUrlRequest): Promise<GetFieldUrlResponse>;
+    deleteField(req: DeleteFieldRequest): Promise<DeleteFieldResponse>;
     /**
      * 在签署任务发起之前，向一些填写控件中预先填写内容
      */
@@ -52,45 +48,38 @@ export declare class Client extends AbstractClient {
      */
     deleteActor(req: DeleteActorRequest): Promise<DeleteActorResponse>;
     /**
-     * 对已经创建好且尚未发起的签署任务，下发发起指令，签署任务将按照预先设定的流程流转。只有签署任务中的必备要素完备时，才可以发起，例如：必须有文档、参与方等基本参数
+     * 提交签署任务
+     * 对**尚未提交**的签署任务，下发提交指令，签署任务将进入内容协同流程
      */
-    initiateSignTask(req: InitiateSignTaskRequest): Promise<InitiateSignTaskResponse>;
+    start(req: StartRequest): Promise<StartResponse>;
     /**
      * 发起方撤销尚未结束的签署任务
      */
-    cancelSignTask(req: CancelSignTaskRequest): Promise<CancelSignTaskResponse>;
+    cancel(req: CancelRequest): Promise<CancelResponse>;
     /**
-     * 如果创建时设定签署任务不自动定稿(autoFillFinalize=false)，签署任务的所有必填控件填写完成后，调用本接口定稿，定稿完成后的文档将不可再被做任何填写修改
+     * 对**内容已填写**的签署任务，下发定稿指令，签署任务将进入定稿流程。如果创建时设定签署任务不自动定稿
      */
-    finalizeSignTaskDoc(req: FinalizeSignTaskDocRequest): Promise<FinalizeSignTaskDocResponse>;
+    finalizeDoc(req: FinalizeDocRequest): Promise<FinalizeDocResponse>;
     /**
      * 设置签署任务在某个参与方节点的自动阻塞
      */
-    blockSignTask(req: BlockSignTaskRequest): Promise<BlockSignTaskResponse>;
+    block(req: BlockRequest): Promise<BlockResponse>;
     /**
      * 解除签署任务某个参与方节点的阻塞设置。如果该签署任务正巧被阻塞在指定的参与方节点，则签署任务继续向下流转
      */
-    unblockSignTask(req: UnblockSignTaskRequest): Promise<UnblockSignTaskResponse>;
-    /**
-     * 催办签署任务
-     * 填写中、签署中状态的签署任务，对当前流程节点需要处理但未处理的填写人或签署人进行催办
-     */
-    urgeSign(req: UrgeSignRequest): Promise<UrgeSignResponse>;
-    /**
-     * 若创建签署任务时设定不自动结束(autoFinish=false)，则在所有签署方都完成签署后，需要调动本接口驱动签署任务结束。
-     * 签署任务结束后，会形成签署完结的合同，且不可再对该签署任务做任何动作
-     */
-    finishSignTask(req: FinishSignTaskRequest): Promise<FinishSignTaskResponse>;
+    unblock(req: UnblockRequest): Promise<UnblockResponse>;
     /**
      * 获取指定签署任务的详情信息和状态
      */
-    getSignTaskDetail(req: GetSignTaskDetailRequest): Promise<GetSignTaskDetailResponse>;
+    getDetail(req: GetDetailRequest): Promise<GetDetailResponse>;
     /**
-     * 直接以文件流形式下载签署任务中的文档或附件
+     * 获取指定归属方的签署任务列表
+     * 支持指定归属方的签署任务列表
      */
-    downloadFiles(req: DownloadFilesRequest): Promise<DownloadFilesResponse>;
+    getOwnerList(req: GetOwnerListRequest): Promise<GetOwnerListResponse>;
     /**
-     * 针对有访问此签署任务详情和操作权限的**参与方或发起方**，返回该签署任务的链接
+     * 获取指定归属方的签署任务文档下载地址
+     * 获取签署文档的下载地址，集成方根据该接口返回的下载地址下载具体的签署文档或附件
      */
-    getSignTaskUrl(req: GetSignTaskUrlRequest): Promise<GetSignTaskUrlResponse>;
+    getOwnerDownLoadUrl(req: GetOwnerDownLoadUrlRequest): Promise<GetOwnerDownLoadUrlResponse>;
 }
