@@ -68,9 +68,9 @@ export interface GetCorpAuthUrlResponse {
 
 interface Resource {
   /** 法大大平台资源标识（签署任务编辑、模板管理等） SIGNTASK: 签署任务 */
-  resourceId: string
+  resourceId: 'SIGNTASK' | 'TEMPLATE'
   /** 资源操作行为如：（编辑）EDIT */
-  action: string
+  action: 'EDIT' | 'CREATE' | 'PREVIEW' | 'MANAGE'
   /** 访问资源携带的参数 */
   params?: string
 }
