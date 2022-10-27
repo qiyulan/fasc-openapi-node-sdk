@@ -123,6 +123,11 @@ export class Client extends AbstractClient {
     return this.request({ url: "/sign-task/actor/delete", reqMethod: "POST", req })
   }
 
+  /** 获取签署任务参与方专属链接 */
+  async getActorUrl(req: DeleteActorRequest): Promise<DeleteActorResponse> {
+    return this.request({ url: "/sign-task/actor/get-url", reqMethod: "POST", req })
+  }
+
   /**
    * 提交签署任务
    * 对**尚未提交**的签署任务，下发提交指令，签署任务将进入内容协同流程
@@ -139,7 +144,7 @@ export class Client extends AbstractClient {
   }
 
   /**
-   * 对**内容已填写**的签署任务，下发定稿指令，签署任务将进入定稿流程。如果创建时设定签署任务不自动定稿
+   * 对内容已填写的签署任务，下发定稿指令，签署任务将进入定稿流程。如果创建时设定签署任务不自动定稿
    */
   async finalizeDoc(req: FinalizeDocRequest): Promise<FinalizeDocResponse> {
     return this.request({ url: "/sign-task/doc-finalize", reqMethod: "POST", req })

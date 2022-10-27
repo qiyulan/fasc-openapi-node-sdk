@@ -64,4 +64,6 @@ export interface GetIdentityInfoResponse {
   identSubmitTime?: string
   /** 认证通过时间。格式为：Unix标准时间戳，精确到毫秒 */
   identSuccessTime?: string
+  /** 该用户的法大大号 */
+  fddId?: string
 }
