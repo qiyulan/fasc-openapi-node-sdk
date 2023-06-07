@@ -1,19 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class FascOpenApiSDKHttpException extends Error {
-    constructor(error, requestId = "") {
-        super(error);
-        this.message = error;
-        this.requestId = requestId || "";
+var tslib_1 = require("tslib");
+var FascOpenApiSDKHttpException = /** @class */ (function (_super) {
+    (0, tslib_1.__extends)(FascOpenApiSDKHttpException, _super);
+    function FascOpenApiSDKHttpException(error, requestId) {
+        if (requestId === void 0) { requestId = ""; }
+        var _this = _super.call(this, error) || this;
+        _this.message = error;
+        _this.requestId = requestId || "";
+        return _this;
     }
-    getMessage() {
+    FascOpenApiSDKHttpException.prototype.getMessage = function () {
         return this.message;
-    }
-    getRequestId() {
+    };
+    FascOpenApiSDKHttpException.prototype.getRequestId = function () {
         return this.requestId;
-    }
-    toString() {
-        return `[FascOpenApiSDKException]message: ${this.getMessage()} requestId: ${this.getRequestId()}`;
-    }
-}
+    };
+    FascOpenApiSDKHttpException.prototype.toString = function () {
+        return "[FascOpenApiSDKException]message: ".concat(this.getMessage(), " requestId: ").concat(this.getRequestId());
+    };
+    return FascOpenApiSDKHttpException;
+}(Error));
 exports.default = FascOpenApiSDKHttpException;

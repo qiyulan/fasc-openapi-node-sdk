@@ -125,11 +125,11 @@ export class AbstractClient {
 
     headers[RequestParamsEnum.SIGN] = signature
 
-    if (this.credential.accessToken !== null) {
-      headers[RequestParamsEnum.ACCESS_TOKEN] = this.credential.accessToken
-    } else {
+    if (!this.credential.accessToken) {
       reqData = null
       headers[RequestParamsEnum.GRANT_TYPE] = RequestParamsEnum.CLIENT_CREDENTIAL
+    } else {
+      headers[RequestParamsEnum.ACCESS_TOKEN] = this.credential.accessToken
     }
 
     const fetchParams = {

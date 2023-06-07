@@ -1,43 +1,47 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
-const crypto = (0, tslib_1.__importStar)(require("crypto"));
-const is_stream_1 = (0, tslib_1.__importDefault)(require("is-stream"));
-class Sign {
-    static sign({ signStr, timestamp, appSecret, }) {
+var tslib_1 = require("tslib");
+var crypto = (0, tslib_1.__importStar)(require("crypto"));
+var is_stream_1 = (0, tslib_1.__importDefault)(require("is-stream"));
+var Sign = /** @class */ (function () {
+    function Sign() {
+    }
+    Sign.sign = function (_a) {
+        var signStr = _a.signStr, timestamp = _a.timestamp, appSecret = _a.appSecret;
         // SHA256算法加密排序后的字符串
-        const signText = crypto.createHash("sha256").update(signStr).digest("hex");
-        const timestampSecret = crypto
+        var signText = crypto.createHash("sha256").update(signStr).digest("hex");
+        var timestampSecret = crypto
             .createHmac("sha256", appSecret)
             .update(String(timestamp))
             .digest();
-        const hash = crypto.createHmac("sha256", timestampSecret).update(signText).digest("hex");
+        var hash = crypto.createHmac("sha256", timestampSecret).update(signText).digest("hex");
         return hash;
-    }
-    static formatSignString(signParams) {
-        let params = { ...signParams };
-        let strParam = "";
+    };
+    Sign.formatSignString = function (signParams) {
+        var params = (0, tslib_1.__assign)({}, signParams);
+        var strParam = "";
         // 去除字节流参数
         removeStream(params);
         // 去除值为空的字段
         params = deepRemoveNull(params);
-        const keys = Object.keys(params);
+        var keys = Object.keys(params);
         // 排序
         keys.sort();
         // 参数拼接，去除重复的key
-        for (const k in keys) {
+        for (var k in keys) {
             if (!keys.hasOwnProperty(k)) {
                 continue;
             }
             strParam += "&" + keys[k] + "=" + params[keys[k]];
         }
-        const signStr = strParam.slice(1);
+        var signStr = strParam.slice(1);
         return signStr;
-    }
-}
+    };
+    return Sign;
+}());
 exports.default = Sign;
 function removeStream(data) {
-    for (const key in data) {
+    for (var key in data) {
         if ((0, is_stream_1.default)(data[key])) {
             delete data[key];
         }
@@ -48,9 +52,9 @@ function deepRemoveNull(obj) {
         return obj.map(deepRemoveNull);
     }
     else if (isObject(obj)) {
-        const result = {};
-        for (const key in obj) {
-            const value = obj[key];
+        var result = {};
+        for (var key in obj) {
+            var value = obj[key];
             if (!isBlank(value)) {
                 result[key] = deepRemoveNull(value);
             }

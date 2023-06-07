@@ -47,6 +47,8 @@ export declare class Client extends AbstractClient {
      * 移除签署任务中的某些参与方。注意：被移除的参与方必须是尚未执行操作的参与方，若某填写方已经完成填写则不能被移除，若某签署方已完成签署则不能被移除
      */
     deleteActor(req: DeleteActorRequest): Promise<DeleteActorResponse>;
+    /** 获取签署任务参与方专属链接 */
+    getActorUrl(req: DeleteActorRequest): Promise<DeleteActorResponse>;
     /**
      * 提交签署任务
      * 对**尚未提交**的签署任务，下发提交指令，签署任务将进入内容协同流程
@@ -57,7 +59,7 @@ export declare class Client extends AbstractClient {
      */
     cancel(req: CancelRequest): Promise<CancelResponse>;
     /**
-     * 对**内容已填写**的签署任务，下发定稿指令，签署任务将进入定稿流程。如果创建时设定签署任务不自动定稿
+     * 对内容已填写的签署任务，下发定稿指令，签署任务将进入定稿流程。如果创建时设定签署任务不自动定稿
      */
     finalizeDoc(req: FinalizeDocRequest): Promise<FinalizeDocResponse>;
     /**

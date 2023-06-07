@@ -1,17 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AbstractClient = void 0;
-const tslib_1 = require("tslib");
-const crypto = (0, tslib_1.__importStar)(require("crypto"));
-const form_data_1 = (0, tslib_1.__importDefault)(require("form-data"));
-const r2curl_1 = (0, tslib_1.__importDefault)(require("r2curl"));
-const sign_1 = (0, tslib_1.__importDefault)(require("./sign"));
-const fetch_1 = (0, tslib_1.__importDefault)(require("./fetch"));
-const models_1 = require("./models");
-const fasc_openapi_sdk_exception_1 = (0, tslib_1.__importDefault)(require("./fasc_openapi_sdk_exception"));
-class AbstractClient {
-    constructor({ serverUrl, credential, profile }) {
-        this.credential = { appId: null, appSecret: null, accessToken: null, ...credential };
+var tslib_1 = require("tslib");
+var crypto = (0, tslib_1.__importStar)(require("crypto"));
+var form_data_1 = (0, tslib_1.__importDefault)(require("form-data"));
+var r2curl_1 = (0, tslib_1.__importDefault)(require("r2curl"));
+var sign_1 = (0, tslib_1.__importDefault)(require("./sign"));
+var fetch_1 = (0, tslib_1.__importDefault)(require("./fetch"));
+var models_1 = require("./models");
+var fasc_openapi_sdk_exception_1 = (0, tslib_1.__importDefault)(require("./fasc_openapi_sdk_exception"));
+var AbstractClient = /** @class */ (function () {
+    function AbstractClient(_a) {
+        var serverUrl = _a.serverUrl, credential = _a.credential, profile = _a.profile;
+        this.credential = (0, tslib_1.__assign)({ appId: null, appSecret: null, accessToken: null }, credential);
         this.serverUrl = serverUrl;
         this.profile = {
             signMethod: (profile === null || profile === void 0 ? void 0 : profile.signMethod) || models_1.SignMethod.hamcsha256,
@@ -24,88 +25,115 @@ class AbstractClient {
             language: (profile === null || profile === void 0 ? void 0 : profile.language) || "zh-CN",
         };
     }
-    async request({ url, reqMethod, req, options, }) {
-        try {
-            const res = await this.doRequest(url, req, reqMethod, options);
-            return res;
-        }
-        catch (e) {
-            return Promise.reject(e);
-        }
-    }
-    async doRequest(url, req, reqMethod, options) {
-        if (this.profile.signMethod === models_1.SignMethod.hamcsha256) {
-            return this.doRequestWithSign(url, req, reqMethod, options);
-        }
-        else {
-            throw new fasc_openapi_sdk_exception_1.default("签名算法错误，仅支持HMAC-SHA256");
-        }
-    }
-    async doRequestWithSign(url, data, reqMethod, options) {
-        const timestamp = new Date().getTime();
-        const nonce = crypto.randomBytes(16).toString("hex");
-        const headers = {
-            [models_1.RequestParamsEnum.APP_ID]: this.credential.appId,
-            [models_1.RequestParamsEnum.SIGN_TYPE]: this.profile.signMethod,
-            [models_1.RequestParamsEnum.NONCE]: nonce,
-            [models_1.RequestParamsEnum.TIMESTAMP]: timestamp,
-            [models_1.RequestParamsEnum.SUBVERSION]: models_1.SUBVERSION,
-            "Content-Type": "application/x-www-form-urlencoded",
-        };
-        let reqData = JSON.stringify(data) || "";
-        let form;
-        if (reqMethod === models_1.RequestParamsEnum.METHOD_POST && (options === null || options === void 0 ? void 0 : options.multipart)) {
-            form = new form_data_1.default();
-            for (const key in data) {
-                form.append(key, data[key]);
-            }
-            reqData = form;
-            headers["Content-Type"] = form.getHeaders()["content-type"];
-        }
-        const params = this.formatParams({
-            data,
-            appId: this.credential.appId,
-            signMethod: this.profile.signMethod,
-            nonce,
-            timestamp,
-            accessToken: this.credential.accessToken,
-            subversion: models_1.SUBVERSION
+    AbstractClient.prototype.request = function (_a) {
+        var url = _a.url, reqMethod = _a.reqMethod, req = _a.req, options = _a.options;
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
+            var res, e_1;
+            return (0, tslib_1.__generator)(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _b.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this.doRequest(url, req, reqMethod, options)];
+                    case 1:
+                        res = _b.sent();
+                        return [2 /*return*/, res];
+                    case 2:
+                        e_1 = _b.sent();
+                        return [2 /*return*/, Promise.reject(e_1)];
+                    case 3: return [2 /*return*/];
+                }
+            });
         });
-        const signStr = sign_1.default.formatSignString(params);
-        const signature = sign_1.default.sign({
-            signStr,
-            timestamp,
-            appSecret: this.credential.appSecret,
+    };
+    AbstractClient.prototype.doRequest = function (url, req, reqMethod, options) {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
+            return (0, tslib_1.__generator)(this, function (_a) {
+                if (this.profile.signMethod === models_1.SignMethod.hamcsha256) {
+                    return [2 /*return*/, this.doRequestWithSign(url, req, reqMethod, options)];
+                }
+                else {
+                    throw new fasc_openapi_sdk_exception_1.default("签名算法错误，仅支持HMAC-SHA256");
+                }
+                return [2 /*return*/];
+            });
         });
-        headers[models_1.RequestParamsEnum.SIGN] = signature;
-        if (this.credential.accessToken !== null) {
-            headers[models_1.RequestParamsEnum.ACCESS_TOKEN] = this.credential.accessToken;
-        }
-        else {
-            reqData = null;
-            headers[models_1.RequestParamsEnum.GRANT_TYPE] = models_1.RequestParamsEnum.CLIENT_CREDENTIAL;
-        }
-        const fetchParams = {
-            url,
-            baseURL: this.serverUrl,
-            method: reqMethod,
-            headers,
-            data: { [models_1.RequestParamsEnum.DATA_KEY]: reqData },
-            timeout: this.profile.reqTimeout * 1000,
-        };
-        const curl = (0, r2curl_1.default)(fetchParams);
-        console.log(curl);
-        return await (0, fetch_1.default)(fetchParams, this.profile.proxyProfile);
-    }
-    formatParams({ data, appId, signMethod, nonce, timestamp, accessToken = null, subversion }) {
-        const signParams = {
-            [models_1.RequestParamsEnum.DATA_KEY]: JSON.stringify(data || ''),
-            [models_1.RequestParamsEnum.APP_ID]: appId,
-            [models_1.RequestParamsEnum.SIGN_TYPE]: signMethod,
-            [models_1.RequestParamsEnum.NONCE]: nonce,
-            [models_1.RequestParamsEnum.TIMESTAMP]: timestamp,
-            [models_1.RequestParamsEnum.SUBVERSION]: subversion
-        };
+    };
+    AbstractClient.prototype.doRequestWithSign = function (url, data, reqMethod, options) {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
+            var timestamp, nonce, headers, reqData, form, key, params, signStr, signature, fetchParams, curl;
+            var _a, _b;
+            return (0, tslib_1.__generator)(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        timestamp = new Date().getTime();
+                        nonce = crypto.randomBytes(16).toString("hex");
+                        headers = (_a = {},
+                            _a[models_1.RequestParamsEnum.APP_ID] = this.credential.appId,
+                            _a[models_1.RequestParamsEnum.SIGN_TYPE] = this.profile.signMethod,
+                            _a[models_1.RequestParamsEnum.NONCE] = nonce,
+                            _a[models_1.RequestParamsEnum.TIMESTAMP] = timestamp,
+                            _a[models_1.RequestParamsEnum.SUBVERSION] = models_1.SUBVERSION,
+                            _a["Content-Type"] = "application/x-www-form-urlencoded",
+                            _a);
+                        reqData = JSON.stringify(data) || "";
+                        if (reqMethod === models_1.RequestParamsEnum.METHOD_POST && (options === null || options === void 0 ? void 0 : options.multipart)) {
+                            form = new form_data_1.default();
+                            for (key in data) {
+                                form.append(key, data[key]);
+                            }
+                            reqData = form;
+                            headers["Content-Type"] = form.getHeaders()["content-type"];
+                        }
+                        params = this.formatParams({
+                            data: data,
+                            appId: this.credential.appId,
+                            signMethod: this.profile.signMethod,
+                            nonce: nonce,
+                            timestamp: timestamp,
+                            accessToken: this.credential.accessToken,
+                            subversion: models_1.SUBVERSION
+                        });
+                        signStr = sign_1.default.formatSignString(params);
+                        signature = sign_1.default.sign({
+                            signStr: signStr,
+                            timestamp: timestamp,
+                            appSecret: this.credential.appSecret,
+                        });
+                        headers[models_1.RequestParamsEnum.SIGN] = signature;
+                        if (this.credential.accessToken !== null) {
+                            headers[models_1.RequestParamsEnum.ACCESS_TOKEN] = this.credential.accessToken;
+                        }
+                        else {
+                            reqData = null;
+                            headers[models_1.RequestParamsEnum.GRANT_TYPE] = models_1.RequestParamsEnum.CLIENT_CREDENTIAL;
+                        }
+                        fetchParams = {
+                            url: url,
+                            baseURL: this.serverUrl,
+                            method: reqMethod,
+                            headers: headers,
+                            data: (_b = {}, _b[models_1.RequestParamsEnum.DATA_KEY] = reqData, _b),
+                            timeout: this.profile.reqTimeout * 1000,
+                        };
+                        curl = (0, r2curl_1.default)(fetchParams);
+                        console.log(curl);
+                        return [4 /*yield*/, (0, fetch_1.default)(fetchParams, this.profile.proxyProfile)];
+                    case 1: return [2 /*return*/, _c.sent()];
+                }
+            });
+        });
+    };
+    AbstractClient.prototype.formatParams = function (_a) {
+        var _b;
+        var data = _a.data, appId = _a.appId, signMethod = _a.signMethod, nonce = _a.nonce, timestamp = _a.timestamp, _c = _a.accessToken, accessToken = _c === void 0 ? null : _c, subversion = _a.subversion;
+        var signParams = (_b = {},
+            _b[models_1.RequestParamsEnum.DATA_KEY] = JSON.stringify(data || ''),
+            _b[models_1.RequestParamsEnum.APP_ID] = appId,
+            _b[models_1.RequestParamsEnum.SIGN_TYPE] = signMethod,
+            _b[models_1.RequestParamsEnum.NONCE] = nonce,
+            _b[models_1.RequestParamsEnum.TIMESTAMP] = timestamp,
+            _b[models_1.RequestParamsEnum.SUBVERSION] = subversion,
+            _b);
         if (accessToken !== null) {
             signParams[models_1.RequestParamsEnum.ACCESS_TOKEN] = accessToken;
         }
@@ -114,6 +142,7 @@ class AbstractClient {
             delete signParams[models_1.RequestParamsEnum.DATA_KEY];
         }
         return signParams;
-    }
-}
+    };
+    return AbstractClient;
+}());
 exports.AbstractClient = AbstractClient;

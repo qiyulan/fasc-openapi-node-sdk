@@ -8,20 +8,21 @@ export interface GetOpenCorpAuthorizeUrlRequest {
 export declare type GetOpenCorpAuthorizeUrlResponse = string;
 /** 获取个人用户授权链接-请求参数结构体 */
 export interface GetUserAuthUrlRequest {
-    openUserId: string;
-    userInfo?: UserIdentInfo;
-    userInfoExtend?: UserInfoExtend;
+    clientUserId: string;
+    userName?: string;
+    userIdentType?: string;
+    userIdentNo?: string;
     /** 是否需要匹配个人身份信息一致：true，false */
-    identInfoMatch?: boolean;
-    /** 用户授权范围列表，ident_info: 身份信息，signtask_init: 发起签署任务，resource_for_sign: 签署相关数据资源 */
-    requestAuthScope?: Array<string>;
+    userIdentInfoMatch?: boolean;
+    /** 查询类：ident_info: 身份信息，**signtask_info**:  签署任务。管理类：signtask_init: 发起签署任务，**signtask_file**:  签署文件 */
+    authScopes?: Array<string>;
     /** 重定向地址 */
     redirectUrl?: string;
 }
 /** 获取个人用户授权链接-响应参数结构体 */
 export interface GetUserAuthUrlResponse {
     /** 授权链接的Embedded URL形式 */
-    eUrl: string;
+    authUrl: string;
 }
 /** getAuthUrl 获取企业用户授权链接-请求参数结构体 */
 export interface GetCorpAuthUrlRequest {
@@ -60,9 +61,9 @@ export interface GetCorpAuthUrlResponse {
 }
 interface Resource {
     /** 法大大平台资源标识（签署任务编辑、模板管理等） SIGNTASK: 签署任务 */
-    resourceId: string;
+    resourceId: 'SIGNTASK' | 'TEMPLATE';
     /** 资源操作行为如：（编辑）EDIT */
-    action: string;
+    action: 'EDIT' | 'CREATE' | 'PREVIEW' | 'MANAGE';
     /** 访问资源携带的参数 */
     params?: string;
 }

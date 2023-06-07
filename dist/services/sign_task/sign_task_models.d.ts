@@ -118,8 +118,12 @@ interface SignConfigInfo {
     blockHere?: boolean;
     /** 是否请求该参与方免验证签：false: 否,true: 是,默认为false */
     requestVerifyFree?: boolean;
-    /** 个人参与方的签署方式: unlimited: 不限制，standard: 使用标准签名，hand_write: 使用手绘签名 */
+    /** 允许该参与方使用的身份和意愿确认方式。pw: 签署密码验证，sms: 短信验证码<br/>face: 刷脸验证<br/>默认选择全部，并按照法大大平台定义的顺序展示 */
+    verifyMethods?: Array<string>;
+    /** 个人参与方或企业参与方经办人的签署方式。 unlimited: 不限制，standard: 使用标准签名，hand_write: 使用手绘签名。默认为unlimited */
     signerSignMethod?: string;
+    /** 企业参与方成员能否通过链接打开签署任务。false：不可以，true：可以，默认为true */
+    joinByLink?: boolean;
 }
 interface SignTaskActor {
     /** 参与方基本信息 */
@@ -161,7 +165,7 @@ export interface CreateResponse {
 interface SignTaskActorForTemplate {
     actor: Actor;
     fillFields?: Array<FillFields>;
-    signConfigInfo?: Pick<SignConfigInfo, 'blockHere' | 'requestVerifyFree'>;
+    signConfigInfo?: Pick<SignConfigInfo, 'blockHere' | 'requestVerifyFree' | 'verifyMethods' | 'joinByLink'>;
 }
 /** createWithTemplate 创建签署任务 (基于签署模板)-请求参数结构体 */
 export interface CreateWithTemplateRequest {
@@ -294,6 +298,19 @@ export interface DeleteActorRequest {
 }
 /** deleteActor 移除签署任务参与方-响应参数结构体 */
 export declare type DeleteActorResponse = null;
+/** getActorUrl 获取签署任务参与方专属链接-请求参数结构体 */
+export interface GetActorUrlRequest {
+    signTaskId: string;
+    actorId: string;
+    clientUserId: string;
+}
+/** getActorUrl 获取签署任务参与方专属链接-请求参数结构体 */
+export interface GetActorUrlResponse {
+    /** 参与方签署任务专属链接 */
+    actorSignTaskUrl: string;
+    /** 可嵌入的参与方签署任务链接 */
+    actorSignTaskEmbedUrl: string;
+}
 /** start 提交签署任务-请求参数结构体 */
 export interface StartRequest {
     signTaskId: string;
