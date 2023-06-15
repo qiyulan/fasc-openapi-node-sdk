@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Permissions = exports.SUBVERSION = exports.RequestParamsEnum = exports.EuiEnvironmentEnum = exports.ActorTypeEnum = exports.CorpIdentTypeEnum = exports.IdTypeEnum = exports.IdentTypeEnum = exports.SignMethod = void 0;
+exports.Permissions = exports.SUBVERSION = exports.RequestParamsEnum = exports.ActorTypeEnum = exports.CorpIdentTypeEnum = exports.IdTypeEnum = exports.IdentTypeEnum = exports.SignMethod = void 0;
 var SignMethod;
 (function (SignMethod) {
     SignMethod["hamcsha256"] = "HMAC-SHA256";
@@ -45,13 +45,6 @@ var ActorTypeEnum;
     /** 个人 */
     ActorTypeEnum["PERSON"] = "person";
 })(ActorTypeEnum = exports.ActorTypeEnum || (exports.ActorTypeEnum = {}));
-/** eui环境枚举 */
-var EuiEnvironmentEnum;
-(function (EuiEnvironmentEnum) {
-    EuiEnvironmentEnum["SIT"] = "sit";
-    EuiEnvironmentEnum["UAT"] = "uat";
-    EuiEnvironmentEnum["PROD"] = "prod";
-})(EuiEnvironmentEnum = exports.EuiEnvironmentEnum || (exports.EuiEnvironmentEnum = {}));
 var RequestParamsEnum;
 (function (RequestParamsEnum) {
     /**
@@ -87,7 +80,7 @@ var RequestParamsEnum;
      */
     RequestParamsEnum["DATA_KEY"] = "bizContent";
     RequestParamsEnum["GRANT_TYPE"] = "X-FASC-Grant-Type";
-    RequestParamsEnum["FDD_REQEUST_ID"] = "X-FASC-Request-Id";
+    RequestParamsEnum["FDD_REQUEST_ID"] = "X-FASC-Request-Id";
     /**
      * 默认授权类型
      **/

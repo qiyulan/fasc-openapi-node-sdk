@@ -24,7 +24,7 @@ export interface UnbindUserRequest {
 /** unbindUser 解绑个人用户-响应参数结构体 */
 export type UnbindUserResponse = null
 
-/** 查询个人用户基本信息-请求参数结构体 */
+/** getUserInfo  查询个人用户基本信息-请求参数结构体 */
 export interface GetUserInfoRequest {
   /** 个人用户在应用中的唯一标识 */
   clientUserId?: string
@@ -32,7 +32,7 @@ export interface GetUserInfoRequest {
   openUserId?: string
 }
 
-/** 查询个人用户基本信息-响应参数结构体 */
+/** getUserInfo  查询个人用户基本信息-响应参数结构体 */
 export interface GetUserInfoResponse {
   clientUserId: string
   openUserId?: string
@@ -46,12 +46,12 @@ export interface GetUserInfoResponse {
   availableStatus: string
 }
 
-/** 获取个人用户身份信息-请求参数结构体 */
+/** getIdentityInfo 获取个人用户身份信息-请求参数结构体 */
 export interface GetIdentityInfoRequest {
   openUserId: string
 }
 
-/** 获取个人用户身份信息-响应参数结构体 */
+/** getIdentityInfo 获取个人用户身份信息-响应参数结构体 */
 export interface GetIdentityInfoResponse {
   openUserId: string
   /** 实名认证状态: unidentified: 未认证, identified: 已认证且有效, ident_invalid：认证失效*/
@@ -66,4 +66,119 @@ export interface GetIdentityInfoResponse {
   identSuccessTime?: string
   /** 该用户的法大大号 */
   fddId?: string
+  /** 该用户认证时的刷脸底图base64 */
+  facePicture?: string
+}
+
+/** getFourElementVerifyUrl 个人四要素校验-请求参数结构体 */
+export interface GetFourElementVerifyUrlRequest {
+  clientUserId: string
+  /** 要素校验的发起方，会扣除该主体的要素校验用量 */
+  initiator: {
+    /** 主体类型： corp: 企业 person: 个人  */
+    idType: string
+    /** 主体标识 */
+    openId: string
+  }
+  /** 用户姓名 */
+  userName: string
+  /** 用户身份证号 */
+  userIdentNo: string
+  /** 银行卡号 */
+  bankAccountNo?: string
+  /** 手机号 */
+  mobile?: string
+  /** 是否需要同时校验身份证照片，默认false，true：需要，false：不需要 */
+  idCardImage?: boolean
+  /** 身份证人像面base64 */
+  faceSide?: string
+  /** 身份证国徽面base64 */
+  nationalEmblemSide?: string
+  /** 重定向地址 */
+  redirectUrl?: string
+}
+
+/** getFourElementVerifyUrl 个人四要素校验-响应参数结构体 */
+export interface GetFourElementVerifyUrlResponse {
+  /** 四要素校验页面链接，自适应PC/H5，有效期10分钟 */
+  verifyUrl: string
+}
+
+/** getThreeElementVerifyUrl 个人三要素校验-请求参数结构体 */
+export interface GetThreeElementVerifyUrlRequest {
+  clientUserId: string
+  /** 要素校验的发起方，会扣除该主体的要素校验用量 */
+  initiator: {
+    /** 主体类型： corp: 企业 person: 个人  */
+    idType: string
+    /** 主体标识 */
+    openId: string
+  }
+  /** 用户姓名 */
+  userName: string
+  /** 用户身份证号 */
+  userIdentNo: string
+  /** 手机号 */
+  mobile?: string
+  /** 是否需要同时校验身份证照片，默认false，true：需要，false：不需要 */
+  idCardImage?: boolean
+  /** 身份证人像面base64 */
+  faceSide?: string
+  /** 身份证国徽面base64 */
+  nationalEmblemSide?: string
+  /** 重定向地址 */
+  redirectUrl?: string
+}
+
+/** getThreeElementVerifyUrl 个人三要素校验-响应参数结构体 */
+export interface GetThreeElementVerifyUrlResponse {
+  /** 四要素校验页面链接，自适应PC/H5，有效期10分钟 */
+  verifyUrl: string
+}
+
+/** getIdCardImageDownloadUrl 获取要素校验身份证图片下载链接-请求参数结构体 */
+export interface GetIdCardImageDownloadUrlRequest {
+  /** 校验id，在回调事件中返回 */
+  verifyId: string
+}
+
+/** getIdCardImageDownloadUrl 获取要素校验身份证图片下载链接-响应参数结构体 */
+export interface GetIdCardImageDownloadUrlResponse {
+  /** 要素校验身份证图片下载链接 */
+  downloadUrl: string
+}
+
+/** getIdCardOcr 身份证OCR-请求参数结构体 */
+export interface GetIdCardOcrRequest {
+  /** 身份证OCR的发起方，会扣除该主体的OCR用量 */
+  initiator: {
+    /** 主体类型： corp: 企业 person: 个人  */
+    idType: string
+    /** 主体标识 */
+    openId: string
+  }
+  /** 身份证人像面base64 */
+  faceSide?: string
+  /** 身份证国徽面base64 */
+  nationalEmblemSide?: string
+}
+
+/** getIdCardOcr 身份证OCR-响应参数结构体 */
+export interface GetIdCardOcrResponse {
+  /** 姓名 */
+  name?: string
+  /** 身份证号 */
+  identNo?: string
+  /** 性别 */
+  gender?: string
+  /** 出生日期 */
+  birthday?: string
+  /** 民族 */
+  nation?: string
+  /** 住址 */
+  address?: string
+  /** 发证机关 */
+  issueAuthority?: string
+  /** 有效期 */
+  validPeriod?: string
 }

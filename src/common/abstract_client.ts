@@ -171,11 +171,11 @@ export class AbstractClient {
       [RequestParamsEnum.SUBVERSION]: subversion
     }
 
-    if (accessToken !== null) {
-      signParams[RequestParamsEnum.ACCESS_TOKEN] = accessToken
-    } else {
+    if (!accessToken) {
       signParams[RequestParamsEnum.GRANT_TYPE] = RequestParamsEnum.CLIENT_CREDENTIAL
       delete signParams[RequestParamsEnum.DATA_KEY]
+    } else {
+      signParams[RequestParamsEnum.ACCESS_TOKEN] = accessToken
     }
 
     return signParams

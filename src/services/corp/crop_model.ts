@@ -59,7 +59,7 @@ export interface GetIdentityInfoRequest {
 export interface GetIdentityInfoResponse {
   /** 法大大平台为该企业在该应用appId范围内分配的唯一标识 */
   openCorpId: string
-  /** 实名认证状态，unidentified，identified，ident_invalid */
+  /** 实名认证状态，unidentified，identified */
   corpIdentStatus: string
   /**
    * @type {CorpIdentInfo}
@@ -77,4 +77,37 @@ export interface GetIdentityInfoResponse {
   identSuccessTime?: string
   /** 该企业用户的法大大号 */
   fddId?: string
+}
+
+
+/** getIdentityStatus 查询企业实名认证状态-请求参数机构体 */
+export interface GetIdentityStatusRequest {
+  /** 企业名称 */
+  corpName: string
+  /** 企业统一社会信用代码或各种类型组织的唯一代码 */
+  corpIdentNo: string
+}
+
+/** getIdentityStatus 查询企业实名认证状态-响应参数机构体 */
+export interface GetIdentityStatusResponse {
+  /** 实名认证状态 */
+  identStatus: boolean
+}
+
+/** getCounterpartList 查询相对方列表-请求结构体 */
+export interface GetCounterpartListRequest {
+  openCorpId: string
+}
+
+/** getCounterpartList 查询相对方列表-响应结构体 */
+export interface GetCounterpartListResponse {
+  /** 相对方列表信息 */
+  counterpartInfos: Array<{
+    /** 相对方企业名称 */
+    corpName: string
+    /** 企业统一社会信用代码或各种类型组织的唯一代码 */
+    corpIdentNo: string
+    /** 相对方企业在法大大的状态 */
+    status: string
+  }>
 }

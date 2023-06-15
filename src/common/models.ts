@@ -42,13 +42,6 @@ export enum ActorTypeEnum {
   PERSON = "person",
 }
 
-/** eui环境枚举 */
-export enum EuiEnvironmentEnum {
-  SIT = 'sit',
-  UAT = 'uat',
-  PROD = 'prod'
-}
-
 export enum RequestParamsEnum {
   /**
    * 企业控制台创建应用后得到的应用ID
@@ -83,7 +76,7 @@ export enum RequestParamsEnum {
    */
   DATA_KEY = "bizContent",
   GRANT_TYPE = "X-FASC-Grant-Type",
-  FDD_REQEUST_ID = "X-FASC-Request-Id",
+  FDD_REQUEST_ID = "X-FASC-Request-Id",
   /**
    * 默认授权类型
    **/
@@ -105,7 +98,7 @@ export interface OpenId {
    * 如果idType为corp：代表应用系统上的企业用户，主体方是openCorpId所指定的企业；
    * 如果idType为person：代表应用系统上的个人用户，主体方是openUserId所指定的个人；
    */
-  openId?: string
+  openId: string
 }
 
 /** 参与方权限 */
@@ -179,10 +172,8 @@ export interface Notification {
 export interface Actor {
   /** 参与方标识。在同一个签署任务中，同类型的各参与方标识不可重复 */
   actorId: string
-  /** 参与方类型，filler: 填充方、signer: 签署方、cc: 抄送方 */
-  actorType: ActorTypeEnum
   /** 参与方主体类型：corp、person */
-  actorIdentType: string
+  actorType: ActorTypeEnum
   /** 参与方名称。长度最大128个字符 */
   actorName: string
   /** 参与方权限数组 */
@@ -195,6 +186,10 @@ export interface Actor {
   actorCorpMembers?: Array<ActorCorpMember>
   /** 参与方身份名称匹配信息：个人姓名或企业全称 */
   identNameForMatch?: string
+  /** 个人参与方证件类型，默认为身份证 */
+  certType?: string
+  /** 参与方的法大大帐号，为手机号或邮箱，仅对个人参与方有效 */
+  accountName?: string
   /** 参与方证件号码匹配信息：个人身份证号或企业统信码 */
   certNoForMatch?: string
   /** 法大大通知信息 */
@@ -205,7 +200,7 @@ export interface Actor {
 export interface FieldPosition {
   /** 定位模式：pixel、keyword */
   positionMode: 'pixel' | 'keyword'
-  /** 定位页码 */
+  /** 定位页码。首页从1开始。 */
   positionPageNo?: string
   /** 中心点定位坐标横向偏移量 */
   positionX?: string
@@ -213,6 +208,10 @@ export interface FieldPosition {
   positionY?: string
   /** 关键字定位 */
   positionKeyword?: string
+  /** 关键字中心点横向偏移量。只能传入数字，可支持小数，正数代表向右偏移，负数代表向左偏移 */
+  keywordOffsetX?: string
+  /** 关键字中心点纵向偏移量。只能传入数字，可支持小数，正数代表向上偏移，负数代表向下偏移 */
+  keywordOffsetY?: string
 }
 
 /** 文档控件 */
@@ -221,8 +220,10 @@ export interface Field {
   fieldId: string
   /** 控件名称 */
   fieldName: string
+  fieldKey?: string
   /** 控件定位 */
   position: FieldPosition
+  moveable?: boolean
   /** 控件类型：person_sign、corp_seal、corp_seal_cross_page、date_sign、text_single_line、text_multi_line、check_box */
   fieldType: string
   /** 单行文本控件属性参数 */
@@ -243,12 +244,41 @@ export interface Field {
   fieldCheckBox?: FieldCheckBox
 }
 
+/** 个人签名空间 */
+export interface FieldPersonSign {
+  width?: number
+  height?: number
+}
+
+/** 企业印章控件 */
+export interface FieldCorpSeal {
+  width?: number
+  height?: number
+}
+
+/** 备注区控件 */
+export interface FieldRemarkSign {
+  defaultValue?: string
+  tips?: string
+  editable?: boolean
+  width?: number
+  height?: number
+  fontType?: string
+  fontSize?: number
+}
+
 /** 单行文本控件 */
 export interface FieldTextSingleLine {
   /** 是否必须：false/true，默认为true */
   required?: boolean
   /** 指定默认值 */
   defaultValue?: string
+  tips?: string
+  width?: number
+  height?: number
+  fontType?: string
+  fontSize?: number
+  alignment?: string
 }
 
 /** 多行文本控件 */
@@ -257,6 +287,12 @@ export interface FieldTextMultiLine {
   required?: boolean
   /** 指定默认值 */
   defaultValue?: string
+  tips?: string
+  width?: number
+  height?: number
+  fontType?: string
+  fontSize?: number
+  alignment?: string
 }
 
 /** 数字控件 */
@@ -265,6 +301,12 @@ export interface FieldNumber {
   required?: boolean
   /** 指定默认值 */
   defaultValue?: string
+  tips?: string
+  width?: number
+  height?: number
+  fontType?: string
+  fontSize?: number
+  alignment?: string
 }
 
 /** 身份证控件 */
@@ -273,6 +315,12 @@ export interface FieldIdCard {
   required?: boolean
   /** 指定默认值 */
   defaultValue?: string
+  tips?: string
+  width?: number
+  height?: number
+  fontType?: string
+  fontSize?: number
+  alignment?: string
 }
 
 /** 填写日期控件 */
@@ -281,22 +329,32 @@ export interface FieldFillDate {
   required?: boolean
   /** 指定默认值 */
   defaultValue?: string
+  tips?: string
+  width?: number
+  height?: number
+  fontType?: string
+  fontSize?: number
+  alignment?: string
 }
 
 /** 单选框-多项控件 */
 export interface FieldMultiRadio {
   /** 是否必须：false/true，默认为true */
   required?: boolean
+  /** 选项，[“选项一”,“选项二”] */
+  option?: Array<string>
   /** 指定默认值 */
-  defaultValue?: string
+  defaultValue?: Array<boolean>
 }
 
 /** 复选框-多项控件 */
 export interface FieldMultiCheckbox {
   /** 是否必须：false/true，默认为true */
   required?: boolean
-  /** 指定默认值 */
-  defaultValue?: string
+ /** 选项，[“选项一”,“选项二”] */
+  option?: Array<string>
+ /** 指定默认值 */
+  defaultValue?: Array<boolean>
 }
 
 /** 复选框控件 */
@@ -305,4 +363,59 @@ export interface FieldCheckBox {
   required?: boolean
   /** 指定默认值 */
   defaultValue?: string
+}
+
+/** 图片控件 */
+export interface FieldPicture {
+  required?: boolean
+  /** 指定默认值 */
+  defaultValue?: string
+  width?: number
+  height?: number
+}
+
+/** 下拉选择控件 */
+export interface FieldSelectBox {
+  required?: boolean
+  option?: Array<string>
+  defaultValue?: string
+  tips?: string
+  width?: number
+  height?: number
+  fontType?: string
+  fontSize?: number
+  alignment?: string
+}
+
+/** 表格控件 */
+export interface FieldTable {
+  required?: boolean
+  header: Array<string>
+  requiredCount?: number
+  fontType?: string
+  fontSize?: number
+  alignment?: string
+  /** 表格方向，默认横向，broadwise：横向，vertical：竖向，竖向无法设置动态表格 */
+  headerPosition?: string
+  rows?: number
+  cols?: number
+  rowHeight?: number
+  /** 每列的宽度，单位px */
+  widths?: Array<number>
+  /** 是否可额外动态增删行数，默认false */
+  dynamicFilling?: boolean
+  defaultValue?: Array<Array<string>>
+  /** 是否隐藏表头，默认faslse */
+  hideHeader?: boolean
+}
+
+export interface ListPageModel {
+  /** 列表当前分页 */
+  listPageNo: number
+  /** 当前返回页中的文档模板数量，即数组大小 */
+  countInPage: number
+  /** 列表总分页数 */
+  listPageCount: number
+  /** 查询到的文档模板总数 */
+  totalCount: number
 }

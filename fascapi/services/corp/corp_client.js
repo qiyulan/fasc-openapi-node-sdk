@@ -29,8 +29,8 @@ var Client = /** @class */ (function (_super) {
         });
     };
     /**
-   * 将已禁用的企业用户再次激活。激活后，该企业用户可继续通过该应用系统使用法大大平台服务
-   */
+     * 针对已绑定法大大帐号的企业用户，解除法大大帐号绑定和企业用户的授权范围。
+     */
     Client.prototype.unbind = function (req) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             return (0, tslib_1.__generator)(this, function (_a) {
@@ -55,6 +55,24 @@ var Client = /** @class */ (function (_super) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             return (0, tslib_1.__generator)(this, function (_a) {
                 return [2 /*return*/, this.request({ url: "/corp/get-identity-info", req: req, reqMethod: "POST" })];
+            });
+        });
+    };
+    /**
+     * 查询企业实名认证状态
+     */
+    Client.prototype.getIdentityStatus = function (req) {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
+            return (0, tslib_1.__generator)(this, function (_a) {
+                return [2 /*return*/, this.request({ url: "/corp/get-identified-status", req: req, reqMethod: "POST" })];
+            });
+        });
+    };
+    /** 查询相对方列表 */
+    Client.prototype.getCounterpartList = function (req) {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
+            return (0, tslib_1.__generator)(this, function (_a) {
+                return [2 /*return*/, this.request({ url: "/counterpart/get-list", req: req, reqMethod: "POST" })];
             });
         });
     };

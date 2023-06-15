@@ -100,12 +100,12 @@ var AbstractClient = /** @class */ (function () {
                             appSecret: this.credential.appSecret,
                         });
                         headers[models_1.RequestParamsEnum.SIGN] = signature;
-                        if (this.credential.accessToken !== null) {
-                            headers[models_1.RequestParamsEnum.ACCESS_TOKEN] = this.credential.accessToken;
-                        }
-                        else {
+                        if (!this.credential.accessToken) {
                             reqData = null;
                             headers[models_1.RequestParamsEnum.GRANT_TYPE] = models_1.RequestParamsEnum.CLIENT_CREDENTIAL;
+                        }
+                        else {
+                            headers[models_1.RequestParamsEnum.ACCESS_TOKEN] = this.credential.accessToken;
                         }
                         fetchParams = {
                             url: url,
@@ -134,12 +134,12 @@ var AbstractClient = /** @class */ (function () {
             _b[models_1.RequestParamsEnum.TIMESTAMP] = timestamp,
             _b[models_1.RequestParamsEnum.SUBVERSION] = subversion,
             _b);
-        if (accessToken !== null) {
-            signParams[models_1.RequestParamsEnum.ACCESS_TOKEN] = accessToken;
-        }
-        else {
+        if (!accessToken) {
             signParams[models_1.RequestParamsEnum.GRANT_TYPE] = models_1.RequestParamsEnum.CLIENT_CREDENTIAL;
             delete signParams[models_1.RequestParamsEnum.DATA_KEY];
+        }
+        else {
+            signParams[models_1.RequestParamsEnum.ACCESS_TOKEN] = accessToken;
         }
         return signParams;
     };

@@ -8,9 +8,7 @@ var Client = /** @class */ (function (_super) {
     function Client(clientConfig) {
         return _super.call(this, clientConfig) || this;
     }
-    /**
-     * 创建一个签署任务。该接口可创建一个简单的或要素完备的签署任务
-     */
+    /** 创建签署任务(基于文档) */
     Client.prototype.create = function (req) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             return (0, tslib_1.__generator)(this, function (_a) {
@@ -18,9 +16,7 @@ var Client = /** @class */ (function (_super) {
             });
         });
     };
-    /**
-     * 在预先已经创作好签署模板的情况下，直接基于签署模板创建比较完整的签署任务。这种方式更快捷方便
-     */
+    /** 创建签署任务(基于签署任务模板) */
     Client.prototype.createWithTemplate = function (req) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             return (0, tslib_1.__generator)(this, function (_a) {
@@ -28,9 +24,7 @@ var Client = /** @class */ (function (_super) {
             });
         });
     };
-    /**
-     * 在**签署任务提交**之前，向签署任务添加文档。可以将已经上传的文档文件或预先定义好的文档模板作为签署任务文档添加进去
-     */
+    /** 添加签署任务文档 */
     Client.prototype.addDoc = function (req) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             return (0, tslib_1.__generator)(this, function (_a) {
@@ -38,9 +32,7 @@ var Client = /** @class */ (function (_super) {
             });
         });
     };
-    /**
-     * 在**签署任务提交**之前，从签署任务中删除文档
-     */
+    /** 移除签署任务文档 */
     Client.prototype.deleteDoc = function (req) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             return (0, tslib_1.__generator)(this, function (_a) {
@@ -48,9 +40,7 @@ var Client = /** @class */ (function (_super) {
             });
         });
     };
-    /**
-     * 在签署任务发起之前，向签署任务添加文档控件
-     */
+    /** 添加签署任务控件 */
     Client.prototype.addField = function (req) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             return (0, tslib_1.__generator)(this, function (_a) {
@@ -58,9 +48,7 @@ var Client = /** @class */ (function (_super) {
             });
         });
     };
-    /**
-     * 在签署任务发起之前，从签署任务的文档中删除指定控件
-     */
+    /** 移除签署任务控件 */
     Client.prototype.deleteField = function (req) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             return (0, tslib_1.__generator)(this, function (_a) {
@@ -68,9 +56,7 @@ var Client = /** @class */ (function (_super) {
             });
         });
     };
-    /**
-     * 在签署任务发起之前，向一些填写控件中预先填写内容
-     */
+    /** 填写签署任务控件内容 */
     Client.prototype.fillFieldValues = function (req) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             return (0, tslib_1.__generator)(this, function (_a) {
@@ -78,9 +64,7 @@ var Client = /** @class */ (function (_super) {
             });
         });
     };
-    /**
-     * 对尚未发起的任务添加附件。可以将已经上传的文件添加进去
-     */
+    /** 添加签署任务附件 */
     Client.prototype.addAttach = function (req) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             return (0, tslib_1.__generator)(this, function (_a) {
@@ -88,9 +72,7 @@ var Client = /** @class */ (function (_super) {
             });
         });
     };
-    /**
-     * 从尚未发起的签署任务移除附件
-     */
+    /** 移除签署任务附件 */
     Client.prototype.deleteAttach = function (req) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             return (0, tslib_1.__generator)(this, function (_a) {
@@ -98,9 +80,7 @@ var Client = /** @class */ (function (_super) {
             });
         });
     };
-    /**
-     * 对已经创建但尚未完成的签署任务添加参与方(包括填写方、签署方、抄送方)
-     */
+    /** 添加签署任务参与方 */
     Client.prototype.addActor = function (req) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             return (0, tslib_1.__generator)(this, function (_a) {
@@ -108,9 +88,7 @@ var Client = /** @class */ (function (_super) {
             });
         });
     };
-    /**
-     * 移除签署任务中的某些参与方。注意：被移除的参与方必须是尚未执行操作的参与方，若某填写方已经完成填写则不能被移除，若某签署方已完成签署则不能被移除
-     */
+    /** 移除签署任务参与方 */
     Client.prototype.deleteActor = function (req) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             return (0, tslib_1.__generator)(this, function (_a) {
@@ -118,7 +96,23 @@ var Client = /** @class */ (function (_super) {
             });
         });
     };
-    /** 获取签署任务参与方专属链接 */
+    /** 获取签署任务编辑链接 */
+    Client.prototype.getSignTaskEditUrl = function (req) {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
+            return (0, tslib_1.__generator)(this, function (_a) {
+                return [2 /*return*/, this.request({ url: "/sign-task/get-edit-url", reqMethod: "POST", req: req })];
+            });
+        });
+    };
+    /** 获取签署任务预览链接 */
+    Client.prototype.getSignTaskPreviewUrl = function (req) {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
+            return (0, tslib_1.__generator)(this, function (_a) {
+                return [2 /*return*/, this.request({ url: "/sign-task/get-preview-url", reqMethod: "POST", req: req })];
+            });
+        });
+    };
+    /** 获取参与方签署链接 */
     Client.prototype.getActorUrl = function (req) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             return (0, tslib_1.__generator)(this, function (_a) {
@@ -126,10 +120,15 @@ var Client = /** @class */ (function (_super) {
             });
         });
     };
-    /**
-     * 提交签署任务
-     * 对**尚未提交**的签署任务，下发提交指令，签署任务将进入内容协同流程
-     */
+    /** 获取参与方批量签署链接 */
+    Client.prototype.getActorBatchSignTaskUrl = function (req) {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
+            return (0, tslib_1.__generator)(this, function (_a) {
+                return [2 /*return*/, this.request({ url: "/sign-task/actor/get-url", reqMethod: "POST", req: req })];
+            });
+        });
+    };
+    /** 提交签署任务 */
     Client.prototype.start = function (req) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             return (0, tslib_1.__generator)(this, function (_a) {
@@ -137,9 +136,7 @@ var Client = /** @class */ (function (_super) {
             });
         });
     };
-    /**
-     * 发起方撤销尚未结束的签署任务
-     */
+    /** 撤销签署任务 */
     Client.prototype.cancel = function (req) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             return (0, tslib_1.__generator)(this, function (_a) {
@@ -147,9 +144,7 @@ var Client = /** @class */ (function (_super) {
             });
         });
     };
-    /**
-     * 对内容已填写的签署任务，下发定稿指令，签署任务将进入定稿流程。如果创建时设定签署任务不自动定稿
-     */
+    /** 定稿签署任务 */
     Client.prototype.finalizeDoc = function (req) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             return (0, tslib_1.__generator)(this, function (_a) {
@@ -157,9 +152,15 @@ var Client = /** @class */ (function (_super) {
             });
         });
     };
-    /**
-     * 设置签署任务在某个参与方节点的自动阻塞
-     */
+    /** 催办签署任务 */
+    Client.prototype.urgeSignTask = function (req) {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
+            return (0, tslib_1.__generator)(this, function (_a) {
+                return [2 /*return*/, this.request({ url: "/sign-task/urge", reqMethod: "POST", req: req })];
+            });
+        });
+    };
+    /** 阻塞签署任务 */
     Client.prototype.block = function (req) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             return (0, tslib_1.__generator)(this, function (_a) {
@@ -167,9 +168,7 @@ var Client = /** @class */ (function (_super) {
             });
         });
     };
-    /**
-     * 解除签署任务某个参与方节点的阻塞设置。如果该签署任务正巧被阻塞在指定的参与方节点，则签署任务继续向下流转
-     */
+    /** 解阻签署任务 */
     Client.prototype.unblock = function (req) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             return (0, tslib_1.__generator)(this, function (_a) {
@@ -177,9 +176,31 @@ var Client = /** @class */ (function (_super) {
             });
         });
     };
-    /**
-     * 获取指定签署任务的详情信息和状态
-     */
+    /** 结束签署任务 */
+    Client.prototype.finish = function (req) {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
+            return (0, tslib_1.__generator)(this, function (_a) {
+                return [2 /*return*/, this.request({ url: "/sign-task/finish", reqMethod: "POST", req: req })];
+            });
+        });
+    };
+    /** 作废签署任务 */
+    Client.prototype.abolish = function (req) {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
+            return (0, tslib_1.__generator)(this, function (_a) {
+                return [2 /*return*/, this.request({ url: "/sign-task/abolish", reqMethod: "POST", req: req })];
+            });
+        });
+    };
+    /** 删除签署任务 */
+    Client.prototype.delete = function (req) {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
+            return (0, tslib_1.__generator)(this, function (_a) {
+                return [2 /*return*/, this.request({ url: "/sign-task/delete", reqMethod: "POST", req: req })];
+            });
+        });
+    };
+    /** 查询签署任务详情 */
     Client.prototype.getDetail = function (req) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             return (0, tslib_1.__generator)(this, function (_a) {
@@ -187,10 +208,7 @@ var Client = /** @class */ (function (_super) {
             });
         });
     };
-    /**
-     * 获取指定归属方的签署任务列表
-     * 支持指定归属方的签署任务列表
-     */
+    /** 查询签署任务列表 */
     Client.prototype.getOwnerList = function (req) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             return (0, tslib_1.__generator)(this, function (_a) {
@@ -198,14 +216,75 @@ var Client = /** @class */ (function (_super) {
             });
         });
     };
-    /**
-     * 获取指定归属方的签署任务文档下载地址
-     * 获取签署文档的下载地址，集成方根据该接口返回的下载地址下载具体的签署文档或附件
-     */
+    /** 查询参与方身份信息 */
+    Client.prototype.getSignTaskActorList = function (req) {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
+            return (0, tslib_1.__generator)(this, function (_a) {
+                return [2 /*return*/, this.request({ url: "/sign-task/actor/list", reqMethod: "POST", req: req })];
+            });
+        });
+    };
+    /** 查询参与方填写内容 */
+    Client.prototype.getSignTaskFieldList = function (req) {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
+            return (0, tslib_1.__generator)(this, function (_a) {
+                return [2 /*return*/, this.request({ url: "/sign-task/field/list", reqMethod: "POST", req: req })];
+            });
+        });
+    };
+    /** 查询签署任务审批信息 */
+    Client.prototype.getSignTaskApprovalInfo = function (req) {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
+            return (0, tslib_1.__generator)(this, function (_a) {
+                return [2 /*return*/, this.request({ url: "/sign-task/get-approval-info", reqMethod: "POST", req: req })];
+            });
+        });
+    };
+    /** 查询企业签署任务文件夹列表 */
+    Client.prototype.getSignTaskCatalogList = function (req) {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
+            return (0, tslib_1.__generator)(this, function (_a) {
+                return [2 /*return*/, this.request({ url: "/sign-task-catalog/list", reqMethod: "POST", req: req })];
+            });
+        });
+    };
+    /** 查询签署业务类型列表 */
+    Client.prototype.getSignTaskBusinessTypeList = function (req) {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
+            return (0, tslib_1.__generator)(this, function (_a) {
+                return [2 /*return*/, this.request({ url: "/sign-task/business-type/get-list", reqMethod: "POST", req: req })];
+            });
+        });
+    };
+    /** 获取签署过程保全报告下载地址 */
+    Client.prototype.getEvidenceReportDownloadUrl = function (req) {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
+            return (0, tslib_1.__generator)(this, function (_a) {
+                return [2 /*return*/, this.request({ url: "/sign-task/evidence-report/get-download-url", reqMethod: "POST", req: req })];
+            });
+        });
+    };
+    /** 获取签署文档下载地址 */
     Client.prototype.getOwnerDownLoadUrl = function (req) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             return (0, tslib_1.__generator)(this, function (_a) {
                 return [2 /*return*/, this.request({ url: "/sign-task/owner/get-download-url", reqMethod: "POST", req: req })];
+            });
+        });
+    };
+    /** 获取签署任务参与方刷脸底图 */
+    Client.prototype.getActorFacePicture = function (req) {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
+            return (0, tslib_1.__generator)(this, function (_a) {
+                return [2 /*return*/, this.request({ url: "/sign-task/actor/get-face-picture", reqMethod: "POST", req: req })];
+            });
+        });
+    };
+    /** 获取图片版签署文档下载地址 */
+    Client.prototype.getSignTaskPicDownLoadUrl = function (req) {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
+            return (0, tslib_1.__generator)(this, function (_a) {
+                return [2 /*return*/, this.request({ url: "/sign-task/owner/get-pic-download-url", reqMethod: "POST", req: req })];
             });
         });
     };

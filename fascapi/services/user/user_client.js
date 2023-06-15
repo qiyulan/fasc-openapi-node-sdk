@@ -29,8 +29,8 @@ var Client = /** @class */ (function (_super) {
         });
     };
     /**
-   * 将已禁用的用户再次激活。激活后，该用户可继续通过该应用系统使用法大大平台服务
-   */
+     * 将已禁用的用户再次激活。激活后，该用户可继续通过该应用系统使用法大大平台服务
+     */
     Client.prototype.unbindUser = function (req) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             return (0, tslib_1.__generator)(this, function (_a) {
@@ -55,6 +55,48 @@ var Client = /** @class */ (function (_super) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             return (0, tslib_1.__generator)(this, function (_a) {
                 return [2 /*return*/, this.request({ url: "/user/get-identity-info", req: req, reqMethod: "POST" })];
+            });
+        });
+    };
+    /**
+     * 个人四要素校验
+     * 从法大大获取一个链接，用户可在页面中校验其姓名、身份证号、运营商手机号是否一致
+     */
+    Client.prototype.getFourElementVerifyUrl = function (req) {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
+            return (0, tslib_1.__generator)(this, function (_a) {
+                return [2 /*return*/, this.request({ url: "/user/four-element-verify/get-url", req: req, reqMethod: "POST" })];
+            });
+        });
+    };
+    /**
+     * 个人三要素校验
+     * 从法大大获取一个链接，用户可在页面中校验其姓名、身份证号、运营商手机号是否一致
+     */
+    Client.prototype.getThreeElementVerifyUrl = function (req) {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
+            return (0, tslib_1.__generator)(this, function (_a) {
+                return [2 /*return*/, this.request({ url: "/user/three-element-verify/get-url", req: req, reqMethod: "POST" })];
+            });
+        });
+    };
+    /**
+     * 获取要素校验身份证图片下载链接
+     */
+    Client.prototype.getIdCardImageDownloadUrl = function (req) {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
+            return (0, tslib_1.__generator)(this, function (_a) {
+                return [2 /*return*/, this.request({ url: "/user/element-verify/get-idcard-image-download-url", req: req, reqMethod: "POST" })];
+            });
+        });
+    };
+    /**
+     * 身份证OCR
+     */
+    Client.prototype.getIdCardOcrUrl = function (req) {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
+            return (0, tslib_1.__generator)(this, function (_a) {
+                return [2 /*return*/, this.request({ url: "/user/ocr/id-card", req: req, reqMethod: "POST" })];
             });
         });
     };

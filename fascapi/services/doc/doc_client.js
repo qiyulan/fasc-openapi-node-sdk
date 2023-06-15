@@ -8,9 +8,7 @@ var Client = /** @class */ (function (_super) {
     function Client(clientConfig) {
         return _super.call(this, clientConfig) || this;
     }
-    /**
-     * 通过网络文件地址上传文件(文档或附件)到法大大存储服务
-     */
+    /** 通过网络文件地址上传 */
     Client.prototype.uploadFileByUrl = function (req) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             return (0, tslib_1.__generator)(this, function (_a) {
@@ -18,9 +16,7 @@ var Client = /** @class */ (function (_super) {
             });
         });
     };
-    /**
-     * 上传本地文件到法大大
-     */
+    /** 上传本地文件到法大大 */
     Client.prototype.getUploadUrl = function (req) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             return (0, tslib_1.__generator)(this, function (_a) {
@@ -28,13 +24,19 @@ var Client = /** @class */ (function (_super) {
             });
         });
     };
-    /**
-     * 文件处理
-     */
-    Client.prototype.FileProcess = function (req) {
+    /** 文件处理 */
+    Client.prototype.fileProcess = function (req) {
         return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
             return (0, tslib_1.__generator)(this, function (_a) {
                 return [2 /*return*/, this.request({ url: "/file/process", reqMethod: "POST", req: req })];
+            });
+        });
+    };
+    /** 文件验签 */
+    Client.prototype.fileVerifySign = function (req) {
+        return (0, tslib_1.__awaiter)(this, void 0, void 0, function () {
+            return (0, tslib_1.__generator)(this, function (_a) {
+                return [2 /*return*/, this.request({ url: "/file/verify-sign", reqMethod: "POST", req: req })];
             });
         });
     };

@@ -6,7 +6,9 @@ import {
   UploadFileByUrlRequest,
   UploadFileByUrlResponse,
   FileProcessRequest,
-  FileProcessResponse
+  FileProcessResponse,
+  FileVerifySignRequest,
+  FileVerifySignResponse,
 } from "./doc_models"
 
 export class Client extends AbstractClient {
@@ -14,31 +16,23 @@ export class Client extends AbstractClient {
     super(clientConfig)
   }
 
-  /** 
-   * 通过网络文件地址上传文件(文档或附件)到法大大存储服务
-   */
-  async uploadFileByUrl(
-    req?: UploadFileByUrlRequest,
-  ): Promise<UploadFileByUrlResponse> {
+  /** 通过网络文件地址上传 */
+  async uploadFileByUrl(req?: UploadFileByUrlRequest): Promise<UploadFileByUrlResponse> {
     return this.request({ url: "/file/upload-by-url", reqMethod: "POST", req })
   }
 
-  /**
-   * 上传本地文件到法大大
-   */
-  async getUploadUrl(
-    req: GetUploadUrlRequest,
-  ): Promise<GetUploadUrlResponse> {
+  /** 上传本地文件到法大大 */
+  async getUploadUrl(req: GetUploadUrlRequest): Promise<GetUploadUrlResponse> {
     return this.request({ url: "/file/get-upload-url", reqMethod: "POST", req })
   }
 
-  /**
-   * 文件处理
-   */
-  async FileProcess(
-    req: FileProcessRequest,
-  ): Promise<FileProcessResponse> {
+  /** 文件处理 */
+  async fileProcess(req: FileProcessRequest): Promise<FileProcessResponse> {
     return this.request({ url: "/file/process", reqMethod: "POST", req })
   }
-}
 
+  /** 文件验签 */
+  async fileVerifySign(req: FileVerifySignRequest): Promise<FileVerifySignResponse> {
+    return this.request({ url: "/file/verify-sign", reqMethod: "POST", req })
+  }
+}

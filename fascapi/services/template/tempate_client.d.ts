@@ -1,26 +1,58 @@
 import { AbstractClient } from "../../common/abstract_client";
 import { ClientConfig } from "../../common/interface";
-import { GetDocTemplateDetailRequest, GetDocTemplateDetailResponse, GetDocTemplateListRequest, GetDocTemplateListResponse, GetSignTemplateDetailRequest, GetSignTemplateDetailResponse, GetSignTemplateListRequest, GetSignTemplateListResponse, GetManageUrlRequest, GetManageUrlResponse } from "./template_models";
+import { GetDocTemplateDetailRequest, GetDocTemplateDetailResponse, GetDocTemplateListRequest, GetDocTemplateListResponse, GetSignTemplateDetailRequest, GetSignTemplateDetailResponse, GetSignTemplateListRequest, GetSignTemplateListResponse, GetTemplateManageUrlRequest, GetTemplateManageUrlResponse, SetDocTemplateStatusRequest, SetDocTemplateStatusResponse, DeleteDocTemplateRequest, DeleteDocTemplateResponse, SetSignTemplateStatusRequest, SetSignTemplateStatusResponse, DeleteSignTemplateRequest, DeleteSignTemplateResponse, GetTemplateCreateUrlRequest, GetTemplateCreateUrlResponse, GetTemplateEditUrlRequest, GetTemplateEditUrlResponse, GetTemplatePreviewUrlRequest, GetTemplatePreviewUrlResponse, GetAppDocTemplateListRequest, GetAppDocTemplateListResponse, GetAppDocTemplateDetailRequest, GetAppDocTemplateDetailResponse, SetAppDocTemplateStatusRequest, SetAppDocTemplateStatusResponse, DeleteAppDocTemplateRequest, DeleteAppDocTemplateResponse, GetAppSignTemplateListRequest, GetAppSignTemplateListResponse, GetAppSignTemplateDetailRequest, GetAppSignTemplateDetailResponse, SetAppSignTemplateStatusRequest, SetAppSignTemplateStatusResponse, GetAppTemplateCreateUrlRequest, GetAppTemplateCreateUrlResponse, GetAppTemplateEditUrlRequest, GetAppTemplateEditUrlResponse, GetAppTemplatePreviewUrlRequest, GetAppTemplatePreviewUrlResponse, CreateAppFieldRequest, CreateAppFieldResponse, ModifyAppFieldRequest, ModifyAppFieldResponse, SetAppFieldStatusRequest, SetAppFieldStatusResponse, GetAppFieldListRequest } from "./template_models";
 export declare class Client extends AbstractClient {
     constructor(clientConfig: ClientConfig);
-    /**
-     * 查询文档模板列表，列表根据文档模板更新时间倒序排序返回
-     */
+    /** 查询文档模板列表 */
     getDocTemplateList(req?: GetDocTemplateListRequest): Promise<GetDocTemplateListResponse>;
-    /**
-     * 获取文档模板详情，包括文档模板的基本信息、填写和签章控件和区域信息等
-     */
+    /** 查询文档模板详情 */
     getDocTemplateDetail(req: GetDocTemplateDetailRequest): Promise<GetDocTemplateDetailResponse>;
-    /**
-     * 查询签署模板列表，列表根据签署模板更新时间倒序排序返回
-     */
+    /** 启用/停用文档模板 */
+    setDocTemplateStatus(req: SetDocTemplateStatusRequest): Promise<SetDocTemplateStatusResponse>;
+    /** 删除文档模板 */
+    deleteDocTemplate(req: DeleteDocTemplateRequest): Promise<DeleteDocTemplateResponse>;
+    /** 查询签署任务模板列表 */
     getSignTemplateList(req: GetSignTemplateListRequest): Promise<GetSignTemplateListResponse>;
-    /**
-     * 获取签署模板详情，包括签署模板基本信息、文档信息、参与方信息(含各参与方填写控件、签章控件)
-     */
+    /** 查询签署任务模板详情 */
     getSignTemplateDetail(req: GetSignTemplateDetailRequest): Promise<GetSignTemplateDetailResponse>;
-    /**
-     * 业务系统向法大大平台获取模板管理页面链接，该页面无需法大大账号登录，用于对指定企业主体的模板进行管理操作
-     */
-    getManageUrl(req: GetManageUrlRequest): Promise<GetManageUrlResponse>;
+    /** 启用/停用签署任务模板 */
+    setSignTemplateStatus(req: SetSignTemplateStatusRequest): Promise<SetSignTemplateStatusResponse>;
+    /** 删除签署任务模板 */
+    deleteSignTemplate(req: DeleteSignTemplateRequest): Promise<DeleteSignTemplateResponse>;
+    /** 获取模板管理链接 */
+    getTemplateManageUrl(req: GetTemplateManageUrlRequest): Promise<GetTemplateManageUrlResponse>;
+    /** 获取模板新增链接 */
+    getTemplateCreateUrl(req: GetTemplateCreateUrlRequest): Promise<GetTemplateCreateUrlResponse>;
+    /** 获取模板编辑链接 */
+    getTemplateEditUrl(req: GetTemplateEditUrlRequest): Promise<GetTemplateEditUrlResponse>;
+    /** 获取模板预览链接 */
+    getTemplatePreviewUrl(req: GetTemplatePreviewUrlRequest): Promise<GetTemplatePreviewUrlResponse>;
+    /** 查询应用文档模板列表 */
+    getAppDocTemplateList(req: GetAppDocTemplateListRequest): Promise<GetAppDocTemplateListResponse>;
+    /** 查询应用文档模板详情 */
+    getAppDocTemplateDetail(req: GetAppDocTemplateDetailRequest): Promise<GetAppDocTemplateDetailResponse>;
+    /** 启用/停用应用文档模板 */
+    setAppDocTemplateStatus(req: SetAppDocTemplateStatusRequest): Promise<SetAppDocTemplateStatusResponse>;
+    /** 删除应用文档模板 */
+    deleteAppDocTemplate(req: DeleteAppDocTemplateRequest): Promise<DeleteAppDocTemplateResponse>;
+    /** 查询应用签署任务模板列表 */
+    getAppSignTemplateList(req: GetAppSignTemplateListRequest): Promise<GetAppSignTemplateListResponse>;
+    /** 查询应用签署任务模板详情 */
+    getAppSignTemplateDetail(req: GetAppSignTemplateDetailRequest): Promise<GetAppSignTemplateDetailResponse>;
+    /** 启用/停用应用签署任务模板 */
+    setAppSignTemplateStatus(req: SetAppSignTemplateStatusRequest): Promise<SetAppSignTemplateStatusResponse>;
+    /** 获取应用模板新增链接 */
+    getAppTemplateCreateUrl(req: GetAppTemplateCreateUrlRequest): Promise<GetAppTemplateCreateUrlResponse>;
+    /** 获取应用模板编辑链接 */
+    getAppTemplateEditUrl(req: GetAppTemplateEditUrlRequest): Promise<GetAppTemplateEditUrlResponse>;
+    /** 获取应用模板预览链接 */
+    getAppTemplatePreviewUrl(req: GetAppTemplatePreviewUrlRequest): Promise<GetAppTemplatePreviewUrlResponse>;
+    /** 创建业务控件 */
+    createAppField(req: CreateAppFieldRequest): Promise<CreateAppFieldResponse>;
+    /** 修改业务控件 */
+    modifyAppField(req: ModifyAppFieldRequest): Promise<ModifyAppFieldResponse>;
+    /** 设置业务控件状态 */
+    setAppFieldStatus(req: SetAppFieldStatusRequest): Promise<SetAppFieldStatusResponse>;
+    /** 查询业务控件列表 */
+    getAppFieldList(req: GetAppFieldListRequest): Promise<GetAppFieldListRequest>;
 }

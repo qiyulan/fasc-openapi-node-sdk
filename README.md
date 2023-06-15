@@ -4,6 +4,7 @@
 
 欢迎使用法大大开发者工具套件（SDK），NODEJS SDK 是法大大电子合同和电子签云服务开放平台（FASC OPEN API）的配套工具。
 
+<br />
 
 # 版本说明
 
@@ -13,7 +14,7 @@ FASC.openAPI 产品目前存在两个子版本号：v5.0、v5.1， 均在持续�
 
 https://gitee.com/fadada-cloud/fasc-openapi-node-sdk/tree/v5.0
 
-
+<br />
 
 # 目录结构
 - SDK项目层级     
@@ -40,12 +41,15 @@ fascapi
 
 实例化 `client` 的入参支持 `clientConfig` 数据结构和说明 详见 [ClientConfig](https://gitee.com/fadada-cloud/fasc-openapi-node-sdk/blob/master/src/common/interface.ts)
 
+<br />
 
 # 依赖环境
 
 1. NODEJS 12 版本及以上
 2. 在法大大平台开通相应应用
-3. 获取 appId、appSecret 及服务请求地址（serverUrl）
+3. 获取 appId、appSecret 及服务请求地址（serverUrl） 
+
+<br />
 
 # 获取安装
 
@@ -60,8 +64,10 @@ fascapi
 ## 下载包安装：
 
 1. 下载压缩包解压
-2. 复制 dist 目录下的 fascapi.js 文件（其余 ts 文件可根据需要自行提取）到项目文件夹下
-3. 在使用是通过 var fascapi = require('fascapi.js') 引入使用
+2. 复制 dist 目录下的 fascapi.cjs.js 文件（cjs请使用 fascapi.esm.js）到项目文件夹下
+3. 在使用是通过 var fascapi = require('fascapi.cjs.js') 引入使用
+
+<br/>
 
 # 示例
 
@@ -97,22 +103,23 @@ client.getUserInfo({openUserId: 'openUserId'}).then(
 )
 
 ```
-
+<br />
 
 ## 更多示例
 
 更丰富的示例请前往 [demo](https://gitee.com/fadada-cloud/fasc-openapi-node-sdk-demo/master) 中查看
 
-
+<br />
 
 # 版本更新日志
 
 5.1.0 - 2022-07-28   基于FASC OpenAPI 5.1.0版本开发，初始版本。
+5.2.5 - 2023-06-15   SDK 更新，打包支持cjs和esm
 
-
+<br />
 
 # 参考
 
 FASC OpenAPI (服务端) 接口文档 v5.1
 
-https://dev.fadada.com/api-doc/MTE9YIK1SP/QMMRYYN5RMPREAZH/5-1 
+https://dev.fadada.com/api-doc/ALGPB7Z1FD/TA0WHTSXQYL0NQRB/5-1
