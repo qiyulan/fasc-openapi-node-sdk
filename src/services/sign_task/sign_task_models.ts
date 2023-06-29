@@ -181,6 +181,7 @@ export interface SignTaskActor {
 export interface CreateRequest {
   /** 签署任务主题 */
   signTaskSubject: string
+  initiatorMemberId?: string
   /** 该签署任务的发起方 */
   initiator: OpenId
   /** 签署文档类型，contract：合同，document：单据 */
@@ -205,6 +206,10 @@ export interface CreateRequest {
   catalogId?: string
   /** 您的业务应用系统中的业务场景信息，用于更好地定义业务场景和签署任务的关系 */
   businessScene?: BusinessScene
+  /** 免验证签场景码（已审核通过），使用免验证签署时传入 */
+  businessId?: string
+  /** 业务参考号 */
+  transReferenceId?: string
   /** 待签署的文档列表 */
   docs?: Array<Doc>
   /** 附件列表，附件数上限为20个 */
@@ -229,6 +234,7 @@ interface SignTaskActorForTemplate {
 export interface CreateWithTemplateRequest {
   /** 签署任务主题 */
   signTaskSubject: string
+  initiatorMemberId?: string
   /** 该签署任务的发起方。**特别注意授权要求：只有经过该发起方授权后，才可以将该发起方填写到此参数中并发起签署任务 */
   initiator: OpenId
   /** 签署文档类型，contract：合同，document：单据 */
@@ -253,6 +259,10 @@ export interface CreateWithTemplateRequest {
   catalogId?: string
   /** 您的业务应用系统中的业务场景信息，用于更好地定义业务场景和签署任务的关系 */
   businessScene?: BusinessScene
+  /** 免验证签场景码（已审核通过），使用免验证签署时传入 */
+  businessId?: string
+  /** 业务参考号 */
+  transReferenceId?: string
   actors?: Array<SignTaskActorForTemplate>
 }
 
@@ -452,6 +462,37 @@ export interface GetActorBatchSignTaskUrlRequest {
 export interface GetActorBatchSignTaskUrlResponse {
   batchSignUrl: string
 }
+
+/** getV3ActorSignTaskUrl 获取参与方签署链接（API3.0任务专属）-请求结构体 */
+export interface GetV3ActorSignTaskUrlRequest {
+  signTaskId: string
+  ownerId: {
+    type: string
+    openId: string
+  }
+  redirectUrl?: string
+}
+
+export interface SignDetail {
+  signUrl?: string
+  signOrder?: string
+  signStatus?: string
+  signer?: {
+    signatory?: {
+      signerId?: string
+    }
+    corp?: {
+      corpId?: string
+    }
+  }
+}
+
+/** getV3ActorSignTaskUrl 获取参与方签署链接（API3.0任务专属）-响应结构体 */
+export interface GetV3ActorSignTaskUrlResponse {
+  signUrls?: Array<{ signUrl?: string }>
+  signDetails?: Array<SignDetail>
+}
+
 /** start 提交签署任务-请求参数结构体 */
 export interface StartRequest {
   signTaskId: string
@@ -550,6 +591,10 @@ export interface AbolishRequest {
   businessTypeId?: number
   /** 该签署任务的业务编号 */
   businessCode?: string
+  /** 免验证签场景码（已审核通过），使用免验证签署时传入 */
+  businessId?: string
+  /** 业务参考号 */
+  transReferenceId?: string
   /** 签署任务归属的发起方文件夹 */
   catalogId?: string
   /** 应用中的业务场景信息，如免验证签业务场景 */

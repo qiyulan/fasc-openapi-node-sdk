@@ -1,5 +1,5 @@
 import { type } from "os"
-import { Field, OpenId, ListPageModel } from "../../common/models"
+import { Field, OpenId, ListPageModel, FieldTextSingleLine, FieldTextMultiLine, FieldMultiCheckbox } from "../../common/models"
 import { Attach } from "../sign_task/sign_task_models"
 
 /** getDocTemplateList 查询文档模板列表-请求参数结构体 */
@@ -534,4 +534,51 @@ export interface GetAppFieldListResponse {
   fieldType: string
   /** 业务控件状态，enable: 启用，disable: 停用 */
 
+}
+
+export interface CorpField {
+  /** 控件标识，不可重复 */
+  fieldKey: string
+  /** 控件名称，支持重复 */
+  fieldName: string
+  /**
+   * 目前支持的填写控件如下：text_single_line: 单行文本，text_multi_line: 多行文本，multi_checkbox：复选框
+   */
+  fieldType: string
+  fieldTextSingleLine?: FieldTextSingleLine
+  fieldTextMultiLine?: FieldTextMultiLine
+  fieldMultiCheckbox?: FieldMultiCheckbox
+}
+
+/** createCorpField 创建自定义控件-请求结构体 */
+export interface CreateCorpFieldRequest {
+  openCorpId: string
+  fields: Array<CorpField>
+}
+
+/** createCorpField 创建自定义控件-响应结构体 */
+export interface CreateCorpFieldResponse {
+  failField?: Array<{
+    fieldKey: string
+    failReason: string
+  }>
+}
+
+/** deleteCorpField 删除自定义控件-请求结构体 */
+export interface DeleteCorpFieldRequest {
+  openCorpId: string
+  fields: Array<{ fieldKey: string }>
+}
+
+/** deleteCorpField 删除自定义控件-响应结构体 */
+export type DeleteCorpFieldResponse = null
+
+/** getCorpFieldList 查询自定义控件列表-请求结构体 */
+export interface GetCorpFieldListRequest {
+  openCorpId: string
+}
+
+/** getCorpFieldList 查询自定义控件列表-响应结构体 */
+export interface GetCorpFieldListResponse {
+  fields: Array<CorpField>
 }

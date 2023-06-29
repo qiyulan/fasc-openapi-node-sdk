@@ -7,3 +7,6 @@ export { userClient } from "./user"
 export { serviceClient } from "./service"
 export { signTaskClient } from "./sign_task"
 export { templateClient } from './template'
+export { approvalClient } from './approval'
+export { callbackClient } from './callback'
+export { ocrClient } from './ocr'

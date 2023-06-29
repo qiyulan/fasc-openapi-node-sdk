@@ -70,7 +70,9 @@ import {
   AbolishRequest,
   AbolishResponse,
   DeleteRequest,
-  DeleteResponse
+  DeleteResponse,
+  GetV3ActorSignTaskUrlRequest,
+  GetV3ActorSignTaskUrlResponse
 } from "./sign_task_models"
 
 export class Client extends AbstractClient {
@@ -150,7 +152,12 @@ export class Client extends AbstractClient {
 
   /** 获取参与方批量签署链接 */
   async getActorBatchSignTaskUrl(req: GetActorBatchSignTaskUrlRequest): Promise<GetActorBatchSignTaskUrlResponse> {
-    return this.request({ url: "/sign-task/actor/get-url", reqMethod: "POST", req })
+    return this.request({ url: "/sign-task/get-batch-sign-url", reqMethod: "POST", req })
+  }
+
+  /** 获取参与方签署链接（API3.0任务专属） */
+  async getV3ActorSignTaskUrl(req: GetV3ActorSignTaskUrlRequest): Promise<GetV3ActorSignTaskUrlResponse> {
+    return this.request({ url: "/sign-task/actor/v3/get-url", reqMethod: "POST", req })
   }
 
   /** 提交签署任务 */

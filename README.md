@@ -38,6 +38,9 @@ fascapi
 | TemplateClient | 文档模板管理     | 包含文档模板查询、签署模板查询                                                  |
 | SignTaskClient | 签署任务管理     | 包含签署任务的创建、维护、各个流程节点的流转操作，以及签署任务查询、文件下载链接等                        |
 | EUIClient      | EUI页面链接管理  | 对EUI页面链接进行管理操作，如获取个人授权链接、获取企业授权链接、获取计费链接、获取签署任务编辑链接、印章管理、组织管理链接等 |
+| ApprovalClient      | 审批管理         | 包含审批相关接口                                                         |
+| CallbackClient      | 回调管理         | 包含回调相关接口                                                         |
+| OcrClient      | OCR识别         | 包含OCR相关接口                                                         |
 
 实例化 `client` 的入参支持 `clientConfig` 数据结构和说明 详见 [ClientConfig](https://gitee.com/fadada-cloud/fasc-openapi-node-sdk/blob/master/src/common/interface.ts)
 

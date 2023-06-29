@@ -182,3 +182,28 @@ export interface GetIdCardOcrResponse {
   /** 有效期 */
   validPeriod?: string
 }
+
+/** telecomThreeElementVerify 个人运营商三要素校验-请求结构体 */
+export interface TelecomThreeElementVerifyRequest {
+  userName: string
+  userIdentNo: string
+  mobile: string
+}
+
+/** telecomThreeElementVerify 个人运营商三要素校验-响应结构体 */
+export interface TelecomThreeElementVerifyResponse {
+  verifyResult: string
+}
+
+/** backFourElementVerify 个人银行卡四要素校验-请求结构体 */
+export interface BackFourElementVerifyRequest {
+  userName: string
+  userIdentNo: string
+  mobile: string
+  bankAccountNo: string
+}
+
+/** backFourElementVerify-响应结构体 */
+export interface BackFourElementVerifyResponse {
+  verifyResult: string
+}

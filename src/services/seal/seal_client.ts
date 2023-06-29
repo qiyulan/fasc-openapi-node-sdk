@@ -29,12 +29,18 @@ import {
   ModifySealResponse,
   DeleteSealRequest,
   DeleteSealResponse,
+  GetPersonalSealManageUrlRequest,
+  GetPersonalSealManageUrlResponse,
+  GetPersonalSealCreateUrlRequest,
+  GetPersonalSealCreateUrlResponse,
   GetPersonalSealListRequest,
   GetPersonalSealListResponse,
   GetPersonalFreeSignUrlRequest,
   GetPersonalFreeSignUrlResponse,
   CancelPersonalFreeSignRequest,
   CancelPersonalFreeSignResponse,
+  DeletePersonalSealRequest,
+  DeletePersonalSealResponse
 } from "./seal_models"
 
 export class Client extends AbstractClient {
@@ -111,6 +117,16 @@ export class Client extends AbstractClient {
     return this.request({ url: "/seal/delete", req, reqMethod: "POST" })
   }
 
+  /** 获取签名管理链接 */
+  async getPersonalSealManageUrl(req: GetPersonalSealCreateUrlRequest): Promise<GetPersonalSealCreateUrlResponse> {
+    return this.request({ url: "/personal-seal/create/get-url", req, reqMethod: "POST" })
+  }
+
+    /** 获取签名创建链接 */
+    async getPersonalSealCreateUrl(req: GetPersonalSealManageUrlRequest): Promise<GetPersonalSealManageUrlResponse> {
+      return this.request({ url: "/personal-seal/manage/get-url", req, reqMethod: "POST" })
+    }
+
   /** 查询个人签名列表 */
   async getPersonalSealList(req: GetPersonalSealListRequest): Promise<GetPersonalSealListResponse> {
     return this.request({ url: "/personal-seal/get-list", req, reqMethod: "POST" })
@@ -124,5 +140,10 @@ export class Client extends AbstractClient {
   /** 解除签名免验证签 */
   async cancelPersonalFreeSign(req: CancelPersonalFreeSignRequest): Promise<CancelPersonalFreeSignResponse> {
     return this.request({ url: "/personal-seal/free-sign/cancel", req, reqMethod: "POST" })
+  }
+  
+  /** 删除签名 */
+  async deletePersonalSeal(req: DeletePersonalSealRequest): Promise<DeletePersonalSealResponse> {
+    return this.request({ url: "/personal-seal/delete", req, reqMethod: "POST" })
   }
 }

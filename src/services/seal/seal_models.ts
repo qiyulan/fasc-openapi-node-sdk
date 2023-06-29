@@ -2,6 +2,13 @@
 export interface GetSealListRequest {
   /** 企业主体在应用上的openCorpId，需检查授权 */
   openCorpId: string
+  /**
+   * 印章是否设置了免验证签，默认都查询：
+   * free_sign：仅查询设置了免验证签的印章
+   * no_free_sign：仅查询未设置免验证签的印章
+   * both：不将是否设置了免验证签作为过滤条件
+   */
+  grantFreeSign?: string
   /** 查询条件。 */
   listFilter?: {
     /** 印章类型，支持传多项：official_seal：法定名称章，contract_seal：合同专用章，hr_seal：人事专用章，financial_seal：财务专用章，legal_representative_seal：法定代表人名章，other：其他。 */
@@ -52,6 +59,7 @@ export interface SealInfo {
 /** getSealList 查询印章列表-响应结构体 */
 export interface GetSealListResponse {
   sealInfos: Array<SealInfo>
+  freeSignInfo?: Array<FreeSignInfo>
 }
 
 /** getSealDetail 查询印章详情-请求结构体 */
@@ -339,6 +347,30 @@ export interface DeleteSealRequest {
 /** deleteSeal 修改印章-响应结构体 */
 export type DeleteSealResponse = null
 
+/** getPersonalSealManageUrl 获取签名管理链接-请求结构体 */
+export interface GetPersonalSealManageUrlRequest {
+  clientUserId?: string
+  redirectUrl?: string
+}
+
+/** getPersonalSealManageUrl 获取签名管理链接-响应结构体 */
+export interface GetPersonalSealManageUrlResponse {
+  resourceUrl: string
+}
+
+/** getPersonalSealCreateUrl 获取签名创建链接-请求结构体 */
+export interface GetPersonalSealCreateUrlRequest {
+  clientUserId?: string
+  redirectUrl?: string
+  /** 业务系统定义的签名创建序列号，用于在签名创建后的回调事件中将sealId和createSerialNo进行对应 */
+  createSerialNo?: string
+}
+
+/** getPersonalSealCreateUrl 获取签名创建链接-响应结构体 */
+export interface GetPersonalSealCreateUrlResponse {
+  sealCreateUrl: string
+}
+
 /** getPersonalSealList 查询个人签名列表-请求结构体 */
 export interface GetPersonalSealListRequest {
   openCorpId: string
@@ -400,3 +432,12 @@ export interface CancelPersonalFreeSignRequest {
 
 /** cancelPersonalFreeSign 解除签名免验证签-响应结构体 */
 export type CancelPersonalFreeSignResponse = null
+
+/** deletePersonalSeal 删除签名-请求结构体 */
+export interface DeletePersonalSealRequest {
+  openUserId: string
+  sealId: number
+}
+
+/** deletePersonalSeal 删除签名-响应结构体 */
+export type DeletePersonalSealResponse = null

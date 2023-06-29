@@ -53,6 +53,10 @@ import {
   SetAppFieldStatusResponse,
   GetAppFieldListRequest,
   GetAppFieldListResponse,
+  CreateCorpFieldRequest,
+  CreateCorpFieldResponse,
+  DeleteCorpFieldRequest,
+  DeleteCorpFieldResponse
 } from "./template_models"
 
 export class Client extends AbstractClient {
@@ -186,7 +190,22 @@ export class Client extends AbstractClient {
   }
 
   /** 查询业务控件列表 */
-  async getAppFieldList(req: GetAppFieldListRequest): Promise<GetAppFieldListRequest> {
+  async getAppFieldList(req: GetAppFieldListRequest): Promise<GetAppFieldListResponse> {
     return this.request({ url: "/app-field/get-list", reqMethod: "POST", req })
+  }
+
+  /** 创建自定义控件 */
+  async createCorpField(req: CreateCorpFieldRequest): Promise<CreateCorpFieldResponse> {
+    return this.request({ url: "/corp-field/create", reqMethod: "POST", req })
+  }
+  
+  /** 删除自定义控件 */
+  async deleteCorpField(req: DeleteCorpFieldRequest): Promise<DeleteCorpFieldResponse> {
+    return this.request({ url: "/corp-field/delete", reqMethod: "POST", req })
+  }
+
+  /** 查询自定义控件列表 */
+  async getCorpFieldList(req: DeleteCorpFieldRequest): Promise<DeleteCorpFieldResponse> {
+    return this.request({ url: "/corp-field/get-list", reqMethod: "POST", req })
   }
 }

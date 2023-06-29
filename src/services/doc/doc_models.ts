@@ -49,6 +49,8 @@ interface FileId {
   fddFileUrl: string
   /** 指定文件名称，包含扩展名 */
   fileName: string
+  /** 文件总页数（仅fileType为doc时有值） */
+  fileTotalPages: number
 }
 
 /** fileProcess 文件处理-请求参数结构体 */

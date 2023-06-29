@@ -18,6 +18,10 @@ import {
   GetIdCardImageDownloadUrlResponse,
   GetIdCardOcrRequest,
   GetIdCardOcrResponse,
+  TelecomThreeElementVerifyRequest,
+  TelecomThreeElementVerifyResponse,
+  BackFourElementVerifyRequest,
+  BackFourElementVerifyResponse
 } from "./user_models"
 import { ClientConfig } from "../../common/interface"
 
@@ -89,5 +93,15 @@ export class Client extends AbstractClient {
    */
   async getIdCardOcrUrl(req: GetIdCardOcrRequest): Promise<GetIdCardOcrResponse> {
     return this.request({ url: "/user/ocr/id-card", req, reqMethod: "POST" })
+  }
+
+  /** 个人运营商三要素校验 */
+  async telecomThreeElementVerify(req: TelecomThreeElementVerifyRequest): Promise<TelecomThreeElementVerifyResponse> {
+    return this.request({ url: "/user/telecom/three-element-verify", req, reqMethod: "POST" })
+  }
+
+  /** 个人银行卡四要素校验 */
+  async backFourElementVerify(req: BackFourElementVerifyRequest): Promise<BackFourElementVerifyResponse> {
+    return this.request({ url: "/user/bank/four-element-verify", req, reqMethod: "POST" })
   }
 }
