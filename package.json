@@ -1,24 +1,30 @@
 {
-  "name": "fasc-openapi-node-sdk",
-  "version": "1.0.0",
+  "name": "@fddnpm/fasc-openapi-node-sdk",
+  "version": "5.2.9",
   "description": "法大大 FASC-OPENAPI NODEJS SDK",
-  "main": "fascapi/index.js",
+  "main": "lib/fascapi.cjs.js",
+  "module": "lib/fascapi.esm.js",
+  "browser": "lib/fascapi.browser.js",
+  "types": "lib/index.d.ts",
   "scripts": {
-    "build": "npm run build:fascapi && npm run build:dist",
+    "build": "rollup -c",
     "prettier": "prettier --config prettier.config.js --write 'src/**/*.{tsx,ts,jsx,js,css,json,vue}'",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:dist": "rollup -c",
-    "build:fascapi": "tsc",
     "lint": "eslint src/**/*.ts --fix"
   },
   "engines": {
     "node": ">=10"
   },
   "type": "commonjs",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "repository": {
     "type": "git",
-    "url": "https://gitlab.fabigbig.com/open-platform/sdks/fasc-openapi-node-sdk"
+    "url": "https://gitee.com/fadada-cloud/fasc-openapi-node-sdk"
   },
+  "homepage": "https://dev.fadada.com/api-home",
   "keywords": [
     "fasc-openapi",
     "api",
@@ -38,6 +44,8 @@
     "qs": "^6.11.0",
     "r2curl": "^0.2.4",
     "rollup": "^2.78.0",
+    "rollup-plugin-filesize": "^10.0.0",
+    "rollup-plugin-terser": "^7.0.2",
     "ts-node": "^10.4.0",
     "tslib": "^2.3.1"
   },

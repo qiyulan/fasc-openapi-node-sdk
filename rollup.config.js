@@ -3,26 +3,31 @@ import typescript from "rollup-plugin-typescript2"
 import { cleandir } from "rollup-plugin-cleandir"
 import resolve from "@rollup/plugin-node-resolve"
 import commonjs from "@rollup/plugin-commonjs"
+import { terser } from 'rollup-plugin-terser'
+import filesize from 'rollup-plugin-filesize'
+import pkg from './package.json'
 
 import babel from 'rollup-plugin-babel'
-import { uglify } from 'rollup-plugin-uglify'
-
-const extensions = [".js", ".ts"]
 
 module.exports = {
   input: ["./src/index.ts"],
   output: [
     {
-      file: "dist/fascapi.cjs.js",
+      file: pkg.main,
       format: "cjs",
     },
     {
-      file: "dist/fascapi.esm.js",
+      file: pkg.module, 
       format: "es"
-    }
+    },
+    // {
+    //   file: pkg.browser,
+    //   format: "umd",
+    //   name: "hello"
+    // }
   ],
   plugins: [
-    cleandir("./dist"),
+    cleandir("./lib"),
     json(),
     typescript({
       tsconfigOverride: {
@@ -36,6 +41,7 @@ module.exports = {
     }),
     commonjs(),
     resolve(),
-    uglify(),
+    terser(),l
+    filesize()
   ],
 }
