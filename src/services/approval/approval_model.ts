@@ -114,3 +114,72 @@ export interface GetApprovalUrlRequest {
 export interface GetApprovalUrlResponse {
   approvalUrl: string
 }
+
+/** getApprovalFlowList 查询审批流程列表-请求结构体 */
+export interface GetApprovalFlowListRequest {
+  openCorpId: string
+  /** 
+     * 审批类型，如不传则查询全部类型: 
+     * template：创建模板审批
+     * sign_task_start：签署任务发起审批
+     * sign_task_finalize：签署任务定稿审批
+     * sign_task_seal：签署任务用印审批
+     * sign_task_abolish：签署任务作废审批
+     */
+  approvalType?: string
+}
+
+/** getApprovalFlowList 查询审批流程列表-响应结构体 */
+export interface GetApprovalFlowListResponse {
+  approvalType: string
+  approvalFlowId: string
+  approvalFlowName: string
+  description?: string
+  status: string
+}
+
+/** getApprovalFlowDetail 查询审批流程详情-请求结构体 */
+export interface GetApprovalFlowDetailRequest {
+  openCorpId: string
+  approvalFlowId: string
+  /** 
+     * 审批类型，如不传则查询全部类型: 
+     * template：创建模板审批
+     * sign_task_start：签署任务发起审批
+     * sign_task_finalize：签署任务定稿审批
+     * sign_task_seal：签署任务用印审批
+     * sign_task_abolish：签署任务作废审批
+     */
+  approvalType?: string
+}
+
+export interface ApprovalFlowNode {
+  /** 审批节点序号 */
+  sortNum: number
+  /**
+   * 节点审批类型：
+   * single_sign：单人审批
+   * jointly_sign：会签
+   * either_sign：或签
+   */
+  approvalNodeType: string
+  approversInfos: Array<{
+    approverMemberName: string
+    approverMemberId: string
+  }>
+}
+
+/** getApprovalFlowDetail 查询审批流程详情-响应结构体 */
+export interface GetApprovalFlowDetailResponse {
+  approvalType: string
+  approvalFlowId: string
+  approvalFlowName: string
+  description?: string
+  /** 最近更新人成员Id */
+  lastOprMemberId: string
+  /** 最近更新人成员名称 */
+  lastOprMemberName: string
+  updateTime: string
+  status: string
+  approvalNode: Array<ApprovalFlowNode>
+}

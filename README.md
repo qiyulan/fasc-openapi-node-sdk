@@ -41,6 +41,7 @@ fascapi
 | ApprovalClient      | 审批管理         | 包含审批相关接口                                                         |
 | CallbackClient      | 回调管理         | 包含回调相关接口                                                         |
 | OcrClient      | OCR识别         | 包含OCR相关接口                                                         |
+| ToolClient      | 工具能力服务         | 包含身份校验和智审对比的相关接口                                                         |
 
 实例化 `client` 的入参支持 `clientConfig` 数据结构和说明 详见 [ClientConfig](https://gitee.com/fadada-cloud/fasc-openapi-node-sdk/blob/master/src/common/interface.ts)
 

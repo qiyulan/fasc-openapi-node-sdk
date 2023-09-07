@@ -132,6 +132,8 @@ interface EmployeeInfo extends ListPageModel {
   internalIdentifier: string
   /** 企业成员邮箱 */
   memberEmail?: string
+  /** 企业成员手机号 */
+  memberMobile?: string
   /** 员工法大大成员状态, inactive: 未激活, activated: 已激活，disabled: 已禁用。 */
   memberStatus: string
   /** 企业成员所属部门列表。如返回值包含 [0] 表示该成员在公司下。 */
@@ -148,7 +150,9 @@ export interface GetMemberListResponse {
 /** getMemberDetail 查询企业成员详情-请求结构体 */
 export interface GetMemberDetailRequest {
   openCorpId: string
-  memberId: number
+  memberId?: number
+  /** 成员在企业内部的标识符。与成员Id不能同时为空。 */
+  internalIdentifier?: string
 }
 
 /** getMemberDetail 查询企业成员详情-响应结构体 */
@@ -158,6 +162,8 @@ export interface GetMemberDetailResponse {
   memberName: string
   /** 成员在企业内部的标识符 */
   internalIdentifier: string
+  /** 企业成员手机号 */
+  memberMobile?: string
   /** 企业成员邮箱 */
   memberEmail?: string
   /** 该用户法大大号 */
@@ -187,6 +193,8 @@ export interface CrateCorpMemberRequest {
   }>
   /** 是否通过邮箱通知激活。默认true */
   notifyActiveByEmail?: boolean
+  mergeMemberInfo?: boolean
+  redirectUrl?: string
 }
 
 export interface SimpleEmployeeInfo {
@@ -195,6 +203,13 @@ export interface SimpleEmployeeInfo {
   memberActiveUrl: string
   /** 可嵌入的成员激活链接。未激活的成员才会返回 */
   memberActiveEmbedUrl: string
+  internalIdentifier: string
+  /** 企业成员状态
+    inactive: 未加入
+    activated: 已加入
+    disabled: 已禁用
+   */
+  memberStatus: string
 }
 
 /** crateCorpMember 创建成员-响应结构体 */
@@ -232,6 +247,7 @@ export type DeleteMemberResponse = null
 export interface GetActiveMemberUrlRequest {
   openCorpId: string
   memberIds: Array<number>
+  redirectUrl?: string
 }
 
 /** getActiveMemberUrl 获取成员激活链接-响应结构体 */
@@ -246,10 +262,10 @@ export interface SetMemberDeptRequest {
   model: string
 }
 
-/** setMemberStatus 设置成员状态-响应结构体 */
+/** setMemberDept 设置成员所属部门-响应结构体 */
 export type SetMemberDeptResponse = null
 
-/** setMemberDept 设置成员所属部门-请求结构体 */
+/** setMemberStatus 设置成员状态-请求结构体 */
 export interface SetMemberStatusRequest { 
   openCorpId: string
   memberIds: Array<number>
@@ -259,3 +275,29 @@ export interface SetMemberStatusRequest {
 
 /** setMemberStatus 设置成员状态-响应结构体 */
 export type SetMemberStatusResponse = null
+
+/** getEntityList 查询企业主体列表-请求结构体 */
+export interface GetEntityListRequest {
+  openCorpId: string
+}
+
+/** getEntityList 查询企业主体列表-响应结构体 */
+export interface GetEntityListResponse {
+  entityId: string
+  /**
+   * 该主体在企业帐号下的类型：
+   * primary：主企业，即企业帐号对应的主体
+   * subsidiary：子企业，即成员企业或子公司
+   */
+  entityType: string
+  corpName: string
+  corpIdentNo: string
+  legalRepName: string
+  /**
+   * 企业认证状态：
+   * identified：已认证
+   * unidentified：未认证
+   * invalid：认证已失效
+   */
+  identStatus: string
+}

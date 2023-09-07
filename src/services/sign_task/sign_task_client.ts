@@ -23,6 +23,8 @@ import {
   AddActorResponse,
   DeleteActorRequest,
   DeleteActorResponse,
+  ModifyActorRequest,
+  ModifyActorResponse,
   StartRequest,
   StartResponse,
   CancelRequest,
@@ -72,7 +74,13 @@ import {
   DeleteRequest,
   DeleteResponse,
   GetV3ActorSignTaskUrlRequest,
-  GetV3ActorSignTaskUrlResponse
+  GetV3ActorSignTaskUrlResponse,
+  ExtensionRequest,
+  ExtensionResponse,
+  getMessageReportDownloadUrlRequest,
+  getMessageReportDownloadUrlResponse,
+  IgnoreSignTaskRequest,
+  IgnoreSignTaskResponse
 } from "./sign_task_models"
 
 export class Client extends AbstractClient {
@@ -133,6 +141,11 @@ export class Client extends AbstractClient {
   /** 移除签署任务参与方 */
   async deleteActor(req: DeleteActorRequest): Promise<DeleteActorResponse> {
     return this.request({ url: "/sign-task/actor/delete", reqMethod: "POST", req })
+  }
+
+  /** 修改签署任务参与方 */
+  async modifyActor(req: ModifyActorRequest): Promise<ModifyActorResponse> {
+    return this.request({ url: "/sign-task/actor/modify", reqMethod: "POST", req })
   }
 
   /** 获取签署任务编辑链接 */
@@ -260,5 +273,19 @@ export class Client extends AbstractClient {
     return this.request({ url: "/sign-task/owner/get-pic-download-url", reqMethod: "POST", req })
   }
 
+  /** 延期签署任务 */
+  async extension(req: ExtensionRequest): Promise<ExtensionResponse> {
+    return this.request({ url: "/sign-task/extension", reqMethod: "POST", req })
+  }
+
+  /** 获取消息送达阅读保全报告下载地址 */
+  async getMessageReportDownloadUrl(req: getMessageReportDownloadUrlRequest): Promise<getMessageReportDownloadUrlResponse> {
+    return this.request({ url: "/sign-task/message-report/get-download-url", reqMethod: "POST", req })
+  }
+
+  /** 驳回填写签署任务 */
+  async ignoreSignTask(req: IgnoreSignTaskRequest): Promise<IgnoreSignTaskResponse> {
+    return this.request({ url: "/sign-task/ignore", reqMethod: "POST", req })
+  }
 
 }

@@ -40,7 +40,19 @@ import {
   CancelPersonalFreeSignRequest,
   CancelPersonalFreeSignResponse,
   DeletePersonalSealRequest,
-  DeletePersonalSealResponse
+  DeletePersonalSealResponse,
+  CreateTemplateSealRequest,
+  CreateTemplateSealResponse,
+  CreateSealByImageRequest,
+  CreateSealByImageResponse,
+  CreateLegalRepSealByTemplateRequest,
+  CreateLegalRepSealByTemplateResponse,
+  CreateLegalRepSealByImageRequest,
+  CreateLegalRepSealByImageResponse,
+  CreatePersonalSealByTemplateRequest,
+  CreatePersonalSealByTemplateResponse,
+  CreatePersonalSealByImageRequest,
+  CreatePersonalSealByImageResponse
 } from "./seal_models"
 
 export class Client extends AbstractClient {
@@ -145,5 +157,35 @@ export class Client extends AbstractClient {
   /** 删除签名 */
   async deletePersonalSeal(req: DeletePersonalSealRequest): Promise<DeletePersonalSealResponse> {
     return this.request({ url: "/personal-seal/delete", req, reqMethod: "POST" })
+  }
+
+  /** 创建模板印章 */
+  async createTemplateSeal(req: CreateTemplateSealRequest): Promise<CreateTemplateSealResponse> {
+    return this.request({ url: "/seal/create-by-template", req, reqMethod: "POST" })
+  }
+
+  /** 创建图片印章 */
+  async createSealByImage(req: CreateSealByImageRequest): Promise<CreateSealByImageResponse> {
+    return this.request({ url: "/seal/create-by-image", req, reqMethod: "POST" })
+  }
+
+  /** 创建法定代表人模板印章 */
+  async createLegalRepSealByTemplate(req: CreateLegalRepSealByTemplateRequest): Promise<CreateLegalRepSealByTemplateResponse> {
+    return this.request({ url: "/seal/create-legal-representative-by-template", req, reqMethod: "POST" })
+  }
+
+  /** 创建法定代表人图片印章 */
+  async createLegalRepSealByImage(req: CreateLegalRepSealByImageRequest): Promise<CreateLegalRepSealByImageResponse> {
+    return this.request({ url: "/seal/create-legal-representative-by-image", req, reqMethod: "POST" })
+  }
+
+  /** 创建模板签名 */
+  async createPersonalSealByTemplate(req: CreatePersonalSealByTemplateRequest): Promise<CreatePersonalSealByTemplateResponse> {
+    return this.request({ url: "/personal-seal/create-by-template", req, reqMethod: "POST" })
+  }
+
+  /** 创建图片签名 */
+  async createPersonalSealByImage(req: CreatePersonalSealByImageRequest): Promise<CreatePersonalSealByImageResponse> {
+    return this.request({ url: "/personal-seal/create-by-image", req, reqMethod: "POST" })
   }
 }

@@ -182,6 +182,8 @@ export interface Actor {
   actorOpenId?: string
   /** 参与方主体的法大大号，用于参与方主体身份识别 */
   actorFDDId?: string
+  /** 参与方企业主体Id */
+  actorEntityId?: string
   /** 参与方企业成员列表，用于参与方企业主体成员的身份识别 */
   actorCorpMembers?: Array<ActorCorpMember>
   /** 参与方身份名称匹配信息：个人姓名或企业全称 */
@@ -418,4 +420,23 @@ export interface ListPageModel {
   listPageCount: number
   /** 查询到的文档模板总数 */
   totalCount: number
+}
+
+export interface Watermark {
+  /**
+   * 水印类型
+   * text：文字
+   * picture：图片
+   */
+  type: string
+  picBase64?: string
+  picWidth?: string
+  picHeight?: string
+  content?: string
+  fontSize?: number
+  fontColor?: string
+  rotation?: number
+  transparency?: number
+  position?: string
+  density?: string
 }

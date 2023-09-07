@@ -1,5 +1,4 @@
-import { type } from "os"
-import { Field, OpenId, ListPageModel, FieldTextSingleLine, FieldTextMultiLine, FieldMultiCheckbox } from "../../common/models"
+import { Field, OpenId, ListPageModel, FieldTextSingleLine, FieldTextMultiLine, FieldMultiCheckbox, Watermark } from "../../common/models"
 import { Attach } from "../sign_task/sign_task_models"
 
 /** getDocTemplateList 查询文档模板列表-请求参数结构体 */
@@ -140,6 +139,21 @@ export interface GetSignTemplateDetailRequest {
   signTemplateId: string
 }
 
+/** createDocTemplate 创建文档模板-请求参数结构体 */
+export interface CreateDocTemplateRequest {
+  openCorpId: string
+  docTemplateName: string
+  /** 业务系统自定义的创建序列号，用于与业务系统对应 */
+  createSerialNo?: string
+  fileId: string
+}
+
+/** createDocTemplate 创建文档模板-响应参数结构体 */
+export interface CreateDocTemplateResponse {
+  docTemplateId: string
+  createSerialNo?: string
+}
+
 /** 文档列表详情 */
 export interface Doc {
   /** 文档序号 */
@@ -151,9 +165,17 @@ export interface Doc {
 }
 
 /** 模板中设置的参与方基本信息 */
+/** 模板中设置的参与方标识 */
 export interface ActorInfo {
-  /** 模板中设置的参与方标识 */
   actorId: string
+  /** 模板中设置的参与方身份名称（个人姓名或企业全称） */
+  identNameForMatch?: string
+  /** 模板中设置的个人参与方证件类型，默认为身份证 */
+  certType?: string
+  /** 模板中设置的参与方证件号码（个人身份证号或企业统信码），最大32个字符 */
+  certNoForMatch?: string
+  /** 如果是企业参与方，模板中设置的企业成员 */
+  memberIds?: Array<string>
   /** 参与方是否是发起方，true: 参与方也是发起方，false: 仅为参与方 */
   isInitiator: boolean
   /** 模板中设置的参与方主体类型，corp: 企业，person: 个人 */
@@ -199,6 +221,12 @@ export interface SignTaskActor {
   fillFields?: FillFields
   signFields?: SignFields
   signConfigInfo?: SignConfigInfo
+  notification?: {
+    /** 送达方式：mobile: 手机，email: 邮箱。 */
+    notifyWay?: string
+    /** 送达地址，手机号或邮箱地址 */
+    notifyAddress?: string
+  }
 }
 
 /** getSignTemplateDetail 查询签署任务模板详情-响应参数结构体 */
@@ -223,6 +251,20 @@ export interface GetSignTemplateDetailResponse {
   /** 附件列表 */
   attachs?: Array<Omit<Attach, "attachFileId">>
   actors?: Array<SignTaskActor>
+  watermarks: Array<Watermark>
+  approvalInfos?: Array<{
+    /** 审批流程Id，由法大大生成 */
+    approvalFlowId: string
+    /** 
+     * 审批类型：
+     * template：创建模板审批
+     * sign_task_start：签署任务发起审批
+     * sign_task_finalize：签署任务定稿审批
+     * sign_task_seal：签署任务用印审批
+     * sign_task_abolish：签署任务作废审批
+     */
+    approvalType: string
+  }>
 }
 
 /** setSignTemplateStatus 启用/停用签署任务模板-请求结构体 */
@@ -581,4 +623,37 @@ export interface GetCorpFieldListRequest {
 /** getCorpFieldList 查询自定义控件列表-响应结构体 */
 export interface GetCorpFieldListResponse {
   fields: Array<CorpField>
+}
+
+/** getCopyCreateDocTemplate 复制新增文档模板-请求结构体 */
+export interface GetCopyCreateDocTemplateRequest {
+  openCorpId: string
+  docTemplateId: string
+  docTemplateName?: string
+  createSerialNo?: string
+}
+
+/** getCopyCreateDocTemplate 复制新增文档模板-响应结构体 */
+export interface GetCopyCreateDocTemplateResponse {
+  docTemplateId: string
+  docTemplateName?: string
+  createSerialNo?: string
+}
+
+/** getFillValuesDocTemplate 填写文档模板生成接口-请求结构体 */
+export interface getFillValuesDocTemplateRequest {
+  openCorpId: string
+  docTemplateId: string
+  fileName: string
+  docFieldValues: Array<{
+    fieldId?: string
+    fieldName?: string
+    fieldValue: string
+  }>
+}
+
+/** getFillValuesDocTemplate 填写文档模板生成接口-响应结构体 */
+export interface getFillValuesDocTemplateResponse {
+  fileId?: string
+  fileDownloadUrl?: string
 }

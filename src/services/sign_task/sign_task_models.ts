@@ -1,4 +1,4 @@
-import { Actor, Field, OpenId, ListPageModel } from "../../common/models"
+import { Actor, Field, OpenId, ListPageModel, Watermark } from "../../common/models"
 
 /** 您的业务应用系统中的业务场景信息，用于更好地定义业务场景和签署任务的关系 */
 export interface BusinessScene {
@@ -162,6 +162,7 @@ export interface SignConfigInfo {
   identifiedView?: boolean
   /** 参与方在签署页面是否可以调整印章大小，默认为false */
   resizeSeal?: boolean
+  viewCompletedTask?: boolean
   /** 要求该参与方上传附件信息 */
   actorAttachInfos?: Array<ActorAttachInfo>
 }
@@ -184,8 +185,15 @@ export interface CreateRequest {
   initiatorMemberId?: string
   /** 该签署任务的发起方 */
   initiator: OpenId
+  /** 发起方企业主体Id，不传默认为发起方initiator的主企业Id */
+  initiatorEntityId?: string
+  /** 发起审批流程Id */
+  startApprovalFlowId?: string
+  /** 定稿审批流程Id */
+  finalizeApprovalFlowId?: string
   /** 签署文档类型，contract：合同，document：单据 */
   signDocType?: string
+  dueDate?: string
   /** 任务过期时间 */
   expiresTime?: string
   /** 是否自动提交协作，false: 不自动发起，true: 自动发起。默认为false */
@@ -215,6 +223,7 @@ export interface CreateRequest {
   /** 附件列表，附件数上限为20个 */
   attachs?: Array<Attach>
   actors?: Array<SignTaskActor>
+  watermarks?: Array<Watermark>
 }
 
 /** create 创建签署任务-响应参数结构体 */
@@ -237,6 +246,12 @@ export interface CreateWithTemplateRequest {
   initiatorMemberId?: string
   /** 该签署任务的发起方。**特别注意授权要求：只有经过该发起方授权后，才可以将该发起方填写到此参数中并发起签署任务 */
   initiator: OpenId
+  /** 发起方企业主体Id，不传默认为发起方initiator的主企业Id */
+  initiatorEntityId?: string
+  /** 发起审批流程Id */
+  startApprovalFlowId?: string
+  /** 定稿审批流程Id */
+  finalizeApprovalFlowId?: string
   /** 签署文档类型，contract：合同，document：单据 */
   signDocType?: string
   /** 指定签署任务模板ID */
@@ -245,6 +260,7 @@ export interface CreateWithTemplateRequest {
   businessTypeId?: number
   /** 该签署任务的业务编号 */
   businessCode?: string
+  dueDate?: string
   /** 任务过期时间 */
   expiresTime?: string
   /** 是否自动发起。false: 不自动发起，true: 自动发起，默认为false。 */
@@ -264,6 +280,7 @@ export interface CreateWithTemplateRequest {
   /** 业务参考号 */
   transReferenceId?: string
   actors?: Array<SignTaskActorForTemplate>
+  watermarks: Array<Watermark>
 }
 
 /** createWithTemplate 创建签署任务 (基于签署模板)-响应参数结构体 */
@@ -333,6 +350,7 @@ export interface DocFieldValue {
   docId: string
   /** 控件ID。仅支持填写类控件 */
   fieldId?: string
+  fieldName?: string
   /** 业务控件标识 */
   fieldKey?: string
   /** 填写的值 */
@@ -404,9 +422,51 @@ export interface DeleteActorRequest {
 /** deleteActor 移除签署任务参与方-响应参数结构体 */
 export type DeleteActorResponse = null
 
+export interface ModifyActorFillFields {
+  fieldDocId: string
+  fieldId?: string
+  fieldName?: string
+  fieldValue?: string
+}
+
+export interface ModifyActorSignFields {
+  fieldDocId: string
+  fieldId?: string
+  fieldName?: string
+  sealId?: string
+  moveable?: boolean
+}
+
+export interface ModifyActorSignConfigInfo {
+  requestVerifyFree?: boolean
+  requestMemberSign?: boolean
+  signerSignMethod?: string
+  readingToEnd?: boolean
+  readingTime?: string
+  resizeSeal?: boolean
+}
+
+export interface ModifyActorActor {
+  actorId: string
+  fillFields: ModifyActorFillFields
+  signFields: ModifyActorSignFields
+  signConfigInfo: ModifyActorSignConfigInfo
+}
+
+/** modifyActor 修改签署任务参与方-请求参数结构体 */
+export interface ModifyActorRequest {
+  signTaskId: string
+  businessId?: string
+  actors: Array<ModifyActorActor>
+}
+
+/** modifyActor 修改签署任务参与方-响应参数结构体 */
+export type ModifyActorResponse = null
+
 /** getSignTaskEditUrl 获取签署任务编辑链接-请求结构体 */
 export interface GetSignTaskEditUrlRequest {
   signTaskId: string
+  nonEditableInfo?: Array<string>
   redirectUrl?: string
 }
 
@@ -456,6 +516,14 @@ export interface GetActorBatchSignTaskUrlRequest {
   signTaskIds: Array<string>
   redirectUrl?: string
   redirectMiniAppUrl?: string
+  /**
+   * 主体类型：
+    corp: 企业
+    person: 个人
+   */
+  idType: string
+  openId?: string
+  accountName?: string
 }
 
 /** getActorBatchSignTaskUrl 获取参与方批量签署链接-响应结构体 */
@@ -568,6 +636,10 @@ export interface abolishActor {
 /** abolish 作废签署任务-请求结构体 */
 export interface AbolishRequest {
   signTaskId: string
+  /** 该作废任务的发起方成员，即任务的创建者。如不传表示由APPID创建 */
+  initiatorMemberId?: string
+  /** 作废审批流程Id */
+  abolishApprovalFlowId?: string
   /** 作废发起方，只能是原签署任务的发起方或签署参与方，二选一传入，同时传入会优先取发起方 */
   abolishedInitiator: {
     /** 原签署任务发起方ID */
@@ -622,12 +694,13 @@ export interface DeleteRequest {
 /** delete 删除签署任务-响应结构体 */
 export type DeleteResponse = null
 
-/** getOwnerList 获取指定归属方的签署任务列表-请求参数结构体 */
+/** getOwnerList 查询签署任务列表-请求参数结构体 */
 export interface GetOwnerListRequest {
   /** 签署任务发起方或参与方主体，**需检查授权** */
   ownerId: OpenId
   /** 主体参与签署协作类型，如不传，则查询主体所有的签署任务: initiator:  发起方, actor:  参与方(填写、签署) */
   ownerRole?: string
+  memberId?: string
   /**  */
   listFilter?: {
     /** 签署任务名称 */
@@ -685,6 +758,10 @@ interface OwnerSignTask {
   terminationNote?: string
   /** 该签署任务的发起方名称，如果是个人即姓名，如果是企业即企业全称 */
   initiatorName: string
+  /** 签署任务发起方企业成员id，即创建者成员id。 */
+  initiatorMemberId?: string
+  /** 签署任务发起方企业成员名称，即创建者名称。 */
+  initiatorMemberName?: string
   /** 签署任务创建时间 */
   createTime: string
   /** 签署任务的发起时间 */
@@ -693,9 +770,11 @@ interface OwnerSignTask {
   finishTime: string
   /** 签署任务的截止时间。返回【null】表示长期有效 */
   deadlineTime: string
+  /** 合同到期日期 */
+  dueDate?: string
 }
 
-/** getOwnerList 获取指定归属方的签署任务列表-响应参数结构体 */
+/** getOwnerList 查询签署任务列表-响应参数结构体 */
 export interface GetOwnerListResponse extends ListPageModel {
   /** 签署任务列表，数组类型 */
   signTasks: Array<OwnerSignTask>
@@ -740,26 +819,43 @@ export interface GetDetailRequest {
 /** getDetail 获取签署任务详情-响应参数结构体 */
 export interface GetDetailResponse {
   initiator: OpenId
+  /** 签署任务发起方企业成员id，即创建者成员id。 */
+  initiatorMemberId?: string
+  /** 签署任务发起方企业成员名称，即创建者名称。 */
+  initiatorMemberName?: string
   signTaskId: string
   /** 签署任务主题 */
   signTaskSubject: string
   /** 签署文档类型，contract：合同，document：单据 */
   signDocType?: string
+  approvalInfos?: Array<{
+    /** 签署任务关联的审批流程Id */
+    approvalFlowId?: string
+    /** 签署任务触发的审批单据Id */
+    approvalId?: string
+    /** 
+     * 审批类型：
+     * sign_task_start：签署任务发起审批
+     * sign_task_finalize：签署任务定稿审批
+     * sign_task_abolish：签署任务作废审批
+     */
+    approvalType?: string
+    /** 
+     * 若该签署任务关联了审批流，当前的审批状态。
+     * in_progress：审批中
+     * approved：已通过
+     * rejected：已驳回
+     */
+    approvalStatus?: string
+    /** 如审批被驳回，审批方填写的驳回原因 */
+    rejectNote?: string
+  }>
   /** 
    * 签署任务来源，表示该任务是用户在法大大saas创建的或者通过接口创建的 
    * fdd：用户在法大大SaaS创建
    * api：用户通过api接口创建
    */
   signTaskSource: string
-  /** 
-   * 若该签署任务关联了审批流，当前的审批状态。
-   * in_progress：审批中
-   * approved：已通过
-   * rejected：已驳回
-   */
-  approvalStatus?: string
-  /** 如审批被驳回，审批方填写的驳回原因 */
-  rejectNote?: string
   /** 该签署任务在SaaS的文件夹id */
   catalogId: string
   /** 该签署任务所属的业务类型id */
@@ -788,6 +884,8 @@ export interface GetDetailResponse {
   finishTime: string
   /** 签署任务的截止时间 */
   deadlineTime: string
+  /** 合同到期日期 */
+  dueDate?: string
   docs?: Array<{
     docId: string
     docName: string
@@ -826,6 +924,7 @@ export interface GetDetailResponse {
     /** 参与方签署长链接。该链接由应用主动分发给对应参与方，可嵌入小程序或iframe */
     actorSignTaskEmbedUrl?: string
   }
+  watermarks: Array<Watermark>
 }
 
 /** getOwnerDownLoadUrl 获取签署文档下载地址-请求参数结构体 */
@@ -897,6 +996,7 @@ export interface GetSignTaskActorListResponse {
   fillStatus?: string
   /** 最后的填写操作时间 */
   fillTime?: string
+  verifyMethod?: string
   /** 参与方签署状态: wait_sign: 待签署 (等待签署), signed: 已签署 (已完成签署), sign_rejected: 已拒签 (拒绝了签署)。 */
   signStatus?: string
   /** 最后的签署操作时间 */
@@ -1055,3 +1155,34 @@ export interface GetSignTaskPicDownLoadUrlRequest {
 export interface GetSignTaskPicDownLoadUrlResponse {
   downloadUrl?: string
 }
+
+/** extension 延期签署任务-请求结构体 */
+export interface ExtensionRequest {
+  signTaskId: string
+  extensionTime: string
+}
+
+/** extension 延期签署任务-请求结构体 */
+export type ExtensionResponse = null
+
+/** getMessageReportDownloadUrl 获取消息送达阅读保全报告下载地址-请求结构体 */
+export interface getMessageReportDownloadUrlRequest {
+  signTaskId: string
+}
+
+/** getMessageReportDownloadUrl 获取消息送达阅读保全报告下载地址-响应结构体 */
+export interface getMessageReportDownloadUrlResponse {
+  reportUrl?: string
+}
+
+/** ignoreSignTask 驳回填写签署任务-请求结构体 */
+export interface IgnoreSignTaskRequest {
+  signTaskId: string
+  actors: Array<{
+    actorId: string
+    reason?: string
+  }>
+}
+
+/** ignoreSignTask 驳回填写签署任务-响应结构体 */
+export type IgnoreSignTaskResponse = null

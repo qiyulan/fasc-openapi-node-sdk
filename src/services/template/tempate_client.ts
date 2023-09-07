@@ -7,6 +7,8 @@ import {
   GetDocTemplateListResponse,
   GetSignTemplateDetailRequest,
   GetSignTemplateDetailResponse,
+  CreateDocTemplateRequest,
+  CreateDocTemplateResponse,
   GetSignTemplateListRequest,
   GetSignTemplateListResponse,
   GetTemplateManageUrlRequest,
@@ -56,7 +58,11 @@ import {
   CreateCorpFieldRequest,
   CreateCorpFieldResponse,
   DeleteCorpFieldRequest,
-  DeleteCorpFieldResponse
+  DeleteCorpFieldResponse,
+  GetCopyCreateDocTemplateRequest,
+  GetCopyCreateDocTemplateResponse,
+  getFillValuesDocTemplateRequest,
+  getFillValuesDocTemplateResponse
 } from "./template_models"
 
 export class Client extends AbstractClient {
@@ -92,6 +98,11 @@ export class Client extends AbstractClient {
   /** 查询签署任务模板详情 */
   async getSignTemplateDetail(req: GetSignTemplateDetailRequest): Promise<GetSignTemplateDetailResponse> {
     return this.request({ url: "/sign-template/get-detail", reqMethod: "POST", req })
+  }
+
+  /** 创建文档模板 */
+  async createDocTemplate(req: CreateDocTemplateRequest): Promise<CreateDocTemplateResponse> {
+    return this.request({ url: "/doc-template/create", reqMethod: "POST", req })
   }
 
   /** 启用/停用签署任务模板 */
@@ -207,5 +218,15 @@ export class Client extends AbstractClient {
   /** 查询自定义控件列表 */
   async getCorpFieldList(req: DeleteCorpFieldRequest): Promise<DeleteCorpFieldResponse> {
     return this.request({ url: "/corp-field/get-list", reqMethod: "POST", req })
+  }
+
+  /** 复制新增文档模板 */
+  async getCopyCreateDocTemplate(req: GetCopyCreateDocTemplateRequest): Promise<GetCopyCreateDocTemplateResponse> {
+    return this.request({ url: "/doc-template/copy-create", reqMethod: "POST", req })
+  }
+
+  /** 填写文档模板生成接口 */
+  async getFillValuesDocTemplate(req: getFillValuesDocTemplateRequest): Promise<getFillValuesDocTemplateResponse> {
+    return this.request({ url: "/doc-template/fill-values", reqMethod: "POST", req })
   }
 }

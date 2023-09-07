@@ -23,6 +23,8 @@ interface SealUser {
   memberName: string
   /** 成员在企业内部的标识符。 如工号等，方便和业务系统对应。 */
   internalIdentifier: string
+  /** 企业成员手机号 */
+  memberMobile?: string
   /** 企业成员邮箱 */
   memberEmail?: string
   /** 印章被授权用印员的时间 */
@@ -44,6 +46,8 @@ export interface SealInfo {
   categoryType: string
   /** 印章图片地址 */
   picFileUrl: string
+  sealWidth: number
+  sealHeight: number
   /** 印章状态，只有系统生成或审核通过的印章才返回，enable：已启用，disable：已停用，cancelled：已注销 */
   sealStatus?: string
   /** 印章创建时间 */
@@ -111,6 +115,8 @@ export interface GetSealDetailResponse {
   categoryType: string
   /** 印章图片地址 */
   picFileUrl: string
+  sealWidth: number
+  sealHeight: number
   /** 印章状态 */
   sealStatus?: string
   /** 印章创建时间 */
@@ -167,6 +173,8 @@ interface SealUser2 extends SealUser {
   memberName: string
   /** 成员在企业内部的标识符。 如工号等，方便和业务系统对应。 */
   internalIdentifier: string
+  /** 企业成员手机号 */
+  memberMobile?: string
   /** 企业成员邮箱 */
   memberEmail?: string
   sealInfos: Array<SealInfoForUserList>
@@ -205,6 +213,7 @@ export interface VerifyInfo {
   createTime: string
   /** 印章审核状态，verifing：审核中，verify_failed：审核不通过 */
   verifyStatus: string
+  rejectReasons?: string
 }
 
 /** getSealVerifyList 查询审核中的印章列表-响应结构体 */
@@ -394,6 +403,8 @@ export interface GetPersonalSealListResponse {
   sealName: string
   /** 印章图片地址 */
   picFileUrl: string
+  sealWidth: number
+  sealHeight: number
   /** 印章创建时间 */
   createTime: string
   /** 证书颁发机构：CFCA： 中国金融认证中心<br/>豸信CA：山东豸信认证服务有限公司，CSCA：世纪数码CA */
@@ -441,3 +452,244 @@ export interface DeletePersonalSealRequest {
 
 /** deletePersonalSeal 删除签名-响应结构体 */
 export type DeletePersonalSealResponse = null
+
+/** createTemplateSeal 创建模板印章-请求结构体 */
+export interface CreateTemplateSealRequest {
+  openCorpId: string
+  sealName: string
+  /**
+   * 法大大平台定义的企业印章类型，默认为公章：
+    official_seal：公章（默认值）
+    contract_seal：合同专用章
+    hr_seal：人事专用章
+    financial_seal：财务专用章
+    other：其他
+   */
+  categoryType?: string
+  /** 印章标签，可以和业务系统的印章业务类型或者印章的子分类对应 */
+  sealTag?: string
+  /**
+   * 印章样式,示例：
+    round：圆形章（默认值）
+    round_no_star：圆形章-不带星
+    oval：椭圆章
+   */
+  sealTemplateStyle?: string
+  /**
+   * 印章规格，即宽高（单位：毫米mm），示例：
+    round圆形章才设置规格
+    round_38_38：38X38mm
+    round_40_40：40X40mm
+    round_42_42：42X42mm（默认值）
+    椭圆章，默认45X30mm
+   */
+  sealSize?: string
+  /** 印章横排文字，最多10个字符 */
+  sealHorizontalText?: string
+  /** 印章下弦文（实体印章防伪码），最多15字符，数字、字母、英文符号 */
+  sealBottomText?: string
+  /** 
+   * 印章颜色，默认红色
+    red：红色（默认值）
+    blue ：蓝色
+    black：黑色
+  */
+  sealColor?: string
+  /** 业务系统定义的印章创建序列号 */
+  createSerialNo?: string
+}
+
+/** createTemplateSeal 创建模板印章-响应结构体 */
+export interface CreateTemplateSealResponse {
+  sealId: number
+}
+
+/** createSealByImage 创建图片印章-请求结构体 */
+export interface CreateSealByImageRequest {
+  openCorpId: string
+  sealName: string
+  /**
+   * 法大大平台定义的企业印章类型，默认为公章：
+    official_seal：公章（默认值）
+    contract_seal：合同专用章
+    hr_seal：人事专用章
+    financial_seal：财务专用章
+    other：其他
+   */
+  categoryType?: string
+  /** 印章标签，可以和业务系统的印章业务类型或者印章的子分类对应 */
+  sealTag?: string
+  /** 印章图片base64，图片大小5M以内 */
+  sealImage: string
+  sealWidth?: number
+  sealHeight?: number
+  /** 印章做旧，默认为0不做旧，数值范围0-1.85 */
+  sealOldStyle?: number
+  /** 
+   * 印章颜色，默认红色
+    red：红色（默认值）
+    blue ：蓝色
+    black：黑色
+  */
+  sealColor?: string
+  createSerialNo?: string
+}
+
+/** createSealByImage 创建图片印章-响应结构体 */
+export interface CreateSealByImageResponse {
+  /** 印章审核工单ID */
+  verifyId: number
+}
+
+/** createLegalRepSealByTemplate 创建法定代表人模板印章-请求结构体 */
+export interface CreateLegalRepSealByTemplateRequest {
+  openCorpId: string
+  openUserId: string
+  sealName: string
+  /** 印章标签，可以和业务系统的印章业务类型或者印章的子分类对应 */
+  sealTag?: string
+  /**
+   * 印章样式，示例：
+    rectangle：矩形（默认值）
+    rectangle_frame：矩形带框
+    square_left_bigword：方形左大字
+    square_left_bigword_frame：方形左大字带框
+    square_right_bigword：方形右大字
+    square_right_bigword_frame：方形右大字带框
+   */
+  sealTemplateStyle?: string
+  /**
+   * 印章规格，即宽高（单位：毫米mm），示例：
+    round圆形章才设置规格
+    round_38_38：38X38mm
+    round_40_40：40X40mm
+    round_42_42：42X42mm（默认值）
+    椭圆章，默认45X30mm
+   */
+  sealSize?: string
+  /** 
+   * 印章颜色，默认红色
+    red：红色（默认值）
+    blue ：蓝色
+    black：黑色
+    */
+  sealColor?: string
+  /** 
+   * 印章内容规则（印章中姓名后缀），默认值为仅名字
+    name：仅名字，无后缀（仅显示姓名，如：包小豸）
+    name_with_suffix_seal：加“印”（姓名后添加“印”字，如：包小豸印）
+    name_with_suffix_of_seal：加“之印”（姓名后添加“之印”，如：包小豸之印）
+   */
+  sealSuffix?: string
+  /** 防伪码 */
+  securityCode?: string
+  createSerialNo?: string
+}
+
+/** createLegalRepSealByTemplate 创建法定代表人模板印章-响应结构体 */
+export interface CreateLegalRepSealByTemplateResponse {
+  /** 印章ID */
+  sealId: number
+}
+
+/** createLegalRepSealByImage 创建法定代表人图片印章-请求结构体 */
+export interface CreateLegalRepSealByImageRequest {
+  openCorpId: string
+  openUserId: string
+  sealName: string
+  /** 印章标签，可以和业务系统的印章业务类型或者印章的子分类对应 */
+  sealTag?: string
+  /** 印章图片base64，图片大小5M以内 */
+  sealImage: string
+  sealWidth?: number
+  sealHeight?: number
+  /** 印章做旧，默认为0不做旧，数值范围0-1.85 */
+  sealOldStyle?: number
+  /** 
+   * 印章颜色，默认红色
+    red：红色（默认值）
+    blue ：蓝色
+    black：黑色
+  */
+  sealColor?: string
+  createSerialNo?: string
+}
+
+/** createLegalRepSealByImage 创建法定代表人图片印章-响应结构体 */
+export interface CreateLegalRepSealByImageResponse {
+  sealId?: number
+  verifyId?: number
+}
+
+/** createPersonalSealByTemplate 创建模板签名-请求结构体 */
+export interface CreatePersonalSealByTemplateRequest {
+  openUserId: string
+  sealName: string
+  /**
+   * 印章样式，示例：
+    rectangle：矩形（默认值）
+    rectangle_frame：矩形带框
+    square_left_bigword：方形左大字
+    square_left_bigword_frame：方形左大字带框
+    square_right_bigword：方形右大字
+    square_right_bigword_frame：方形右大字带框
+   */
+  sealTemplateStyle?: string
+  /**
+   * 印章规格，即宽高（单位：毫米mm）
+   * 矩形签名，示例：
+   * rectangle_30_16：30X16mm（默认）
+   * rectangle_20_11：20X11mm
+   * 方形签名，默认20X20mm，示例：
+   * square_16_16 ：16X16mm
+   * square_18_18：18X18mm
+   * square_20_20：20X20mm（默认值）
+   * square_22_22：22X22mm
+   */
+  sealSize?: string
+  /** 
+   * 印章颜色，默认红色
+    red：红色（默认值）
+    blue ：蓝色
+    black：黑色
+    */
+  sealColor?: string
+  /** 
+   * 印章内容规则（印章中姓名后缀），默认值为仅名字
+    name：仅名字，无后缀（仅显示姓名，如：包小豸）
+    name_with_suffix_seal：加“印”（姓名后添加“印”字，如：包小豸印）
+    name_with_suffix_of_seal：加“之印”（姓名后添加“之印”，如：包小豸之印）
+   */
+  sealSuffix?: string
+  /** 防伪码 */
+  securityCode?: string
+  createSerialNo?: string
+}
+
+/** createPersonalSealByTemplate 创建模板签名-响应结构体 */
+export interface CreatePersonalSealByTemplateResponse {
+  sealId: number
+}
+
+/** createPersonalSealByImage 创建图片签名-请求结构体 */
+export interface CreatePersonalSealByImageRequest {
+  openUserId: string
+  sealName: string
+  sealWidth?: number
+  sealHeight?: number
+  /** 印章做旧，默认为0不做旧，数值范围0-1.85 */
+  sealOldStyle?: number
+  /** 
+   * 印章颜色，默认红色
+    red：红色（默认值）
+    blue ：蓝色
+    black：黑色
+  */
+  sealColor?: string
+  createSerialNo?: string
+}
+
+/** createPersonalSealByImage 创建图片签名-响应结构体 */
+export interface CreatePersonalSealByImageResponse {
+  sealId?: number
+}

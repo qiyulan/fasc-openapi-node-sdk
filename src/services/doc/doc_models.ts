@@ -88,3 +88,25 @@ export interface FileVerifySignResponse {
   reason?: string
   signatureInfos: Array<SignatureInfo>
 }
+
+/** getFileKeywordPositions 查询文档关键字坐标-请求结构体 */
+export interface GetFileKeywordPositionsRequest {
+  fileId: string
+  keywords: Array<string>
+}
+
+export interface Coordinate {
+  positionX?: string
+  positionY?: string
+}
+
+export interface KeywordPosition {
+  positionPageNo?: number
+  coordinates?: Array<Coordinate>
+}
+
+/** getFileKeywordPositions 查询文档关键字坐标-响应结构体 */
+export interface GetFileKeywordPositionsResponse {
+  keyword?: string
+  positions?: Array<KeywordPosition>
+}

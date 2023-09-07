@@ -5,7 +5,7 @@ import {
   GetCorpDeptDetailRequest, GetCorpDeptDetailResponse, CreateCorpDeptRequest, CreateCorpDeptResponse, ModifyCorpDeptRequest, ModifyCorpDeptResponse,
   DeleteCorpDeptRequest, DeleteCorpDeptResponse, GetMemberDetailRequest, GetMemberDetailResponse, CrateCorpMemberRequest, CrateCorpMemberResponse,
   ModifyMemberRequest, ModifyMemberResponse, DeleteMemberRequest, DeleteMemberResponse, GetActiveMemberUrlRequest, GetActiveMemberUrlResponse,
-  SetMemberDeptRequest, SetMemberDeptResponse,
+  SetMemberStatusRequest, SetMemberStatusResponse, SetMemberDeptRequest, SetMemberDeptResponse, GetEntityListRequest, GetEntityListResponse
 } from "./org_models"
 
 export class Client extends AbstractClient {
@@ -78,7 +78,12 @@ export class Client extends AbstractClient {
   }
 
   /** 设置成员状态 */
-  async setMemberStatus(req: SetMemberDeptRequest): Promise<SetMemberDeptResponse> {
+  async setMemberStatus(req: SetMemberStatusRequest): Promise<SetMemberStatusResponse> {
     return this.request({ url: "/corp/member/set-status", req, reqMethod: "POST" })
+  }
+  
+  /** 查询企业主体列表 */
+  async getEntityList(req: GetEntityListRequest): Promise<GetEntityListResponse> {
+    return this.request({ url: "/corp/entity/get-list", req, reqMethod: "POST" })
   }
 }

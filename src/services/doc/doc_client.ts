@@ -9,6 +9,8 @@ import {
   FileProcessResponse,
   FileVerifySignRequest,
   FileVerifySignResponse,
+  GetFileKeywordPositionsRequest,
+  GetFileKeywordPositionsResponse
 } from "./doc_models"
 
 export class Client extends AbstractClient {
@@ -34,5 +36,10 @@ export class Client extends AbstractClient {
   /** 文件验签 */
   async fileVerifySign(req: FileVerifySignRequest): Promise<FileVerifySignResponse> {
     return this.request({ url: "/file/verify-sign", reqMethod: "POST", req })
+  }
+
+  /** 查询文档关键字坐标 */
+  async getFileKeywordPositions(req: GetFileKeywordPositionsRequest): Promise<GetFileKeywordPositionsResponse> {
+    return this.request({ url: "/file/get-keyword-positions", reqMethod: "POST", req })
   }
 }

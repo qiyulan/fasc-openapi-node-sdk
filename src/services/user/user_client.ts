@@ -9,19 +9,7 @@ import {
   GetUserInfoRequest,
   GetUserInfoResponse,
   GetIdentityInfoRequest,
-  GetIdentityInfoResponse,
-  GetFourElementVerifyUrlRequest,
-  GetFourElementVerifyUrlResponse,
-  GetThreeElementVerifyUrlRequest,
-  GetThreeElementVerifyUrlResponse,
-  GetIdCardImageDownloadUrlRequest,
-  GetIdCardImageDownloadUrlResponse,
-  GetIdCardOcrRequest,
-  GetIdCardOcrResponse,
-  TelecomThreeElementVerifyRequest,
-  TelecomThreeElementVerifyResponse,
-  BackFourElementVerifyRequest,
-  BackFourElementVerifyResponse
+  GetIdentityInfoResponse
 } from "./user_models"
 import { ClientConfig } from "../../common/interface"
 
@@ -63,45 +51,5 @@ export class Client extends AbstractClient {
    */
   async getIdentInfo(req: GetIdentityInfoRequest): Promise<GetIdentityInfoResponse> {
     return this.request({ url: "/user/get-identity-info", req, reqMethod: "POST" })
-  }
-
-  /**
-   * 个人四要素校验
-   * 从法大大获取一个链接，用户可在页面中校验其姓名、身份证号、运营商手机号是否一致
-   */
-  async getFourElementVerifyUrl(req: GetFourElementVerifyUrlRequest): Promise<GetFourElementVerifyUrlResponse> {
-    return this.request({ url: "/user/four-element-verify/get-url", req, reqMethod: "POST" })
-  }
-
-  /**
-   * 个人三要素校验
-   * 从法大大获取一个链接，用户可在页面中校验其姓名、身份证号、运营商手机号是否一致
-   */
-  async getThreeElementVerifyUrl(req: GetThreeElementVerifyUrlRequest): Promise<GetThreeElementVerifyUrlResponse> {
-    return this.request({ url: "/user/three-element-verify/get-url", req, reqMethod: "POST" })
-  }
-
-  /**
-   * 获取要素校验身份证图片下载链接
-   */
-  async getIdCardImageDownloadUrl(req: GetIdCardImageDownloadUrlRequest): Promise<GetIdCardImageDownloadUrlResponse> {
-    return this.request({ url: "/user/element-verify/get-idcard-image-download-url", req, reqMethod: "POST" })
-  }
-
-  /**
-   * 身份证OCR
-   */
-  async getIdCardOcrUrl(req: GetIdCardOcrRequest): Promise<GetIdCardOcrResponse> {
-    return this.request({ url: "/user/ocr/id-card", req, reqMethod: "POST" })
-  }
-
-  /** 个人运营商三要素校验 */
-  async telecomThreeElementVerify(req: TelecomThreeElementVerifyRequest): Promise<TelecomThreeElementVerifyResponse> {
-    return this.request({ url: "/user/telecom/three-element-verify", req, reqMethod: "POST" })
-  }
-
-  /** 个人银行卡四要素校验 */
-  async backFourElementVerify(req: BackFourElementVerifyRequest): Promise<BackFourElementVerifyResponse> {
-    return this.request({ url: "/user/bank/four-element-verify", req, reqMethod: "POST" })
   }
 }

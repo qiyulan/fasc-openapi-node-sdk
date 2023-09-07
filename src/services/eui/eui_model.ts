@@ -41,6 +41,7 @@ export interface GetUserAuthUrlRequest {
   authScopes?: Array<string>
   /** 重定向地址 */
   redirectUrl?: string
+  unbindAccount?: boolean
 }
 
 /** 获取个人用户授权链接-响应参数结构体 */
